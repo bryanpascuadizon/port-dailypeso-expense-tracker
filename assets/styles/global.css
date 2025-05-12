@@ -2,8 +2,16 @@
 @import "tw-animate-css";
 
 @layer utilities {
+  body {
+    @apply bg-gray-50;
+  }
+
   .wrapper {
-    @apply max-w-3xl lg:mx-auto p-5 md:px-10 w-full bg-slate-100;
+    @apply max-w-3xl lg:mx-auto md:px-10 w-full;
+  }
+
+  .content-wrapper {
+    @apply p-5;
   }
 
   .flex-start {
@@ -20,5 +28,33 @@
 
   .toast-text {
     @apply text-base;
+  }
+
+  .header-title {
+    @apply text-gray-800 text-3xl;
+  }
+
+  .header-slogan {
+    @apply text-gray-800 text-[0.7rem];
+  }
+
+  .header-container {
+    @apply border-b-gray-200 py-3;
+  }
+
+  .footer-container {
+    @apply border-t-gray-200;
+  }
+
+  .footer-links {
+    @apply text-center w-full hover:bg-gray-300 p-2 col-span-1 rounded-xs;
+  }
+
+  .footer-icon-links {
+    @apply m-auto w-7 h-7 mb-1 text-gray-800;
+  }
+
+  .account-card {
+    @apply col-span-1 p-5 rounded-md border-1 border-gray-200 shadow text-center text-sm min-w-[150px] cursor-pointer;
   }
 }

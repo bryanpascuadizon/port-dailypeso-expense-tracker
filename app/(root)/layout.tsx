@@ -1,3 +1,5 @@
+import Footer from "@/components/shared/Footer";
+import Header from "@/components/shared/Header";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
 import { Metadata } from "next";
 
@@ -11,7 +13,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="flex h-screen flex-col">
-      <main className="flex-1 wrapper">{children}</main>
+      <Header />
+      <main className="flex-1 wrapper">
+        <div className="content-wrapper">{children}</div>
+      </main>
+      <Footer />
     </div>
   );
 }
