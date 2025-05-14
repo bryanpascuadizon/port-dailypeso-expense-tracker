@@ -6,3 +6,13 @@ export type Transactions = {
   account: string;
   transactionType: string;
 };
+
+export type Accounts = {
+  name: string;
+  description: string;
+};
+
+export type MonthlyAccordion = {
+  month: string;
+  transactions: Transactions[];
+};

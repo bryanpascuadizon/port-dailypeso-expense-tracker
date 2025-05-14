@@ -4,7 +4,6 @@ import {
   CreditCard,
   ChartNoAxesCombined,
   Ellipsis,
-  HandIcon,
   PlusIcon,
 } from "lucide-react";
 import { JSX } from "react";

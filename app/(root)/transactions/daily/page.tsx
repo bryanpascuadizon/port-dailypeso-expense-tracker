@@ -4,10 +4,7 @@ import IncomeExpense from "@/components/shared/IncomeExpense";
 import PageTitle from "@/components/shared/PageTitle";
 import DailyTransactionItem from "@/components/shared/Transactions/DailyTransactionItem";
 import TransactionTabs from "@/components/shared/Transactions/TransactionTabs";
-import {
-  getUserDailyTransactions,
-  getUserMonthlyTransactions,
-} from "@/lib/actions/transaction-actions";
+import { getUserDailyTransactions } from "@/lib/actions/transaction-actions";
 import { Transactions } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
@@ -17,7 +14,6 @@ const DailyTransactions = () => {
     queryFn: getUserDailyTransactions,
   });
 
-  console.log(getUserMonthlyTransactions(2025));
   return (
     <div>
       <PageTitle title="Transactions" />

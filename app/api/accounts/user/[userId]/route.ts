@@ -17,6 +17,8 @@ export const GET = async (
     const { userId } = await params;
     const accounts = data.accounts;
 
+    console.log(userId);
+
     if (accounts) {
       return new NextResponse(JSON.stringify(accounts), { status: 200 });
     }

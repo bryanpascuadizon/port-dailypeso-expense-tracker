@@ -1,5 +1,6 @@
 import moment from "moment";
 import { getTransactions } from "../handlers/transaction-handlers";
+import { formatDateToISO } from "../utils";
 
 export const getUserDailyTransactions = async () => {
   try {
@@ -27,10 +28,28 @@ export const getUserDailyTransactions = async () => {
   }
 };
 
-export const getUserMonthlyTransactions = (year: number) => {
-  const startDate = moment([year]).startOf("year").format();
-  const endDate = moment([year]).endOf("year").format();
+export const getUserMonthlyTransactions = async (year: number) => {
+  try {
+    const startDate = formatDateToISO(moment([year]).startOf("year"));
+    const endDate = formatDateToISO(moment([year]).endOf("year"));
 
-  console.log("start date: ", startDate);
-  console.log("end date: ", endDate);
+    const response = await getTransactions("1", startDate, endDate);
+
+    if (response) {
+      return {
+        success: true,
+        transactions: response,
+      };
+    }
+
+    return {
+      success: false,
+      message: `Cannot get monthly transactions`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Cannot get monthly transactions - ${error}`,
+    };
+  }
 };

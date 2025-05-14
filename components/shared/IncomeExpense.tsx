@@ -10,10 +10,13 @@ const IncomeExpense = ({ transactions }: { transactions: Transactions[] }) => {
     (transaction: Transactions) => transaction.transactionType === "expense"
   );
 
-  const totalIncome = useMemo(() => computeTotalAmount(incomeTransactions), []);
+  const totalIncome = useMemo(
+    () => computeTotalAmount(incomeTransactions),
+    [incomeTransactions]
+  );
   const totalExpense = useMemo(
     () => computeTotalAmount(expenseTransactions),
-    []
+    [expenseTransactions]
   );
 
   const totalIncomeExpense = totalIncome - totalExpense;
