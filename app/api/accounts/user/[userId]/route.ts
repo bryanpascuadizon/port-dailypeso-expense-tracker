@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { data } from "@/db/sample-seed-data";
 
 /**
- * API Handler: /accountHandlers/getAccounts()
+ * API Handler: /account-handlers/getAccounts()
  * Description: Get user accounts by userId
  * @param request
  * @param userId

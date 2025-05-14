@@ -5,6 +5,7 @@ import {
   ChartNoAxesCombined,
   Ellipsis,
   HandIcon,
+  PlusIcon,
 } from "lucide-react";
 import { JSX } from "react";
 
@@ -12,7 +13,7 @@ const Footer = () => {
   const footerPages = [
     {
       title: "Transactions",
-      link: "/transactions",
+      link: "/transactions/daily",
       icon: <HandCoins className="footer-icon-links" />,
     },
     {
@@ -33,7 +34,7 @@ const Footer = () => {
   ];
   return (
     <footer className="w-full footer-container">
-      <div className="wrapper">
+      <div className="wrapper relative bg-white shadow rounded-t-sm">
         <nav className="grid grid-cols-4 text-sm text-center">
           {footerPages.map(
             (
@@ -47,6 +48,9 @@ const Footer = () => {
             )
           )}
         </nav>
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-15 h-15 flex items-center justify-center">
+          <PlusIcon className="w-10 h-10 cursor-pointer" />
+        </div>
       </div>
     </footer>
   );
