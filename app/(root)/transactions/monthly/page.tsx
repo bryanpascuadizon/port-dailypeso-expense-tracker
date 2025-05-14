@@ -2,7 +2,7 @@
 
 import IncomeExpense from "@/components/shared/IncomeExpense";
 import PageTitle from "@/components/shared/PageTitle";
-import MonthlyTransactionAccordion from "@/components/shared/Transactions/MonthlyTransactionAccordion";
+import MonthlyTransactionAccordion from "@/components/shared/Transactions/monthly/MonthlyTransactionAccordion";
 import TransactionTabs from "@/components/shared/Transactions/TransactionTabs";
 import { getUserMonthlyTransactions } from "@/lib/actions/transaction-actions";
 

@@ -23,16 +23,16 @@ const IncomeExpense = ({ transactions }: { transactions: Transactions[] }) => {
 
   return (
     <div className="grid grid-cols-3">
-      <div className="col-span-1 text-center income-text p-3">
-        <p className="">Income</p>
-        <p>{currencyFormatter.format(totalIncome)}</p>
-      </div>
-      <div className="col-span-1 text-center expense-text p-3">
-        <p className="">Expense</p>
-        <p>{currencyFormatter.format(totalExpense)}</p>
+      <div className="col-span-1 text-center p-3">
+        <p className="font-bold">Income</p>
+        <p className="income-text">{currencyFormatter.format(totalIncome)}</p>
       </div>
       <div className="col-span-1 text-center p-3">
-        <p className="">Total</p>
+        <p className="font-bold">Expense</p>
+        <p className="expense-text">{currencyFormatter.format(totalExpense)}</p>
+      </div>
+      <div className="col-span-1 text-center p-3">
+        <p className="font-bold">Total</p>
         <p
           className={`${
             totalIncomeExpense < 0 ? "expense-text" : "income-text"

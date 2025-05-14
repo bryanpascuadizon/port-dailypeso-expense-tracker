@@ -10,7 +10,7 @@ const DailyTransactionItem = ({
   return (
     <div className="grid grid-cols-2 rounded-sm bg-white p-3 text-sm shadow mb-3">
       <div className="flex-start gap-3">
-        <Sun className="w-10 h-10 text-yellow-400" />
+        <Sun className="w-10 h-10 text-yellow-500" />
         <div>
           <p>{transaction.transactionNote}</p>
           <p className="text-xs">{transaction.account}</p>

@@ -2,7 +2,7 @@
 
 import IncomeExpense from "@/components/shared/IncomeExpense";
 import PageTitle from "@/components/shared/PageTitle";
-import DailyTransactionItem from "@/components/shared/Transactions/DailyTransactionItem";
+import DailyTransactionItem from "@/components/shared/Transactions/daily/DailyTransactionItem";
 import TransactionTabs from "@/components/shared/Transactions/TransactionTabs";
 import { getUserDailyTransactions } from "@/lib/actions/transaction-actions";
 import { Transactions } from "@/types";

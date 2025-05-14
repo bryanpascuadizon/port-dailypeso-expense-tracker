@@ -9,6 +9,7 @@ import { Calendar1 } from "lucide-react";
 import MonthlyTransactionItem from "./MonthlyTransactionItem";
 import { useMemo } from "react";
 import { getMonthlyAccordions } from "@/lib/utils";
+import IncomeExpense from "../../IncomeExpense";
 
 const MonthlyTransactionAccordion = ({
   transactions,
@@ -17,9 +18,10 @@ const MonthlyTransactionAccordion = ({
   transactions: Transactions[];
   year: number;
 }) => {
-  const monthlyAccordionPanels = useMemo(() => {
-    return getMonthlyAccordions(transactions, year);
-  }, [transactions, year]);
+  const monthlyAccordionPanels = useMemo(
+    () => getMonthlyAccordions(transactions, year),
+    [transactions, year]
+  );
 
   return (
     <Accordion type="single" collapsible className="p-3">
@@ -28,18 +30,25 @@ const MonthlyTransactionAccordion = ({
           value={monthTransaction.month}
           key={monthTransaction.month}
         >
-          <AccordionTrigger className="w-full text-left rounded-sm p-3 shadow bg-white mb-3 cursor-pointer">
-            <div className="">
-              <div className="flex-start gap-3">
+          <AccordionTrigger className="w-full text-left rounded-sm p-3 shadow bg-white mb-3 ">
+            <div className="grid grid-cols-2 w-full">
+              <div className="col-span-1 flex-start gap-3">
                 <div>
                   <Calendar1 className="w-10 h-10 text-sky-500" />
                 </div>
                 <p className="font-bold">{monthTransaction.month}</p>
               </div>
+              <div className="col-span-1 flex-end">
+                <IncomeExpense transactions={monthTransaction.transactions} />
+              </div>
             </div>
           </AccordionTrigger>
           <AccordionContent>
-            <MonthlyTransactionItem month={monthTransaction.month} />
+            <MonthlyTransactionItem
+              month={monthTransaction.month}
+              transactions={monthTransaction.transactions}
+              year={2025}
+            />
           </AccordionContent>
         </AccordionItem>
       ))}
