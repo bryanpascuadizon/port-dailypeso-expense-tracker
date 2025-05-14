@@ -2,10 +2,23 @@ import moment from "moment";
 import { getTransactions } from "../handlers/transaction-handlers";
 import { formatDateToISO } from "../utils";
 
-export const getUserDailyTransactions = async () => {
+export const getUserDailyTransactions = async (week: string | null) => {
   try {
-    const startDate = moment().startOf("day").format();
-    const endDate = moment().endOf("day").format();
+    let startDate = "";
+    let endDate = "";
+    let monthIndex = 0;
+    let year = 0;
+
+    if (week) {
+      monthIndex = Number(week.split("/")[0]) - 1;
+      year = Number(week.split("/")[2]);
+    } else {
+      monthIndex = new Date().getMonth();
+      year = new Date().getFullYear();
+    }
+
+    startDate = formatDateToISO(moment([year, monthIndex]).startOf("month"));
+    endDate = formatDateToISO(moment([year, monthIndex]).endOf("month"));
 
     const response = await getTransactions("1", startDate, endDate);
 

@@ -20,6 +20,13 @@ export type MonthlyAccordion = {
 };
 
 export type WeeklyAccordion = {
-  week: string;
+  startWeek: string;
+  endWeek: string;
+  transactions: Transactions[];
+};
+
+export type DailyAccordion = {
+  date: string;
+  day: string;
   transactions: Transactions[];
 };

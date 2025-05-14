@@ -121,7 +121,8 @@ export const renderWeek = (
     );
 
     weeks.push({
-      week: `${weekStart.format("MM/DD")} - ${weekEnd.format("MM/DD")}`,
+      startWeek: `${weekStart.format("MM/DD/YYYY")}`,
+      endWeek: `${weekEnd.format("MM/DD/YYYY")}`,
       transactions: weeklyTransactions,
     });
     current.subtract(1, "week");
@@ -129,3 +130,11 @@ export const renderWeek = (
 
   return weeks;
 };
+
+export const renderDaily = () =>
+  // month: string,
+  // year: string,
+  // transations: Transactions[]
+  {
+    //const daily = [];
+  };

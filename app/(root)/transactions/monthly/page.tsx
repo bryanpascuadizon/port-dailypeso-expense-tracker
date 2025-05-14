@@ -30,8 +30,8 @@ const MonthlyTransactions = () => {
             <IncomeExpense transactions={data.transactions} />
           </div>
 
-          <div className="transaction-content overflow-y-auto">
-            {data && data.transactions && (
+          <div className="transaction-content">
+            {data.transactions && (
               <MonthlyTransactionAccordion
                 transactions={data.transactions}
                 year={new Date().getFullYear()}

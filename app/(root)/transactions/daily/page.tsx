@@ -8,19 +8,31 @@ import { getUserDailyTransactions } from "@/lib/actions/transaction-actions";
 import { Transactions } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
+import { useSearchParams } from "next/navigation";
+
 const DailyTransactions = () => {
+  const searchParams = useSearchParams();
+
+  const startWeek = searchParams.get("week");
+
   const { data } = useQuery({
-    queryKey: ["user-daily-transactions"],
-    queryFn: getUserDailyTransactions,
+    queryKey: ["user-daily-transactions", startWeek],
+    queryFn: async () => {
+      const response = await getUserDailyTransactions(startWeek);
+
+      return response;
+    },
   });
 
   return (
-    <div>
-      <PageTitle title="Transactions" />
+    <>
       {data && data.transactions && (
         <>
-          <TransactionTabs activeTab="Daily" />
-          <IncomeExpense transactions={data.transactions!} />
+          <div className="transaction-headers">
+            <PageTitle title="Transactions" />
+            <TransactionTabs activeTab="Daily" />
+            <IncomeExpense transactions={data.transactions} />
+          </div>
           <div className="transaction-content">
             {data.transactions.map((transaction: Transactions, index) => (
               <DailyTransactionItem transaction={transaction} key={index} />
@@ -28,7 +40,7 @@ const DailyTransactions = () => {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 

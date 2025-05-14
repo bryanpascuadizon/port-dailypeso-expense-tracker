@@ -12,7 +12,7 @@ const Footer = () => {
   const footerPages = [
     {
       title: "Transactions",
-      link: "/transactions/daily",
+      link: "/transactions/monthly",
       icon: <HandCoins className="footer-icon-links" />,
     },
     {

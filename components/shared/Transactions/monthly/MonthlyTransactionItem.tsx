@@ -2,6 +2,7 @@ import { Transactions, WeeklyAccordion } from "@/types";
 import IncomeExpense from "../../IncomeExpense";
 import { useMemo } from "react";
 import { renderWeek } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 const MonthlyTransactionItem = ({
   month,
@@ -17,6 +18,10 @@ const MonthlyTransactionItem = ({
     [month, year, transactions]
   );
 
+  const handleDailyRender = (startWeek: string) => {
+    redirect(`/transactions/daily?week=${startWeek}`);
+  };
+
   return (
     <>
       {weekPanels &&
@@ -24,9 +29,12 @@ const MonthlyTransactionItem = ({
           <div
             className="grid grid-cols-2 px-3 rounded-sm cursor-pointer hover:bg-slate-200"
             key={index}
+            onClick={() => handleDailyRender(item.startWeek)}
           >
             <div className="col-span-1 flex-start">
-              <p className="">{item.week}</p>
+              <p className="">
+                {item.startWeek} - {item.endWeek}
+              </p>
             </div>
             <div className="col-span-1">
               <IncomeExpense transactions={item.transactions} />
