@@ -12,12 +12,16 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="flex h-screen flex-col">
-      <Header />
-      <main className="flex-1 wrapper">
-        <div className="content-wrapper">{children}</div>
-      </main>
-      <Footer />
-    </div>
+    <>
+      <div className="flex flex-col h-screen">
+        <Header />
+        <main className="flex-1 wrapper flex flex-col overflow-hidden">
+          <div className="content-wrapper flex flex-col flex-1 overflow-hidden">
+            {children}
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }

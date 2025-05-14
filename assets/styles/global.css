@@ -9,7 +9,7 @@
   }
 
   .wrapper {
-    @apply max-w-3xl lg:mx-auto w-full;
+    @apply max-w-3xl mx-auto w-full;
   }
 
   .content-wrapper {
@@ -66,7 +66,7 @@
 
   /* Transactions */
   .transaction-content {
-    @apply pb-3;
+    @apply pb-3 overflow-y-auto;
   }
 
   .income-text {
@@ -76,10 +76,13 @@
   .expense-text {
     @apply text-red-700;
   }
+
+  .accordion-trigger {
+    @apply !no-underline hover:!no-underline;
+  }
 }
 
 @theme inline {
-
   --radius-sm: calc(var(--radius) - 4px);
 
   --radius-md: calc(var(--radius) - 2px);
@@ -152,7 +155,6 @@
 }
 
 :root {
-
   --radius: 0.625rem;
 
   --background: oklch(1 0 0);
@@ -219,7 +221,6 @@
 }
 
 .dark {
-
   --background: oklch(0.145 0 0);
 
   --foreground: oklch(0.985 0 0);

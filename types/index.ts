@@ -14,5 +14,12 @@ export type Accounts = {
 
 export type MonthlyAccordion = {
   month: string;
+  startDate: string;
+  endDate: string;
+  transactions: Transactions[];
+};
+
+export type WeeklyAccordion = {
+  week: string;
   transactions: Transactions[];
 };

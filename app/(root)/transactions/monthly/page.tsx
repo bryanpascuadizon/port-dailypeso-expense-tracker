@@ -21,13 +21,16 @@ const MonthlyTransactions = () => {
   });
 
   return (
-    <div>
-      <PageTitle title="Transactions" />
+    <>
       {data && data.transactions && (
         <>
-          <TransactionTabs activeTab="Monthly" />
-          <IncomeExpense transactions={data.transactions} />
-          <div className="transaction-content">
+          <div className="transaction-headers">
+            <PageTitle title="Transactions" />
+            <TransactionTabs activeTab="Monthly" />
+            <IncomeExpense transactions={data.transactions} />
+          </div>
+
+          <div className="transaction-content overflow-y-auto">
             {data && data.transactions && (
               <MonthlyTransactionAccordion
                 transactions={data.transactions}
@@ -37,7 +40,7 @@ const MonthlyTransactions = () => {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 

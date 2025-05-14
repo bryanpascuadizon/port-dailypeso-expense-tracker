@@ -1,4 +1,4 @@
-import { MonthlyAccordion, Transactions } from "@/types";
+import { MonthlyAccordion, Transactions, WeeklyAccordion } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import moment, { Moment } from "moment";
@@ -76,6 +76,8 @@ export const getMonthlyAccordions = (
 
       return {
         month,
+        startDate: moment(startDate).format("MM/DD").toString(),
+        endDate: moment(endDate).format("MM/DD").toString(),
         transactions: monthTransactions,
       };
     }
@@ -86,4 +88,44 @@ export const getMonthlyAccordions = (
 
 export const formatDateToISO = (date: Moment) => {
   return date.toISOString();
+};
+
+export const renderWeek = (
+  month: string,
+  year: number,
+  transactions: Transactions[]
+): WeeklyAccordion[] => {
+  const monthIndex = moment().month(month).month();
+  const startOfMonth = moment([year, monthIndex]).startOf("month");
+  const endOfMonth = moment([year, monthIndex]).endOf("month");
+
+  const weekStart = startOfMonth.clone().startOf("week");
+  const weekEnd = endOfMonth.clone().endOf("week");
+
+  const weeks = [];
+
+  const current = weekEnd.clone();
+
+  while (current.isSameOrAfter(weekStart)) {
+    const weekEnd = current.clone();
+    const weekStart = current.clone().startOf("week");
+
+    const startDate = new Date(weekStart.format("MM/DD/YYYY"));
+
+    const endDate = new Date(weekEnd.format("MM/DD/YYYY"));
+
+    const weeklyTransactions = transactions.filter(
+      (transaction: Transactions) =>
+        new Date(transaction.transactionDate) >= startDate &&
+        new Date(transaction.transactionDate) <= endDate
+    );
+
+    weeks.push({
+      week: `${weekStart.format("MM/DD")} - ${weekEnd.format("MM/DD")}`,
+      transactions: weeklyTransactions,
+    });
+    current.subtract(1, "week");
+  }
+
+  return weeks;
 };
