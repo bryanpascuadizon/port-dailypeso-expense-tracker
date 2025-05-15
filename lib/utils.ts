@@ -1,4 +1,9 @@
-import { MonthlyAccordion, Transactions, WeeklyAccordion } from "@/types";
+import {
+  DailyAccordion,
+  MonthlyAccordion,
+  Transactions,
+  WeeklyAccordion,
+} from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import moment, { Moment } from "moment";
@@ -23,7 +28,7 @@ export const computeTotalAmount = (transactions: Transactions[]) => {
 };
 
 export const renderTransactionType = (type: string) => {
-  return `${type === "expense" ? "text-red-700" : "text-blue-700"}`;
+  return `${type === "expense" ? "expense-text" : "income-text"}`;
 };
 
 export const getMonthlyAccordions = (
@@ -86,6 +91,40 @@ export const getMonthlyAccordions = (
   return accordionPanels;
 };
 
+export const getDailyAccordions = (transactions: Transactions[]) => {
+  const dailies: DailyAccordion[] = [];
+
+  transactions.sort((a, b) => {
+    const currentTransaction = new Date(a.transactionDate).getDay();
+    const nextTransaction = new Date(b.transactionDate).getDay();
+
+    return nextTransaction - currentTransaction;
+  });
+  transactions.forEach((transaction: Transactions) => {
+    const dailyTransactionDate = transaction.transactionDate.toString();
+    const dailyDate = dailyTransactionDate.split("T")[0];
+
+    //const year = dailyDate.split("-")[0];
+    const month = moment(transaction.transactionDate).format("MMMM");
+    const monthDay = `${month} ${dailyDate.split("-")[2]}`;
+    const day = moment(transaction.transactionDate).format("dddd");
+
+    const dailyIndex = dailies.findIndex((obj) => obj.date === monthDay);
+
+    if (dailyIndex < 0) {
+      dailies.push({
+        day: day,
+        date: monthDay,
+        transactions: [transaction],
+      });
+    } else {
+      dailies[dailyIndex].transactions.push(transaction);
+    }
+  });
+
+  return dailies;
+};
+
 export const formatDateToISO = (date: Moment) => {
   return date.toISOString();
 };
@@ -121,8 +160,8 @@ export const renderWeek = (
     );
 
     weeks.push({
-      startWeek: `${weekStart.format("MM/DD/YYYY")}`,
-      endWeek: `${weekEnd.format("MM/DD/YYYY")}`,
+      startWeek: `${weekStart.format("MMM DD, YYYY")}`,
+      endWeek: `${weekEnd.format("MMM DD, YYYY")}`,
       transactions: weeklyTransactions,
     });
     current.subtract(1, "week");
@@ -130,11 +169,3 @@ export const renderWeek = (
 
   return weeks;
 };
-
-export const renderDaily = () =>
-  // month: string,
-  // year: string,
-  // transations: Transactions[]
-  {
-    //const daily = [];
-  };

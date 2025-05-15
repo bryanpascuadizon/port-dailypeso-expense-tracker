@@ -4,24 +4,17 @@ import { formatDateToISO } from "../utils";
 
 export const getUserDailyTransactions = async (week: string | null) => {
   try {
-    let startDate = "";
-    let endDate = "";
-    let monthIndex = 0;
-    let year = 0;
+    const monthIndex = week ? new Date(week).getMonth() : new Date().getMonth();
+    const year = week ? new Date(week).getFullYear() : new Date().getFullYear();
 
-    if (week) {
-      monthIndex = Number(week.split("/")[0]) - 1;
-      year = Number(week.split("/")[2]);
-    } else {
-      monthIndex = new Date().getMonth();
-      year = new Date().getFullYear();
-    }
-
-    startDate = formatDateToISO(moment([year, monthIndex]).startOf("month"));
-    endDate = formatDateToISO(moment([year, monthIndex]).endOf("month"));
+    const startDate = formatDateToISO(
+      moment([year, monthIndex]).startOf("month")
+    );
+    const endDate = formatDateToISO(moment([year, monthIndex]).endOf("month"));
 
     const response = await getTransactions("1", startDate, endDate);
 
+    console.log(response);
     if (response) {
       return {
         success: true,

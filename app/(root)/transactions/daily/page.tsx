@@ -1,11 +1,11 @@
 "use client";
 
 import IncomeExpense from "@/components/shared/IncomeExpense";
+import NoData from "@/components/shared/NoData";
 import PageTitle from "@/components/shared/PageTitle";
-import DailyTransactionItem from "@/components/shared/Transactions/daily/DailyTransactionItem";
+import DailyTransactionAccordion from "@/components/shared/Transactions/daily/DailyTransactionAccordion";
 import TransactionTabs from "@/components/shared/Transactions/TransactionTabs";
 import { getUserDailyTransactions } from "@/lib/actions/transaction-actions";
-import { Transactions } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 import { useSearchParams } from "next/navigation";
@@ -34,9 +34,11 @@ const DailyTransactions = () => {
             <IncomeExpense transactions={data.transactions} />
           </div>
           <div className="transaction-content">
-            {data.transactions.map((transaction: Transactions, index) => (
-              <DailyTransactionItem transaction={transaction} key={index} />
-            ))}
+            {data.transactions.length ? (
+              <DailyTransactionAccordion transactions={data.transactions} />
+            ) : (
+              <NoData />
+            )}
           </div>
         </>
       )}

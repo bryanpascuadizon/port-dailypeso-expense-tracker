@@ -70,7 +70,7 @@
   }
 
   .income-text {
-    @apply text-blue-700;
+    @apply text-green-700;
   }
 
   .expense-text {
@@ -78,7 +78,7 @@
   }
 
   .accordion-trigger {
-    @apply !no-underline hover:!no-underline;
+    @apply w-full text-left rounded-sm p-3 shadow bg-white mb-3 cursor-pointer !no-underline hover:!no-underline;
   }
 }
 
