@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 const Home = () => {
-  redirect("/transactions/monthly");
+  redirect("/transactions/daily");
   return <div>Home</div>;
 };
 

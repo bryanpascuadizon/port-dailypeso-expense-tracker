@@ -40,7 +40,15 @@ const Footer = () => {
               page: { title: string; link: string; icon: JSX.Element },
               index
             ) => (
-              <Link href={page.link} className="footer-links" key={index}>
+              <Link
+                href={page.link}
+                className={`footer-links ${
+                  index === 0
+                    ? "rounded-tl-sm"
+                    : index === footerPages.length - 1 && "rounded-tr-sm"
+                }`}
+                key={index}
+              >
                 {page.icon}
                 <p>{page.title}</p>
               </Link>
