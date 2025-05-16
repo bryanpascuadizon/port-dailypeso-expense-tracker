@@ -29,12 +29,12 @@ const TransactionTabs = ({ activeTab }: { activeTab: string }) => {
             <Link
               key={index}
               href={page.link}
-              className={`w-full p-2 col-span-1 font-bold flex justify-center gap-2 ${
+              className={`w-full p-2 col-span-1 font-bold flex justify-center gap-2 text-sm md:text-base ${
                 page.title === activeTab && "transaction-tab-active"
               }`}
             >
               {page.icon}
-              <p>{page.title}</p>
+              <p className="hidden sm:inline">{page.title}</p>
             </Link>
           )
         )}

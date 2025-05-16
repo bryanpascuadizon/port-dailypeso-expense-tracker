@@ -34,7 +34,11 @@ const MonthlyTransactions = () => {
               setDate={setDate}
             />
             <TransactionTabs activeTab="Monthly" />
-            <IncomeExpense transactions={data.transactions} />
+            <IncomeExpense
+              transactions={data.transactions}
+              className="text-xs md:text-sm py-3"
+              isHeader
+            />
           </div>
 
           <div className="transaction-content">

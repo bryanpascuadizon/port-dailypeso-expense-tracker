@@ -31,22 +31,24 @@ const MonthlyTransactionAccordion = ({
           key={monthTransaction.month}
         >
           <AccordionTrigger className="accordion-trigger">
-            <div className="grid grid-cols-2 w-full">
-              <div className="col-span-1 flex-start gap-3">
+            <div className="flex-between w-full">
+              <div className="flex-start gap-3">
                 <div>
                   <Calendar1 className="w-10 h-10 text-sky-500" />
                 </div>
                 <div>
-                  <p className="font-bold">{monthTransaction.month}</p>
+                  <p className="font-bold text-xs md:text-sm">
+                    {monthTransaction.month}
+                  </p>
                   <p className="text-xs text-gray-500">
                     {monthTransaction.startDate} - {monthTransaction.endDate}
                   </p>
                 </div>
               </div>
-              <div className="col-span-1">
+              <div className="">
                 <IncomeExpense
                   transactions={monthTransaction.transactions}
-                  className="text-xs"
+                  className="text-xs md:text-sm flex-col"
                 />
               </div>
             </div>

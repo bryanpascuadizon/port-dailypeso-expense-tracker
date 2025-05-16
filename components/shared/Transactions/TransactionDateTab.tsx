@@ -42,7 +42,7 @@ const TransactionDateTab = ({
         className="transaction-date-tab-arrows button-hover"
         onClick={() => handleTransactionTabDateChange(false)}
       >
-        <ChevronLeft className="" />
+        <ChevronLeft className="w-5" />
       </div>
       <Popover>
         <PopoverTrigger className="w-full" disabled={dateType === "yearly"}>
@@ -53,14 +53,14 @@ const TransactionDateTab = ({
           </div>
         </PopoverTrigger>
         <PopoverContent>
-          <TransactionDatePopoverContent date={date} setDate={setDate}/>
+          <TransactionDatePopoverContent date={date} setDate={setDate} />
         </PopoverContent>
       </Popover>
       <div
         className="transaction-date-tab-arrows button-hover"
         onClick={() => handleTransactionTabDateChange(true)}
       >
-        <ChevronRight />
+        <ChevronRight className="w-5" />
       </div>
     </div>
   );

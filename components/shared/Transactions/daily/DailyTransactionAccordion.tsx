@@ -29,22 +29,24 @@ const DailyTransactionAccordion = ({
           key={dailyTransaction.date}
         >
           <AccordionTrigger className="accordion-trigger">
-            <div className="grid grid-cols-2 w-full">
-              <div className="col-span-1 flex-start gap-3">
+            <div className="flex-between w-full">
+              <div className="flex-start gap-3">
                 <div>
                   <Sun className="w-10 h-10 text-yellow-400" />
                 </div>
                 <div>
-                  <p className="font-bold">{dailyTransaction.date}</p>
+                  <p className="font-bold text-xs md:text-sm">
+                    {dailyTransaction.date}
+                  </p>
                   <p className="text-xs text-gray-500">
                     {dailyTransaction.day}
                   </p>
                 </div>
               </div>
-              <div className="col-span-1">
+              <div>
                 <IncomeExpense
                   transactions={dailyTransaction.transactions}
-                  className="text-xs"
+                  className="text-xs md:text-sm flex-col"
                 />
               </div>
             </div>

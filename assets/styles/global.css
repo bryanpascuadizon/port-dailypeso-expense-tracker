@@ -37,7 +37,7 @@
   }
 
   .header-title {
-    @apply text-gray-800 text-3xl font-bold;
+    @apply text-gray-800 text-xl md:text-3xl font-bold;
   }
 
   .header-slogan {
@@ -53,11 +53,11 @@
   }
 
   .footer-links {
-    @apply text-center w-full hover:bg-gray-300 p-2 col-span-1;
+    @apply text-center text-xs w-full hover:bg-gray-300 p-2 col-span-1;
   }
 
   .footer-icon-links {
-    @apply m-auto w-7 h-7 mb-1 text-gray-800;
+    @apply m-auto w-5 h-5 md:w-7 md:h-7 mb-1 text-gray-800;
   }
 
   .account-card {
@@ -90,15 +90,19 @@
   }
 
   .transaction-date-tab-arrows {
-    @apply px-10 bg-white rounded-sm p-2 shadow cursor-pointer;
+    @apply px-5 md:px-10 bg-white rounded-sm p-2 shadow cursor-pointer;
   }
 
   .transaction-date-tab-date {
-    @apply w-full bg-white rounded-sm text-center p-2 shadow cursor-pointer;
+    @apply w-full bg-white rounded-sm text-center p-2 shadow cursor-pointer text-sm md:text-base;
   }
 
   .button-hover {
     @apply hover:bg-slate-200;
+  }
+
+  .income-expense-item {
+    @apply flex gap-1 md:flex-col text-center w-full;
   }
 }
 

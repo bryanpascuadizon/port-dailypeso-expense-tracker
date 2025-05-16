@@ -7,16 +7,16 @@ const DailyTransactionItem = ({
   transaction: Transactions;
 }) => {
   return (
-    <div className="grid grid-cols-2 p-3 text-sm mb-3">
+    <div className="grid grid-cols-2 px-5 text-xs md:text-sm mb-3">
       <div className="flex-start gap-3">
         <div>
-          <p>{transaction.transactionNote}</p>
+          <p className="font-bold">{transaction.transactionNote}</p>
           <p className="text-xs">{transaction.account}</p>
         </div>
       </div>
       <div className="flex-end">
         <p
-          className={`text-base ${renderTransactionType(
+          className={`text-sm md:text-base ${renderTransactionType(
             transaction.transactionType
           )}`}
         >

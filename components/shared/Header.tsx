@@ -7,7 +7,7 @@ const Header = () => {
       <div className="wrapper flex-start bg-white py-3 rounded-b-sm shadow">
         <div className="flex-start gap-2 px-10">
           <div>
-            <HandCoins width={50} height={50} />
+            <HandCoins className="w-11 h-11 md:w-13 md:h-13" />
           </div>
           <div>
             <Link href="/">

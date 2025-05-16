@@ -26,17 +26,20 @@ const MonthlyTransactionItem = ({
     weekPanels &&
     weekPanels.map((item: WeeklyAccordion, index: number) => (
       <div
-        className="grid grid-cols-2 px-3 rounded-sm cursor-pointer hover:bg-slate-200"
+        className="flex-between p-2 rounded-sm cursor-pointer hover:bg-slate-200"
         key={index}
         onClick={() => handleDailyRender(item.startWeek)}
       >
-        <div className="col-span-1 flex-start">
+        <div className="flex-start text-xs md:text-sm">
           <p className="">
             {item.startWeek} - {item.endWeek}
           </p>
         </div>
-        <div className="col-span-1">
-          <IncomeExpense transactions={item.transactions} className="text-xs"/>
+        <div className="">
+          <IncomeExpense
+            transactions={item.transactions}
+            className="text-xs flex-col"
+          />
         </div>
       </div>
     ))

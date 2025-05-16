@@ -41,7 +41,11 @@ const DailyTransactions = () => {
               setDate={setDate}
             />
             <TransactionTabs activeTab="Daily" />
-            <IncomeExpense transactions={data.transactions} />
+            <IncomeExpense
+              transactions={data.transactions}
+              className="text-xs md:text-sm py-3"
+              isHeader
+            />
           </div>
           <div className="transaction-content">
             {data.transactions.length ? (

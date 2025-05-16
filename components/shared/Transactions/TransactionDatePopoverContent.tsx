@@ -52,7 +52,7 @@ const TransactionDatePopoverContent = ({
           <ChevronRight />
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-3 p-2">
+      <div className="grid grid-cols-3 md:grid-cols-4 gap-3 p-2">
         {months.map((month, index) => (
           <div
             key={index}
