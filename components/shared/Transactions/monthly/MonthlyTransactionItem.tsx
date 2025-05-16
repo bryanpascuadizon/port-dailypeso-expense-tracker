@@ -30,7 +30,7 @@ const MonthlyTransactionItem = ({
         key={index}
         onClick={() => handleDailyRender(item.startWeek)}
       >
-        <div className="flex-start text-xs md:text-sm">
+        <div className="flex-start text-xs md:text-sm font-bold">
           <p className="">
             {item.startWeek} - {item.endWeek}
           </p>

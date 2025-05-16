@@ -160,8 +160,8 @@ export const renderWeek = (
     );
 
     weeks.push({
-      startWeek: `${weekStart.format("MMM DD, YYYY")}`,
-      endWeek: `${weekEnd.format("MMM DD, YYYY")}`,
+      startWeek: `${weekStart.format("MM/DD")}`,
+      endWeek: `${weekEnd.format("MM/DD")}`,
       transactions: weeklyTransactions,
     });
     current.subtract(1, "week");
