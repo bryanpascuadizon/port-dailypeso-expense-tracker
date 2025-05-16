@@ -1,3 +1,4 @@
+import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
 import { HandCoins } from "lucide-react";
 import Link from "next/link";
 
@@ -11,8 +12,8 @@ const Header = () => {
           </div>
           <div>
             <Link href="/">
-              <p className="header-title">Thriftly</p>
-              <p className="header-slogan">Know Finances. Grow Freedom</p>
+              <p className="header-title">{APP_NAME}</p>
+              <p className="header-slogan">{APP_DESCRIPTION}</p>
             </Link>
           </div>
         </div>
