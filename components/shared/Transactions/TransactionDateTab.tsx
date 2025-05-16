@@ -1,6 +1,12 @@
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@radix-ui/react-popover";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import moment from "moment";
 import { Dispatch, SetStateAction } from "react";
+import TransactionDatePopoverContent from "./TransactionDatePopoverContent";
 
 const TransactionDateTab = ({
   dateType,
@@ -38,11 +44,18 @@ const TransactionDateTab = ({
       >
         <ChevronLeft className="" />
       </div>
-      <div className="transaction-date-tab-date button-hover">
-        {dateType === "yearly"
-          ? moment(date).format("YYYY")
-          : moment(date).format("MMMM YYYY")}
-      </div>
+      <Popover>
+        <PopoverTrigger className="w-full" disabled={dateType === "yearly"}>
+          <div className="transaction-date-tab-date button-hover">
+            {dateType === "yearly"
+              ? moment(date).format("YYYY")
+              : moment(date).format("MMMM YYYY")}
+          </div>
+        </PopoverTrigger>
+        <PopoverContent>
+          <TransactionDatePopoverContent date={date} setDate={setDate}/>
+        </PopoverContent>
+      </Popover>
       <div
         className="transaction-date-tab-arrows button-hover"
         onClick={() => handleTransactionTabDateChange(true)}

@@ -4,7 +4,7 @@ import IncomeExpense from "@/components/shared/IncomeExpense";
 import NoData from "@/components/shared/NoData";
 import PageTitle from "@/components/shared/PageTitle";
 import DailyTransactionAccordion from "@/components/shared/Transactions/daily/DailyTransactionAccordion";
-import TransactionDateTab from "@/components/shared/Transactions/monthly/TransactionDateTab";
+import TransactionDateTab from "@/components/shared/Transactions/TransactionDateTab";
 import TransactionTabs from "@/components/shared/Transactions/TransactionTabs";
 import { getUserDailyTransactions } from "@/lib/actions/transaction-actions";
 import { useQuery } from "@tanstack/react-query";

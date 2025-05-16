@@ -32,7 +32,7 @@ const DailyTransactionAccordion = ({
             <div className="grid grid-cols-2 w-full">
               <div className="col-span-1 flex-start gap-3">
                 <div>
-                  <Sun className="w-10 h-10 text-yellow-500" />
+                  <Sun className="w-10 h-10 text-yellow-400" />
                 </div>
                 <div>
                   <p className="font-bold">{dailyTransaction.date}</p>
