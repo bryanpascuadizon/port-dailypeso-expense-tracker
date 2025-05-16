@@ -22,23 +22,24 @@ const TransactionTabs = ({ activeTab }: { activeTab: string }) => {
   ];
 
   return (
-    <div className="grid grid-cols-3">
-      {transactionPages.map(
-        (page: { title: string; link: string; icon: JSX.Element }, index) => (
-          <Link
-            key={index}
-            href={page.link}
-            className={`w-full p-2 col-span-1 font-bold flex justify-center gap-2 ${
-              page.title === activeTab &&
-              "border-b-3 border-b-gray-700 shadow bg-white rounded-t-sm"
-            }`}
-          >
-            {page.icon}
-            <p>{page.title}</p>
-          </Link>
-        )
-      )}
-    </div>
+    <>
+      <div className="grid grid-cols-3">
+        {transactionPages.map(
+          (page: { title: string; link: string; icon: JSX.Element }, index) => (
+            <Link
+              key={index}
+              href={page.link}
+              className={`w-full p-2 col-span-1 font-bold flex justify-center gap-2 ${
+                page.title === activeTab && "transaction-tab-active"
+              }`}
+            >
+              {page.icon}
+              <p>{page.title}</p>
+            </Link>
+          )
+        )}
+      </div>
+    </>
   );
 };
 

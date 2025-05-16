@@ -169,3 +169,7 @@ export const renderWeek = (
 
   return weeks;
 };
+
+export const getInitialdate = (startWeek: string | null) => {
+  return startWeek ? new Date(startWeek) : new Date();
+};

@@ -78,7 +78,27 @@
   }
 
   .accordion-trigger {
-    @apply w-full text-left rounded-sm p-3 shadow bg-white mb-3 cursor-pointer !no-underline hover:!no-underline [&>svg]:hidden hover:bg-slate-200;
+    @apply w-full text-left rounded-sm p-3 shadow bg-white mb-3 cursor-pointer !no-underline hover:!no-underline [&>svg]:hidden;
+  }
+
+  .transaction-tab-active {
+    @apply bg-white rounded-t-sm p-2 shadow border-b-3 border-b-gray-700 cursor-pointer;
+  }
+
+  .transaction-date-tab {
+    @apply w-full font-bold;
+  }
+
+  .transaction-date-tab-arrows {
+    @apply px-10 bg-white rounded-sm p-2 shadow cursor-pointer;
+  }
+
+  .transaction-date-tab-date {
+    @apply w-full bg-white rounded-sm text-center p-2 shadow cursor-pointer;
+  }
+
+  .button-hover {
+    @apply hover:bg-slate-200;
   }
 }
 

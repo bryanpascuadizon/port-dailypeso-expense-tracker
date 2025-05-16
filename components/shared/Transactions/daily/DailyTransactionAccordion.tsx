@@ -36,7 +36,7 @@ const DailyTransactionAccordion = ({
                 </div>
                 <div>
                   <p className="font-bold">{dailyTransaction.date}</p>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-gray-500">
                     {dailyTransaction.day}
                   </p>
                 </div>

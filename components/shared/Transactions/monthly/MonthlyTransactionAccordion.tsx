@@ -16,10 +16,10 @@ const MonthlyTransactionAccordion = ({
   year,
 }: {
   transactions: Transactions[];
-  year: number;
+  year: Date;
 }) => {
   const monthlyAccordionPanels = useMemo(
-    () => getMonthlyAccordions(transactions, year),
+    () => getMonthlyAccordions(transactions, year.getFullYear()),
     [transactions, year]
   );
 

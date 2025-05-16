@@ -2,7 +2,7 @@ import moment from "moment";
 import { getTransactions } from "../handlers/transaction-handlers";
 import { formatDateToISO } from "../utils";
 
-export const getUserDailyTransactions = async (week: string | null) => {
+export const getUserDailyTransactions = async (week: Date) => {
   try {
     const monthIndex = week ? new Date(week).getMonth() : new Date().getMonth();
     const year = week ? new Date(week).getFullYear() : new Date().getFullYear();
@@ -14,7 +14,6 @@ export const getUserDailyTransactions = async (week: string | null) => {
 
     const response = await getTransactions("1", startDate, endDate);
 
-    console.log(response);
     if (response) {
       return {
         success: true,
