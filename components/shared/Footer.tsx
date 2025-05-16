@@ -3,8 +3,8 @@ import {
   HandCoins,
   CreditCard,
   ChartNoAxesCombined,
-  Ellipsis,
   PlusIcon,
+  User,
 } from "lucide-react";
 import { JSX } from "react";
 
@@ -26,9 +26,9 @@ const Footer = () => {
       icon: <ChartNoAxesCombined className="footer-icon-links" />,
     },
     {
-      title: "More",
-      link: "/",
-      icon: <Ellipsis className="footer-icon-links" />,
+      title: "Profile",
+      link: "/profile",
+      icon: <User className="footer-icon-links" />,
     },
   ];
   return (
