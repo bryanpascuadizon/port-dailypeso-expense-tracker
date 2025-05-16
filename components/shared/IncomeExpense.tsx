@@ -2,7 +2,13 @@ import { computeTotalAmount, currencyFormatter } from "@/lib/utils";
 import { Transactions } from "@/types";
 import { useMemo } from "react";
 
-const IncomeExpense = ({ transactions }: { transactions: Transactions[] }) => {
+const IncomeExpense = ({
+  transactions,
+  className,
+}: {
+  transactions: Transactions[];
+  className?: string;
+}) => {
   const incomeTransactions = transactions.filter(
     (transaction: Transactions) => transaction.transactionType === "income"
   );
@@ -22,7 +28,7 @@ const IncomeExpense = ({ transactions }: { transactions: Transactions[] }) => {
   const totalIncomeExpense = totalIncome - totalExpense;
 
   return (
-    <div className="grid grid-cols-3">
+    <div className={`grid grid-cols-3 ${className}`}>
       <div className="col-span-1 text-center p-3">
         <p className="font-bold">Income</p>
         <p className="income-text">{currencyFormatter.format(totalIncome)}</p>

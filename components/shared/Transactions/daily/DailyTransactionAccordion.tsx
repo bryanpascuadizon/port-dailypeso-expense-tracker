@@ -41,8 +41,11 @@ const DailyTransactionAccordion = ({
                   </p>
                 </div>
               </div>
-              <div className="col-span-1 flex-end">
-                <IncomeExpense transactions={dailyTransaction.transactions} />
+              <div className="col-span-1">
+                <IncomeExpense
+                  transactions={dailyTransaction.transactions}
+                  className="text-xs"
+                />
               </div>
             </div>
           </AccordionTrigger>

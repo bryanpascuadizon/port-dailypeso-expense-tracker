@@ -38,13 +38,16 @@ const MonthlyTransactionAccordion = ({
                 </div>
                 <div>
                   <p className="font-bold">{monthTransaction.month}</p>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-gray-500">
                     {monthTransaction.startDate} - {monthTransaction.endDate}
                   </p>
                 </div>
               </div>
-              <div className="col-span-1 flex-end">
-                <IncomeExpense transactions={monthTransaction.transactions} />
+              <div className="col-span-1">
+                <IncomeExpense
+                  transactions={monthTransaction.transactions}
+                  className="text-xs"
+                />
               </div>
             </div>
           </AccordionTrigger>

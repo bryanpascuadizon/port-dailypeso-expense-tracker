@@ -36,7 +36,7 @@ const MonthlyTransactionItem = ({
           </p>
         </div>
         <div className="col-span-1">
-          <IncomeExpense transactions={item.transactions} />
+          <IncomeExpense transactions={item.transactions} className="text-xs"/>
         </div>
       </div>
     ))

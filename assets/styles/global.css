@@ -37,7 +37,7 @@
   }
 
   .header-title {
-    @apply text-gray-800 text-3xl;
+    @apply text-gray-800 text-3xl font-bold;
   }
 
   .header-slogan {
@@ -78,7 +78,7 @@
   }
 
   .accordion-trigger {
-    @apply w-full text-left rounded-sm p-3 shadow bg-white mb-3 cursor-pointer !no-underline hover:!no-underline;
+    @apply w-full text-left rounded-sm p-3 shadow bg-white mb-3 cursor-pointer !no-underline hover:!no-underline [&>svg]:hidden hover:bg-slate-200;
   }
 }
 
