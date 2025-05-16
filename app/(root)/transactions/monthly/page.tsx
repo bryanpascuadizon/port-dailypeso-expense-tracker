@@ -41,7 +41,7 @@ const MonthlyTransactions = () => {
             {data.transactions && (
               <MonthlyTransactionAccordion
                 transactions={data.transactions}
-                year={new Date()}
+                year={date}
               />
             )}
           </div>

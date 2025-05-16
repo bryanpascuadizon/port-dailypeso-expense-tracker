@@ -7,6 +7,7 @@ import {
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import moment, { Moment } from "moment";
+import { start } from "repl";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -171,5 +172,13 @@ export const renderWeek = (
 };
 
 export const getInitialdate = (startWeek: string | null) => {
-  return startWeek ? new Date(startWeek) : new Date();
+  if (isNaN(new Date(startWeek!).getTime())) {
+    return new Date();
+  }
+
+  if (startWeek) {
+    return new Date(startWeek);
+  }
+
+  return new Date();
 };
