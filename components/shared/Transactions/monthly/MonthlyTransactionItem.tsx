@@ -3,6 +3,7 @@ import IncomeExpense from "../../IncomeExpense";
 import { useMemo } from "react";
 import { renderWeek } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import moment from "moment";
 
 const MonthlyTransactionItem = ({
   month,
@@ -19,7 +20,8 @@ const MonthlyTransactionItem = ({
   );
 
   const handleDailyRender = (startWeek: string) => {
-    redirect(`/transactions/daily?week=${startWeek}`);
+    const week = new Date(`${startWeek}/${year}`);
+    redirect(`/transactions/daily?week=${moment(week).format("MMM DD, YYYY")}`);
   };
 
   return (
