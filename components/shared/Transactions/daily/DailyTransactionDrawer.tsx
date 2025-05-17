@@ -60,7 +60,7 @@ const DailyTransactionDrawer = () => {
         </DrawerTrigger>
       )}
 
-      <DrawerContent className="wrapper">
+      <DrawerContent className="">
         <DrawerHeader>
           <DrawerTitle className="text-base md:text-lg">
             Add Transaction
