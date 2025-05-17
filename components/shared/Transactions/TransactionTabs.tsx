@@ -7,17 +7,29 @@ const TransactionTabs = ({ activeTab }: { activeTab: string }) => {
     {
       title: "Daily",
       link: "/transactions/daily",
-      icon: <Sun className="w-5 h-5 text-yellow-500 inline" />,
+      icon: (
+        <Sun className="w-5 h-5 text-yellow-500 inline" aria-label="Daily" />
+      ),
     },
     {
       title: "Monthly",
       link: "/transactions/monthly",
-      icon: <Calendar1 className="w-5 h-5 text-sky-500 inline" />,
+      icon: (
+        <Calendar1
+          className="w-5 h-5 text-sky-500 inline"
+          aria-label="Monthly"
+        />
+      ),
     },
     {
       title: "Calendar",
       link: "/transactions/calendar",
-      icon: <CalendarDays className="w-5 h-5 text-red-700 inline" />,
+      icon: (
+        <CalendarDays
+          className="w-5 h-5 text-red-700 inline"
+          aria-label="Calendar"
+        />
+      ),
     },
   ];
 
