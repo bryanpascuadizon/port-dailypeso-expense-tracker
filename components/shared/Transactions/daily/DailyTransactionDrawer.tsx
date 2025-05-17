@@ -2,14 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent } from "@/components/ui/popover";
 import {
@@ -24,12 +16,19 @@ import { submitDailyTransaction } from "@/lib/actions/transaction-actions";
 import { cn, currencyFormatter } from "@/lib/utils";
 import { Accounts } from "@/types";
 import { PopoverTrigger } from "@radix-ui/react-popover";
-import { Label } from "@/components/ui/label";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { CalendarIcon, PlusIcon } from "lucide-react";
 import moment from "moment";
 import { useActionState, useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 const DailyTransactionDrawer = () => {
   const { data } = useQuery({
@@ -53,28 +52,32 @@ const DailyTransactionDrawer = () => {
   }, []);
 
   return (
-    <Drawer>
+    <Dialog>
       {data && data.accounts && (
-        <DrawerTrigger className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center">
+        <DialogTrigger className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center">
           <PlusIcon className="w-8 h-8 md:w-10 md:h-10 cursor-pointer" />
-        </DrawerTrigger>
+        </DialogTrigger>
       )}
 
-      <DrawerContent className="">
-        <DrawerHeader>
-          <DrawerTitle className="text-base md:text-lg">
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="text-base md:text-lg font-bold">
             Add Transaction
-          </DrawerTitle>
-          <DrawerDescription className="text-sm">
+          </DialogTitle>
+          <DialogDescription className="text-sm">
             {moment(date).format("MMM DD, YYYY")}
-          </DrawerDescription>
-        </DrawerHeader>
-        <form action={action} className="p-5">
-          <Label className="daily-form-item">Note</Label>
-          <Input id="note" name="note" className="daily-form-item" required />
+          </DialogDescription>
+        </DialogHeader>
+        <form action={action} className="">
+          <Input
+            id="note"
+            name="note"
+            className="daily-form-item"
+            placeholder="Note"
+            required
+          />
           <div className="grid grid-cols-2 gap-3">
             <div className="col-span-1">
-              <Label className="daily-form-item">Date</Label>
               <Popover>
                 <PopoverTrigger asChild id="date" name="date">
                   <Button
@@ -102,7 +105,6 @@ const DailyTransactionDrawer = () => {
                 name="date"
                 value={moment(date).format("MMM DD, YYYY")}
               />
-              <Label className="daily-form-item">Amount</Label>
               <Input
                 id="amount"
                 name="amount"
@@ -113,12 +115,11 @@ const DailyTransactionDrawer = () => {
               />
             </div>
             <div className="col-span-1">
-              <Label className="daily-form-item">Account</Label>
               <Select value={account} onValueChange={setAccount}>
-                <SelectTrigger
-                  id="account"
-                  className="w-full daily-form-item"
-                ></SelectTrigger>
+                <SelectTrigger id="account" className="w-full daily-form-item">
+                  {" "}
+                  <SelectValue placeholder="Select an account" />
+                </SelectTrigger>
                 <SelectContent>
                   {data &&
                     data.accounts &&
@@ -130,7 +131,6 @@ const DailyTransactionDrawer = () => {
                 </SelectContent>
               </Select>
               <input required type="hidden" name="account" value={account} />
-              <Label className="daily-form-item">Income/Expense</Label>
               <Select
                 defaultValue={transactionType}
                 onValueChange={setTransactionType}
@@ -172,8 +172,8 @@ const DailyTransactionDrawer = () => {
             Add
           </Button>
         </form>
-      </DrawerContent>
-    </Drawer>
+      </DialogContent>
+    </Dialog>
   );
 };
 
