@@ -54,7 +54,7 @@ const DailyTransactionDrawer = () => {
   return (
     <Dialog>
       {data && data.accounts && (
-        <DialogTrigger className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center">
+        <DialogTrigger aria-label="Add Transaction"className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center">
           <PlusIcon className="w-8 h-8 md:w-10 md:h-10 cursor-pointer" />
         </DialogTrigger>
       )}
