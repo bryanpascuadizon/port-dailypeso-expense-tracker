@@ -1,20 +1,24 @@
 export const data = {
   accounts: [
     {
+      id: "1",
+      userId: "1",
       name: "Cash",
-      description: "Transactions paid with Cash",
     },
     {
+      id: "2",
+      userId: "1",
       name: "Credit Card",
-      description: "Transactions paid with Credit Card",
     },
     {
+      id: "3",
+      userId: "1",
       name: "Debit Card",
-      description: "Transactions paid with Debit Card",
     },
     {
+      id: "4",
+      userId: "1",
       name: "Gcash",
-      description: "Transactions paid with GCash",
     },
   ],
   transactions: [

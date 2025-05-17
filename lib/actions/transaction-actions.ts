@@ -1,6 +1,7 @@
 import moment from "moment";
 import { getTransactions } from "../handlers/transaction-handlers";
 import { formatDateToISO } from "../utils";
+import { FormState } from "@/types";
 
 export const getUserDailyTransactions = async (week: Date) => {
   try {
@@ -55,6 +56,34 @@ export const getUserMonthlyTransactions = async (year: number) => {
     return {
       success: false,
       message: `Cannot get monthly transactions - ${error}`,
+    };
+  }
+};
+
+export const submitDailyTransaction = async (
+  prevState: FormState,
+  formData: FormData
+) => {
+  try {
+    const amount = formData.get("amount");
+    const note = formData.get("note");
+    const account = formData.get("account");
+    const type = formData.get("type");
+    const date = formData.get("date");
+
+    console.log("amount: ", amount);
+    console.log("note: ", note);
+    console.log("account: ", account);
+    console.log("type: ", type);
+    console.log("date: ", date);
+    return {
+      success: false,
+      message: `Cannot submit daily transaction`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Cannot submit daily transaction - ${error}`,
     };
   }
 };

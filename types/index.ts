@@ -8,8 +8,9 @@ export type Transactions = {
 };
 
 export type Accounts = {
+  id: string;
   name: string;
-  description: string;
+  userId: string;
 };
 
 export type MonthlyAccordion = {
@@ -29,4 +30,9 @@ export type DailyAccordion = {
   date: string;
   day: string;
   transactions: Transactions[];
+};
+
+export type FormState = {
+  success: boolean;
+  message: string;
 };

@@ -1,8 +1,9 @@
+import { Accounts } from "@/types";
 import { getAccounts } from "../handlers/account-handlers";
 
 export const getUserAccounts = async () => {
   try {
-    const response = await getAccounts("1");
+    const response: Accounts[] = await getAccounts("1");
 
     if (response) {
       return {

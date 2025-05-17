@@ -29,7 +29,7 @@ const TransactionTabs = ({ activeTab }: { activeTab: string }) => {
             <Link
               key={index}
               href={page.link}
-              className={`w-full p-2 col-span-1 font-bold flex justify-center gap-2 text-sm md:text-base ${
+              className={`button-hover rounded-t-sm w-full p-2 col-span-1 font-bold flex justify-center gap-2 text-sm md:text-base ${
                 page.title === activeTab && "transaction-tab-active"
               }`}
             >

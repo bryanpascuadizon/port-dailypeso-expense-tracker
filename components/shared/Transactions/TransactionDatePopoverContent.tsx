@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { MONTHS } from "@/lib/constants";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 
@@ -9,21 +10,6 @@ const TransactionDatePopoverContent = ({
   date: Date;
   setDate: Dispatch<SetStateAction<Date>>;
 }) => {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    " August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
   const [selectedYear, setSelectedYear] = useState(
     new Date(date).getFullYear()
   );
@@ -53,10 +39,10 @@ const TransactionDatePopoverContent = ({
         </div>
       </div>
       <div className="grid grid-cols-3 md:grid-cols-4 gap-3 p-2">
-        {months.map((month, index) => (
+        {MONTHS.map((month, index) => (
           <div
             key={index}
-            className={`col-span-1 text-center cursor-pointer p-3 button-hover rounded-sm ${
+            className={`col-span-1 text-center cursor-pointer p-3 button-hover rounded-sm font-normal text-xs md:text-sm ${
               index === selectedMonth && "bg-slate-200"
             }`}
             onClick={() => handleMonthChange(month)}

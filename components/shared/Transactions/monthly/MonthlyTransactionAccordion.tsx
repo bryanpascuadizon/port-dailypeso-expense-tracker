@@ -30,7 +30,7 @@ const MonthlyTransactionAccordion = ({
           value={monthTransaction.month}
           key={monthTransaction.month}
         >
-          <AccordionTrigger className="accordion-trigger">
+          <AccordionTrigger className="accordion-trigger button-hover">
             <div className="flex-between w-full">
               <div className="flex-start gap-3">
                 <div>

@@ -14,10 +14,8 @@ export const GET = async (
   { params }: { params: Promise<{ userId: string }> }
 ) => {
   try {
-    const { userId } = await params;
+    //const { userId } = await params;
     const accounts = data.accounts;
-
-    console.log(userId);
 
     if (accounts) {
       return new NextResponse(JSON.stringify(accounts), { status: 200 });
