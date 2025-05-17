@@ -16,10 +16,9 @@ const TransactionDatePopoverContent = ({
   const [selectedMonth] = useState(new Date(date).getMonth());
 
   const handleMonthChange = (month: string) => {
-    setDate(new Date(`${month} ${selectedYear}`));
+    const monthIndex = MONTHS.indexOf(month);
+    setDate(new Date(selectedYear, monthIndex, 1));
   };
-
-  console.log();
 
   return (
     <div className="rounded-sm bg-white text-sm mt-2 shadow">

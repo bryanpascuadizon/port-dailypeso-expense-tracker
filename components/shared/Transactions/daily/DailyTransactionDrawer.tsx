@@ -118,7 +118,7 @@ const DailyTransactionDrawer = () => {
               <Select value={account} onValueChange={setAccount}>
                 <SelectTrigger id="account" className="w-full daily-form-item">
                   {" "}
-                  <SelectValue placeholder="Select an account" />
+                  <SelectValue placeholder="Select account" />
                 </SelectTrigger>
                 <SelectContent>
                   {data &&
