@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { data } from "@/db/sample-seed-data";
 
 /**
@@ -9,20 +9,22 @@ import { data } from "@/db/sample-seed-data";
  * @returns Accounts[]
  */
 
-export const GET = async (
-  request: NextRequest,
-  { params }: { params: Promise<{ userId: string }> }
-) => {
-  try {
-    //const { userId } = await params;
-    const accounts = data.accounts;
+export const GET = async () =>
+  // request: NextRequest,
+  // { params }: { params: Promise<{ userId: string }> }
+  {
+    try {
+      //const { userId } = await params;
+      const accounts = data.accounts;
 
-    if (accounts) {
-      return new NextResponse(JSON.stringify(accounts), { status: 200 });
+      if (accounts) {
+        return new NextResponse(JSON.stringify(accounts), { status: 200 });
+      }
+
+      return new NextResponse("Cannot get accounts.", { status: 500 });
+    } catch (error) {
+      return new NextResponse(`Cannot get accounts - ${error}`, {
+        status: 200,
+      });
     }
-
-    return new NextResponse("Cannot get accounts.", { status: 500 });
-  } catch (error) {
-    return new NextResponse(`Cannot get accounts - ${error}`, { status: 200 });
-  }
-};
+  };

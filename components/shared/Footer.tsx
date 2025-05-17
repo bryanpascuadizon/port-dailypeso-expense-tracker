@@ -3,7 +3,6 @@ import {
   HandCoins,
   CreditCard,
   ChartNoAxesCombined,
-  PlusIcon,
   User,
 } from "lucide-react";
 import { JSX } from "react";

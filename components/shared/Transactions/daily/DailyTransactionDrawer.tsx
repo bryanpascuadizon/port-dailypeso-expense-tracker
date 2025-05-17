@@ -15,7 +15,6 @@ import { Popover, PopoverContent } from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -44,7 +43,7 @@ const DailyTransactionDrawer = () => {
     "income"
   );
 
-  const [state, action] = useActionState(submitDailyTransaction, {
+  const [, action] = useActionState(submitDailyTransaction, {
     success: false,
     message: "",
   });
