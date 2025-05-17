@@ -79,88 +79,77 @@ const DailyTransactionDrawer = () => {
             placeholder="Note"
             required
           />
-          <div className="grid grid-cols-2 gap-3">
-            <div className="col-span-1">
-              <Popover>
-                <PopoverTrigger asChild id="date" name="date">
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "daily-form-item justify-start text-left font-normal w-full",
-                      !date && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon />
-                    {date ? format(date, "PPP") : <span>Pick a date</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar mode="single" selected={date} onSelect={setDate} />
-                </PopoverContent>
-              </Popover>
-              <input
-                type="hidden"
-                name="date"
-                value={moment(date).format("MMM DD, YYYY")}
-              />
-              <Input
-                id="amount"
-                name="amount"
-                placeholder={`${currencyFormatter.format(0)}`}
-                type="number"
-                className="daily-form-item"
-                required
-              />
-            </div>
-            <div className="col-span-1">
-              <Select value={account} onValueChange={setAccount}>
-                <SelectTrigger id="account" className="w-full daily-form-item">
-                  {" "}
-                  <SelectValue placeholder="Select account" />
-                </SelectTrigger>
-                <SelectContent>
-                  {data &&
-                    data.accounts &&
-                    data.accounts.map((account: Accounts) => (
-                      <SelectItem key={account.id} value={account.id}>
-                        {account.name}
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
-              <input required type="hidden" name="account" value={account} />
-              <Select
-                defaultValue={transactionType}
-                onValueChange={setTransactionType}
-                value={transactionType}
+          <Popover>
+            <PopoverTrigger asChild id="date" name="date">
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "daily-form-item justify-start text-left font-normal w-full",
+                  !date && "text-muted-foreground"
+                )}
               >
-                <SelectTrigger
-                  id="type"
-                  className={`w-full daily-form-item ${
-                    transactionType === "income"
-                      ? "income-text border-1 border-green-700"
-                      : "expense-text border-1 border-red-700"
-                  }`}
-                >
-                  <SelectValue placeholder="Income/Expense" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="income" className="income-text">
-                    Income
+                <CalendarIcon />
+                {date ? format(date, "PPP") : <span>Pick a date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar mode="single" selected={date} onSelect={setDate} />
+            </PopoverContent>
+          </Popover>
+          <input
+            type="hidden"
+            name="date"
+            value={moment(date).format("MMM DD, YYYY")}
+          />
+          <Input
+            id="amount"
+            name="amount"
+            placeholder={`${currencyFormatter.format(0)}`}
+            type="number"
+            className="daily-form-item"
+            required
+          />
+          <Select value={account} onValueChange={setAccount}>
+            <SelectTrigger id="account" className="w-full daily-form-item">
+              {" "}
+              <SelectValue placeholder="Select account" />
+            </SelectTrigger>
+            <SelectContent>
+              {data &&
+                data.accounts &&
+                data.accounts.map((account: Accounts) => (
+                  <SelectItem key={account.id} value={account.id}>
+                    {account.name}
                   </SelectItem>
-                  <SelectItem value="expense" className="expense-text">
-                    Expense
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-              <input
-                required
-                type="hidden"
-                name="type"
-                value={transactionType}
-              />
-            </div>
-          </div>
+                ))}
+            </SelectContent>
+          </Select>
+          <input required type="hidden" name="account" value={account} />
+          <Select
+            defaultValue={transactionType}
+            onValueChange={setTransactionType}
+            value={transactionType}
+          >
+            <SelectTrigger
+              id="type"
+              className={`w-full daily-form-item ${
+                transactionType === "income"
+                  ? "income-text border-1 border-green-700"
+                  : "expense-text border-1 border-red-700"
+              }`}
+            >
+              <SelectValue placeholder="Income/Expense" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="income" className="income-text">
+                Income
+              </SelectItem>
+              <SelectItem value="expense" className="expense-text">
+                Expense
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          <input required type="hidden" name="type" value={transactionType} />
 
           <Button
             disabled={!account}
