@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { SignOut } from "@/lib/actions/user-actions";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
@@ -18,13 +18,13 @@ const Header = () => {
             <HandCoins className="w-11 h-11 md:w-13 md:h-13" />
           </div>
           <div className="w-full">
-            <Link href="/">
+            <Link href="/transactions/daily">
               <p className="header-title">{APP_NAME}</p>
               <p className="header-slogan">{APP_DESCRIPTION}</p>
             </Link>
           </div>
           <nav className="flex justify-end w-full">
-            <Power onClick={() => handleLogOut()} />
+            <Power onClick={() => handleLogOut()} className="cursor-pointer" />
           </nav>
         </div>
       </div>

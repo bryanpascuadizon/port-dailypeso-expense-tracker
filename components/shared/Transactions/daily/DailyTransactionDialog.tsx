@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
-const DailyTransactionDrawer = () => {
+const DailyTransactionDialog = () => {
   const { data } = useQuery({
     queryKey: ["user-accounts"],
     queryFn: getUserAccounts,
@@ -164,4 +164,4 @@ const DailyTransactionDrawer = () => {
   );
 };
 
-export default DailyTransactionDrawer;
+export default DailyTransactionDialog;

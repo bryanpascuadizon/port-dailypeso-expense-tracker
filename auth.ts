@@ -6,6 +6,7 @@ import prisma from "./db/prisma";
 export const config = {
   pages: {
     signIn: "/sign-in",
+    signOut: "/sign-in",
     error: "/sign-in",
   },
   session: {

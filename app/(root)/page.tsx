@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import DailyTransactions from "@/components/shared/Transactions/daily/DailyTransactions";
 import { redirect } from "next/navigation";
 
 const Home = async () => {
@@ -6,6 +7,8 @@ const Home = async () => {
 
   if (!session) {
     return redirect("/sign-in");
+  } else {
+    return redirect("/transactions/daily");
   }
 };
 

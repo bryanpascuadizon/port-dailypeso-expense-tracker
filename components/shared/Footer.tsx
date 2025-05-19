@@ -1,14 +1,17 @@
 import Link from "next/link";
-import {
-  HandCoins,
-  CreditCard,
-  ChartNoAxesCombined,
-  User,
-} from "lucide-react";
+import { HandCoins, CreditCard, ChartNoAxesCombined, User } from "lucide-react";
 import { JSX } from "react";
-import DailyTransactionDrawer from "./Transactions/daily/DailyTransactionDrawer";
+import DailyTransactionDialog from "./Transactions/daily/DailyTransactionDialog";
+import { auth } from "@/auth";
+import Image from "next/image";
 
-const Footer = () => {
+const Footer = async () => {
+  const session = await auth();
+  const user = session?.user;
+
+  const userName = user?.name?.split(" ")[0];
+  const userImage = user?.image;
+
   const footerPages = [
     {
       title: "Transactions",
@@ -26,9 +29,19 @@ const Footer = () => {
       icon: <ChartNoAxesCombined className="footer-icon-links" />,
     },
     {
-      title: "Profile",
+      title: userName ? userName : "",
       link: "/profile",
-      icon: <User className="footer-icon-links" />,
+      icon: userImage ? (
+        <Image
+          src={userImage}
+          alt="profile picture"
+          width={35}
+          height={35}
+          className="footer-icon-links rounded-full"
+        />
+      ) : (
+        <div className="footer-icon-links"></div>
+      ),
     },
   ];
   return (
@@ -55,11 +68,7 @@ const Footer = () => {
             )
           )}
         </nav>
-        {/* <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center">
-          <PlusIcon className="w-8 h-8 md:w-10 md:h-10 cursor-pointer" />
-        </div> */}
-
-        <DailyTransactionDrawer />
+        <DailyTransactionDialog />
       </div>
     </footer>
   );
