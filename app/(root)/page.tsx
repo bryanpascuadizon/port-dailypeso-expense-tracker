@@ -7,7 +7,6 @@ const Home = async () => {
   if (!session) {
     return redirect("/sign-in");
   }
-  return <div>Home</div>;
 };
 
 export default Home;
