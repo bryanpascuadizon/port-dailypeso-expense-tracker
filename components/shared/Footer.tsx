@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HandCoins, CreditCard, ChartNoAxesCombined, User } from "lucide-react";
+import { HandCoins, CreditCard, ChartNoAxesCombined } from "lucide-react";
 import { JSX } from "react";
 import DailyTransactionDialog from "./Transactions/daily/DailyTransactionDialog";
 import { auth } from "@/auth";

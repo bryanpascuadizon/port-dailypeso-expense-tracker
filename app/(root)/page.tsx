@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import DailyTransactions from "@/components/shared/Transactions/daily/DailyTransactions";
 import { redirect } from "next/navigation";
 
 const Home = async () => {
