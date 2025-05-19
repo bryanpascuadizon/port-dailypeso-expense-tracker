@@ -1,7 +1,12 @@
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
-const Home = () => {
-  redirect("/transactions/daily");
+const Home = async () => {
+  const session = await auth();
+
+  if (!session) {
+    return redirect("/sign-in");
+  }
   return <div>Home</div>;
 };
 
