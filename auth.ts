@@ -40,7 +40,6 @@ export const config = {
       //Assign user fields to token
       if (user) {
         token.id = user.id;
-        token.role = user.role;
 
         //if user has no name, use email
         if (user.name === "User") {
