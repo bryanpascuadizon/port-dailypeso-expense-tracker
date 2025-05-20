@@ -10,17 +10,18 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Redirect root path based on session
+  // Public routes
+  const publicRoutes = ["/sign-in"];
+  const isPublicRoute = publicRoutes.includes(pathname);
+
+  // Root redirect based on auth
   if (pathname === "/") {
-    if (!token) {
-      console.log("REDIREEEEEEEEEEEECT: ", "/sign-in");
-      return NextResponse.redirect(new URL("/sign-in", request.url));
-    } else {
-      console.log("REDIREEEEEEEEEEEECT: ", "/transactions/daily");
-      return NextResponse.redirect(new URL("/transactions/daily", request.url));
-    }
+    return NextResponse.redirect(
+      new URL(token ? "/transactions/daily" : "/sign-in", request.url)
+    );
   }
 
+  // Redirect protected routes if no token
   const protectedPaths = [/^\/transactions/, /^\/accounts/];
   const isProtected = protectedPaths.some((regex) => regex.test(pathname));
 
@@ -28,7 +29,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
-  if (pathname === "/sign-in" && token) {
+  // Prevent signed-in users from accessing /sign-in
+  if (isPublicRoute && token) {
     return NextResponse.redirect(new URL("/transactions/daily", request.url));
   }
 
