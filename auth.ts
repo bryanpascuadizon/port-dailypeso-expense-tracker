@@ -65,21 +65,9 @@ export const config = {
 
       return token;
     },
-    authorized({ request, auth }: any) {
-      const protectedPaths = [/\/transactions\/(.*)/, /\/accounts/];
-
-      const { pathname } = request.nextUrl;
-
-      if (!auth && protectedPaths.some((p) => p.test(pathname))) {
-        return false;
-      }
-
-      return true; // ✅ always return something
-    },
   },
 
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true,
 } satisfies NextAuthConfig;
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);

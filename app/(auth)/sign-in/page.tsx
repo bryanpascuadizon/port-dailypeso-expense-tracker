@@ -11,7 +11,7 @@ const SignInPage = async (props: {
   const session = await auth();
 
   if (session) {
-    return redirect(callbackUrl || "/transactions/daily");
+    return redirect(callbackUrl || "/transactions/monthly");
   }
 
   return (
