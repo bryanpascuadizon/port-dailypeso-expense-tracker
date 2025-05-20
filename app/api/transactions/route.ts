@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/db/prisma";
 import { Transaction } from "@prisma/client";
-import { formatDateToISO } from "@/lib/utils";
 
 /**
  * API Handler: /transaction-handlers/getTransactions()
@@ -79,7 +78,6 @@ export const POST = async (request: NextRequest) => {
       status: 500,
     });
   } catch (error) {
-    console.log("ERRRROOOOR", error);
     return new NextResponse(`Cannot add transaction - ${error}`, {
       status: 500,
     });

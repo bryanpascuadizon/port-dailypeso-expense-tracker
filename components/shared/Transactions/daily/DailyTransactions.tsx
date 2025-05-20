@@ -9,7 +9,6 @@ import TransactionTabs from "../TransactionTabs";
 import IncomeExpense from "../../IncomeExpense";
 import DailyTransactionAccordion from "./DailyTransactionAccordion";
 import NoData from "../../NoData";
-import useTransactions from "@/lib/hooks/useTransactions";
 import { useQuery } from "@tanstack/react-query";
 import { getUserDailyTransactions } from "@/lib/actions/transaction-actions";
 
