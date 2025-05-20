@@ -2,12 +2,17 @@
 
 import { SignOut } from "@/lib/actions/user-actions";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
-import { HandCoins, Power } from "lucide-react";
+import { HandCoins, Loader, Power } from "lucide-react";
 import Link from "next/link";
+import { useTransition } from "react";
 
 const Header = () => {
+  const [isLogoutPending, startLogoutTransition] = useTransition();
+
   const handleLogOut = () => {
-    SignOut();
+    startLogoutTransition(async () => {
+      await SignOut();
+    });
   };
 
   return (
@@ -24,7 +29,14 @@ const Header = () => {
             </Link>
           </div>
           <nav className="flex justify-end w-full">
-            <Power onClick={() => handleLogOut()} className="cursor-pointer" />
+            {isLogoutPending ? (
+              <Loader className="animate-spin" />
+            ) : (
+              <Power
+                onClick={() => handleLogOut()}
+                className="cursor-pointer"
+              />
+            )}
           </nav>
         </div>
       </div>
