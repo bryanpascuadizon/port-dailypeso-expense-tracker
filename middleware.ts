@@ -8,6 +8,7 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
+  console.log("AUTH SECRET: ", process.env.NEXTAUTH_SECRET);
   const { pathname } = request.nextUrl;
 
   // Public routes
