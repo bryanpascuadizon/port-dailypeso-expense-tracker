@@ -29,13 +29,17 @@ export const getUserDailyTransactions = async (week: Date) => {
         : new Date().getFullYear();
 
       const startDate = formatDateToISO(
-        moment([year, monthIndex]).startOf("month")
+        moment([year, monthIndex]).startOf("month").format("MMM DD, YYYY")
       );
       const endDate = formatDateToISO(
-        moment([year, monthIndex]).endOf("month")
+        moment([year, monthIndex]).endOf("month").format("MMM DD, YYYY")
       );
 
-      const response = await getTransactions(user.id, startDate, endDate);
+      const response = await getTransactions(
+        user.id,
+        startDate.toString(),
+        endDate.toString()
+      );
 
       if (response) {
         return {
@@ -59,16 +63,28 @@ export const getUserDailyTransactions = async (week: Date) => {
 
 export const getUserMonthlyTransactions = async (year: number) => {
   try {
-    const startDate = formatDateToISO(moment([year]).startOf("year"));
-    const endDate = formatDateToISO(moment([year]).endOf("year"));
+    const user = await getUserSession();
 
-    const response = await getTransactions("1", startDate, endDate);
+    if (user && user.id) {
+      const startDate = formatDateToISO(
+        moment([year]).startOf("year").format("MMM DD, YYYY")
+      );
+      const endDate = formatDateToISO(
+        moment([year]).endOf("year").format("MMM DD, YYYY")
+      );
 
-    if (response) {
-      return {
-        success: true,
-        transactions: response,
-      };
+      const response = await getTransactions(
+        user.id,
+        startDate.toString(),
+        endDate.toString()
+      );
+
+      if (response) {
+        return {
+          success: true,
+          transactions: response,
+        };
+      }
     }
 
     return {
@@ -91,18 +107,20 @@ export const submitDailyTransaction = async (
     const user = await getUserSession();
 
     if (user && user.id) {
-      const amount = formData.get("amount");
-      const note = formData.get("note");
-      const account = formData.get("account");
-      const type = formData.get("type");
-      const date = formData.get("date");
+      const amount: number = Number(formData.get("amount"));
+      const note: string = formData.get("note")!.toString();
+      const account: string = formData.get("account")!.toString();
+      const type: string = formData.get("type")!.toString();
+      const date: string = formData.get("date")!.toString();
+
+      const newFormattedDate = formatDateToISO(`${date}`);
 
       const newTransaction = {
         amount,
         note,
         account,
         type,
-        date,
+        date: newFormattedDate,
       };
 
       const response = await addDailyTransaction(newTransaction, user.id);

@@ -64,12 +64,16 @@ export const getMonthlyAccordions = (
     (month: string) => {
       const startDate = new Date(
         formatDateToISO(
-          moment(`${month} 1, ${year}`, "MMMM D, YYYY").startOf("month")
+          moment(`${month} 1, ${year}`, "MMMM D, YYYY")
+            .startOf("month")
+            .format("MMM DD, YYYY")
         )
       );
       const endDate = new Date(
         formatDateToISO(
-          moment(`${month} 1, ${year}`, "MMMM D, YYYY").endOf("month")
+          moment(`${month} 1, ${year}`, "MMMM D, YYYY")
+            .endOf("month")
+            .format("MMM DD, YYYY")
         )
       );
 
@@ -126,7 +130,7 @@ export const getDailyAccordions = (transactions: Transactions[]) => {
   return dailies;
 };
 
-export const formatDateToISO = (date: Moment) => {
+export const formatDateToISO = (date: string) => {
   return moment.utc(date, "MMMM D, YYYY").startOf("day").toDate();
 };
 

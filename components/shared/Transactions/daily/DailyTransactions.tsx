@@ -10,14 +10,24 @@ import IncomeExpense from "../../IncomeExpense";
 import DailyTransactionAccordion from "./DailyTransactionAccordion";
 import NoData from "../../NoData";
 import useTransactions from "@/lib/hooks/useTransactions";
+import { useQuery } from "@tanstack/react-query";
+import { getUserDailyTransactions } from "@/lib/actions/transaction-actions";
 
 const DailyTransactions = () => {
   const searchParams = useSearchParams();
 
   const startWeek = searchParams.get("week");
+
   const [date, setDate] = useState(() => getInitialdate(startWeek));
 
-  const { data } = useTransactions(date);
+  const { data } = useQuery({
+    queryKey: ["user-daily-transactions", date],
+    queryFn: async () => {
+      const response = await getUserDailyTransactions(date);
+
+      return response;
+    },
+  });
 
   return (
     <>

@@ -17,11 +17,11 @@ export const getTransactions = async (
 
 export const addDailyTransaction = async (
   transaction: {
-    amount: FormDataEntryValue | null;
-    note: FormDataEntryValue | null;
-    account: FormDataEntryValue | null;
-    type: FormDataEntryValue | null;
-    date: FormDataEntryValue | null;
+    amount: number;
+    note: string;
+    account: string;
+    type: string;
+    date: Date;
   },
   userId: string
 ) => {

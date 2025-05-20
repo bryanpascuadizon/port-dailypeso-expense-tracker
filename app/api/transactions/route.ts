@@ -60,7 +60,7 @@ export const POST = async (request: NextRequest) => {
       const transaction: Transaction = await prisma.transaction.create({
         data: {
           userId: userIdParams,
-          date: formatDateToISO(newTransaction.date),
+          date: newTransaction.date,
           note: newTransaction.note,
           transactionAccountId: newTransaction.account,
           amount: newTransaction.amount,
