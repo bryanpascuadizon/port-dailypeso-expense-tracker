@@ -20,7 +20,7 @@ export const currencyFormatter = new Intl.NumberFormat("en-PH", {
 
 export const computeTotalAmount = (transactions: Transactions[]) => {
   const totalAmount = transactions.reduce(
-    (acc, transaction: Transactions) => acc + transaction.transactionAmount,
+    (acc, transaction: Transactions) => acc + Number(transaction.amount),
     0
   );
 
@@ -47,7 +47,7 @@ export const getMonthlyAccordions = (
   }
 
   transactions.forEach((transaction: Transactions) => {
-    const monthIndex = new Date(transaction.transactionDate).getMonth();
+    const monthIndex = new Date(transaction.date).getMonth();
     const month = moment().month(monthIndex).format("MMMM");
 
     if (!transactionMonths.includes(month)) {
@@ -75,8 +75,8 @@ export const getMonthlyAccordions = (
 
       const monthTransactions = transactions.filter(
         (transaction: Transactions) =>
-          new Date(transaction.transactionDate) >= startDate &&
-          new Date(transaction.transactionDate) <= endDate
+          new Date(transaction.date) >= startDate &&
+          new Date(transaction.date) <= endDate
       );
 
       return {
@@ -95,19 +95,19 @@ export const getDailyAccordions = (transactions: Transactions[]) => {
   const dailies: DailyAccordion[] = [];
 
   transactions.sort((a, b) => {
-    const currentTransaction = new Date(a.transactionDate).getDay();
-    const nextTransaction = new Date(b.transactionDate).getDay();
+    const currentTransaction = new Date(a.date).getDay();
+    const nextTransaction = new Date(b.date).getDay();
 
     return nextTransaction - currentTransaction;
   });
   transactions.forEach((transaction: Transactions) => {
-    const dailyTransactionDate = transaction.transactionDate.toString();
+    const dailyTransactionDate = transaction.date.toString();
     const dailyDate = dailyTransactionDate.split("T")[0];
 
     //const year = dailyDate.split("-")[0];
-    const month = moment(transaction.transactionDate).format("MMMM");
+    const month = moment(transaction.date).format("MMMM");
     const monthDay = `${month} ${dailyDate.split("-")[2]}`;
-    const day = moment(transaction.transactionDate).format("dddd");
+    const day = moment(transaction.date).format("dddd");
 
     const dailyIndex = dailies.findIndex((obj) => obj.date === monthDay);
 
@@ -126,7 +126,7 @@ export const getDailyAccordions = (transactions: Transactions[]) => {
 };
 
 export const formatDateToISO = (date: Moment) => {
-  return date.toISOString();
+  return moment.utc(date, "MMMM D, YYYY").startOf("day").toDate();
 };
 
 export const renderWeek = (
@@ -155,8 +155,8 @@ export const renderWeek = (
 
     const weeklyTransactions = transactions.filter(
       (transaction: Transactions) =>
-        new Date(transaction.transactionDate) >= startDate &&
-        new Date(transaction.transactionDate) <= endDate
+        new Date(transaction.date) >= startDate &&
+        new Date(transaction.date) <= endDate
     );
 
     weeks.push({

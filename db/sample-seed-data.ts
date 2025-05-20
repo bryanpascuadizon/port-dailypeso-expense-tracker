@@ -1,24 +1,24 @@
 export const data = {
   accounts: [
     {
-      id: "1",
-      userId: "1",
+      userId: "6631bb1f-5456-4183-ad56-9f20cbdbf4c0",
       name: "Cash",
     },
     {
-      id: "2",
-      userId: "1",
+      userId: "6631bb1f-5456-4183-ad56-9f20cbdbf4c0",
       name: "Credit Card",
     },
     {
-      id: "3",
-      userId: "1",
+      userId: "6631bb1f-5456-4183-ad56-9f20cbdbf4c0",
       name: "Debit Card",
     },
     {
-      id: "4",
-      userId: "1",
+      userId: "6631bb1f-5456-4183-ad56-9f20cbdbf4c0",
       name: "Gcash",
+    },
+    {
+      userId: "6631bb1f-5456-4183-ad56-9f20cbdbf4c0",
+      name: "Maya",
     },
   ],
   transactions: [

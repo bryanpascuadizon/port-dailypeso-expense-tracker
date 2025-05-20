@@ -1,7 +1,10 @@
 export const getAccounts = async (userId: string) => {
-  const response = fetch(`/api/accounts/user/${userId}`, {
-    method: "GET",
-  }).then((res) => res.json());
+  const response = fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/accounts?userId=${userId}`,
+    {
+      method: "GET",
+    }
+  ).then((res) => res.json());
 
   return response;
 };

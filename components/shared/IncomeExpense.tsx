@@ -12,10 +12,10 @@ const IncomeExpense = ({
   isHeader?: boolean;
 }) => {
   const incomeTransactions = transactions.filter(
-    (transaction: Transactions) => transaction.transactionType === "income"
+    (transaction: Transactions) => transaction.type === "income"
   );
   const expenseTransactions = transactions.filter(
-    (transaction: Transactions) => transaction.transactionType === "expense"
+    (transaction: Transactions) => transaction.type === "expense"
   );
 
   const totalIncome = useMemo(

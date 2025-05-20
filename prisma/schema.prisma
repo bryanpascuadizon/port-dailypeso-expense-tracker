@@ -32,11 +32,12 @@ model Transaction {
   userId               String   @db.Uuid
   date                 DateTime @default(now()) @db.Timestamp(6)
   amount               Decimal  @default(0) @db.Decimal(12, 2)
-  note                 String
+  note                 String   @default("")
+  type                 String   @default("")
   transactionAccountId String   @db.Uuid
 
-  transactionAccount TransactionAccount @relation(fields: [transactionAccountId], references: [id], onDelete: Cascade)
   user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactionAccount TransactionAccount @relation(fields: [transactionAccountId], references: [id], onDelete: Cascade)
 }
 
 model TransactionAccount {

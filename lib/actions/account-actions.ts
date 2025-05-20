@@ -1,20 +1,27 @@
-import { Accounts } from "@/types";
+"use server";
+
+import { TransactionAccount } from "@/types";
 import { getAccounts } from "../handlers/account-handlers";
+import { getUserSession } from "./transaction-actions";
 
 export const getUserAccounts = async () => {
   try {
-    const response: Accounts[] = await getAccounts("1");
+    const user = await getUserSession();
 
-    if (response) {
-      return {
-        success: true,
-        accounts: response,
-      };
+    if (user && user.id) {
+      const response: TransactionAccount[] = await getAccounts(user.id);
+
+      if (response) {
+        return {
+          success: true,
+          accounts: response,
+        };
+      }
     }
 
     return {
       success: false,
-      message: response,
+      message: "Cannot get accounts",
     };
   } catch (error) {
     return {

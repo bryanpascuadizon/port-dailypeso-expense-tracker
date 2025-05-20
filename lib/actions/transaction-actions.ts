@@ -1,30 +1,53 @@
+"use server";
+
 import moment from "moment";
-import { getTransactions } from "../handlers/transaction-handlers";
+import {
+  addDailyTransaction,
+  getTransactions,
+} from "../handlers/transaction-handlers";
 import { formatDateToISO } from "../utils";
 import { FormState } from "@/types";
+import { auth } from "@/auth";
+
+export const getUserSession = async () => {
+  const session = await auth();
+  const user = session?.user;
+
+  return user;
+};
 
 export const getUserDailyTransactions = async (week: Date) => {
   try {
-    const monthIndex = week ? new Date(week).getMonth() : new Date().getMonth();
-    const year = week ? new Date(week).getFullYear() : new Date().getFullYear();
+    const user = await getUserSession();
 
-    const startDate = formatDateToISO(
-      moment([year, monthIndex]).startOf("month")
-    );
-    const endDate = formatDateToISO(moment([year, monthIndex]).endOf("month"));
+    if (user && user.id) {
+      const monthIndex = week
+        ? new Date(week).getMonth()
+        : new Date().getMonth();
+      const year = week
+        ? new Date(week).getFullYear()
+        : new Date().getFullYear();
 
-    const response = await getTransactions("1", startDate, endDate);
+      const startDate = formatDateToISO(
+        moment([year, monthIndex]).startOf("month")
+      );
+      const endDate = formatDateToISO(
+        moment([year, monthIndex]).endOf("month")
+      );
 
-    if (response) {
-      return {
-        success: true,
-        transactions: response,
-      };
+      const response = await getTransactions(user.id, startDate, endDate);
+
+      if (response) {
+        return {
+          success: true,
+          transactions: response,
+        };
+      }
     }
 
     return {
       success: false,
-      message: response,
+      message: "Cannot get daily transactions",
     };
   } catch (error) {
     return {
@@ -65,17 +88,33 @@ export const submitDailyTransaction = async (
   formData: FormData
 ) => {
   try {
-    const amount = formData.get("amount");
-    const note = formData.get("note");
-    const account = formData.get("account");
-    const type = formData.get("type");
-    const date = formData.get("date");
+    const user = await getUserSession();
 
-    console.log("amount: ", amount);
-    console.log("note: ", note);
-    console.log("account: ", account);
-    console.log("type: ", type);
-    console.log("date: ", date);
+    if (user && user.id) {
+      const amount = formData.get("amount");
+      const note = formData.get("note");
+      const account = formData.get("account");
+      const type = formData.get("type");
+      const date = formData.get("date");
+
+      const newTransaction = {
+        amount,
+        note,
+        account,
+        type,
+        date,
+      };
+
+      const response = await addDailyTransaction(newTransaction, user.id);
+
+      if (response) {
+        return {
+          success: false,
+          message: `Added transacaction`,
+        };
+      }
+    }
+
     return {
       success: false,
       message: `Cannot submit daily transaction`,

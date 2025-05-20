@@ -1,13 +1,14 @@
 export type Transactions = {
   userId: string;
-  transactionDate: Date;
-  transactionAmount: number;
-  transactionNote: string;
-  account: string;
-  transactionType: string;
+  date: Date;
+  amount: number;
+  note: string;
+  transactionAccountId: string;
+  type: string;
+  transactionAccount: TransactionAccount;
 };
 
-export type Accounts = {
+export type TransactionAccount = {
   id: string;
   name: string;
   userId: string;

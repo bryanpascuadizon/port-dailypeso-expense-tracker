@@ -14,7 +14,7 @@ import {
 import { getUserAccounts } from "@/lib/actions/account-actions";
 import { submitDailyTransaction } from "@/lib/actions/transaction-actions";
 import { cn, currencyFormatter } from "@/lib/utils";
-import { Accounts } from "@/types";
+import { TransactionAccount } from "@/types";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -29,6 +29,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import useTransactions from "@/lib/hooks/useTransactions";
 
 const DailyTransactionDialog = () => {
   const { data } = useQuery({
@@ -36,27 +37,43 @@ const DailyTransactionDialog = () => {
     queryFn: getUserAccounts,
   });
 
+  const { refetchDailyTransactions } = useTransactions(new Date());
+
   const [date, setDate] = useState<Date>();
   const [account, setAccount] = useState<string>("");
-  const [transactionType, setTransactionType] = useState<string | undefined>(
-    "income"
-  );
-
-  const [, action] = useActionState(submitDailyTransaction, {
+  const [transactionType, setTransactionType] = useState<string>("expense");
+  const [state, action] = useActionState(submitDailyTransaction, {
     success: false,
     message: "",
   });
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     setDate(new Date());
   }, []);
 
+  useEffect(() => {
+    if (data && data.accounts) {
+      setAccount(data.accounts[0].id);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const closeDialog = async () => {
+      setOpenDialog(false);
+      await refetchDailyTransactions();
+    };
+
+    closeDialog();
+  }, [state, refetchDailyTransactions]);
+
   return (
-    <Dialog>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       {data && data.accounts && (
         <DialogTrigger
           aria-label="Add Transaction"
           className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center"
+          onClick={() => setOpenDialog}
         >
           <PlusIcon className="w-8 h-8 md:w-10 md:h-10 cursor-pointer" />
         </DialogTrigger>
@@ -77,6 +94,15 @@ const DailyTransactionDialog = () => {
             name="note"
             className="daily-form-item"
             placeholder="Note"
+            required
+          />
+          <Input
+            id="amount"
+            name="amount"
+            placeholder={`${currencyFormatter.format(0)}`}
+            type="number"
+            step="0.01"
+            className="daily-form-item"
             required
           />
           <Popover>
@@ -101,29 +127,28 @@ const DailyTransactionDialog = () => {
             name="date"
             value={moment(date).format("MMM DD, YYYY")}
           />
-          <Input
-            id="amount"
-            name="amount"
-            placeholder={`${currencyFormatter.format(0)}`}
-            type="number"
-            className="daily-form-item"
-            required
-          />
-          <Select value={account} onValueChange={setAccount}>
-            <SelectTrigger id="account" className="w-full daily-form-item">
-              {" "}
-              <SelectValue placeholder="Select account" />
-            </SelectTrigger>
-            <SelectContent>
-              {data &&
-                data.accounts &&
-                data.accounts.map((account: Accounts) => (
-                  <SelectItem key={account.id} value={account.id}>
-                    {account.name}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
+          {data && data.accounts && (
+            <Select
+              value={account}
+              defaultValue={data.accounts[0].id.toString()}
+              onValueChange={setAccount}
+            >
+              <SelectTrigger id="account" className="w-full daily-form-item">
+                {" "}
+                <SelectValue placeholder="Select account" />
+              </SelectTrigger>
+              <SelectContent>
+                {data &&
+                  data.accounts &&
+                  data.accounts.map((account: TransactionAccount) => (
+                    <SelectItem key={account.id} value={account.id}>
+                      {account.name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          )}
+
           <input required type="hidden" name="account" value={account} />
           <Select
             defaultValue={transactionType}
@@ -141,18 +166,17 @@ const DailyTransactionDialog = () => {
               <SelectValue placeholder="Income/Expense" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="income" className="income-text">
-                Income
-              </SelectItem>
               <SelectItem value="expense" className="expense-text">
                 Expense
+              </SelectItem>
+              <SelectItem value="income" className="income-text">
+                Income
               </SelectItem>
             </SelectContent>
           </Select>
           <input required type="hidden" name="type" value={transactionType} />
 
           <Button
-            disabled={!account}
             type="submit"
             className="w-full bg-sky-500 hover:bg-sky-400 cursor-pointer"
           >

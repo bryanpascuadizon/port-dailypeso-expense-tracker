@@ -2,7 +2,7 @@
 
 import PageTitle from "@/components/shared/PageTitle";
 import { getUserAccounts } from "@/lib/actions/account-actions";
-import { Accounts as AccountType } from "@/types";
+import { TransactionAccount as AccountType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
 
