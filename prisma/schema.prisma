@@ -14,15 +14,38 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name          String    @default("User")
-  email         String    @unique(map: "user_email_idx")
-  image         String?
-  emailVerified DateTime?
-  createdAt     DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt     DateTime  @updatedAt
-  Account       Account[]
-  Session       Session[]
+  id                 String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name               String               @default("User")
+  email              String               @unique(map: "user_email_idx")
+  image              String?
+  emailVerified      DateTime?
+  createdAt          DateTime             @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime             @updatedAt
+  Account            Account[]
+  Session            Session[]
+  Transaction        Transaction[]
+  TransactionAccount TransactionAccount[]
+}
+
+model Transaction {
+  id                   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId               String   @db.Uuid
+  date                 DateTime @default(now()) @db.Timestamp(6)
+  amount               Decimal  @default(0) @db.Decimal(12, 2)
+  note                 String
+  transactionAccountId String   @db.Uuid
+
+  transactionAccount TransactionAccount @relation(fields: [transactionAccountId], references: [id], onDelete: Cascade)
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model TransactionAccount {
+  id     String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name   String
+  userId String @db.Uuid
+
+  User        User          @relation(fields: [userId], references: [id])
+  Transaction Transaction[]
 }
 
 model Account {
