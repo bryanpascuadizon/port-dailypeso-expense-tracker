@@ -95,11 +95,12 @@ export const getDailyAccordions = (transactions: Transactions[]) => {
   const dailies: DailyAccordion[] = [];
 
   transactions.sort((a, b) => {
-    const currentTransaction = new Date(a.date).getDay();
-    const nextTransaction = new Date(b.date).getDay();
+    const currentTransaction = new Date(a.date).getDate();
+    const nextTransaction = new Date(b.date).getDate();
 
     return nextTransaction - currentTransaction;
   });
+
   transactions.forEach((transaction: Transactions) => {
     const dailyTransactionDate = transaction.date.toString();
     const dailyDate = dailyTransactionDate.split("T")[0];
