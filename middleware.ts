@@ -8,12 +8,15 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  console.log("AUTH SECRET: ", process.env.NEXTAUTH_SECRET);
   const { pathname } = request.nextUrl;
 
   // Public routes
   const publicRoutes = ["/sign-in"];
   const isPublicRoute = publicRoutes.includes(pathname);
+
+  console.log("PATHNAME: ", pathname);
+  console.log("ISPUBLIC ROUTE: ", isPublicRoute);
+  console.log("TOKEN: ", token?.name);
 
   // Root redirect based on auth
   if (pathname === "/") {
@@ -23,7 +26,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Redirect protected routes if no token
-  const protectedPaths = [/^\/transactions/, /^\/accounts/];
+  const protectedPaths = [/^\/transactions(\/.*)?$/];
   const isProtected = protectedPaths.some((regex) => regex.test(pathname));
 
   if (isProtected && !token) {
