@@ -27,5 +27,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
+  if (pathname === "/sign-in" && token) {
+    return NextResponse.redirect(new URL("/transactions/daily", request.url));
+  }
+
   return NextResponse.next();
 }
