@@ -108,6 +108,12 @@
   .daily-form-item {
     @apply text-sm mb-3;
   }
+
+  /* Utils */
+
+  .skeleton {
+    @apply rounded-full bg-gray-300;
+  }
 }
 
 @theme inline {

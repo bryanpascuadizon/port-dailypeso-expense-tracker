@@ -9,11 +9,12 @@ import { getUserMonthlyTransactions } from "@/lib/actions/transaction-actions";
 
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import SkeletonLoader from "../../SkeletonLoader";
 
 const MonthlyTransactions = () => {
   const [date, setDate] = useState(new Date());
 
-  const { data } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["user-monthly-transactions", date],
     queryFn: async () => {
       const response = await getUserMonthlyTransactions(date.getFullYear());
@@ -22,7 +23,7 @@ const MonthlyTransactions = () => {
     },
   });
 
-  return (
+  return !isPending ? (
     <>
       {data && data.transactions && (
         <>
@@ -52,6 +53,8 @@ const MonthlyTransactions = () => {
         </>
       )}
     </>
+  ) : (
+    <SkeletonLoader />
   );
 };
 

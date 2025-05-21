@@ -12,7 +12,7 @@ const CalendarTransactions = () => {
       <PageTitle title="Transactions" />
       <TransactionDateTab dateType="monthly" date={date} setDate={setDate} />
       <TransactionTabs activeTab="Calendar" />
-      <div className="transaction-content">Calendar Transactions</div>
+      <div className="transaction-content"></div>
     </div>
   );
 };
