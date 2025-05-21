@@ -5,16 +5,14 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  if (pathname.startsWith("/api/auth") || pathname.startsWith("/auth")) {
+    return NextResponse.next();
+  }
+
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
-
-  console.log("Middleware token:", token?.name);
-  console.log(
-    "Middleware secret:",
-    process.env.NEXTAUTH_SECRET?.substring(0, 5)
-  );
 
   if (pathname === "/") {
     return NextResponse.redirect(
@@ -46,7 +44,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Only run middleware on these app routes
     "/",
     "/sign-in",
     "/transactions/:path*",
