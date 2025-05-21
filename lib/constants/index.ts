@@ -17,3 +17,5 @@ export const MONTHS = [
   "November",
   "December",
 ];
+
+export const useQueryUserDailyTransactions = "user-daily-transactions";

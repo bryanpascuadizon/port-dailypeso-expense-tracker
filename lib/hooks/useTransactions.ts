@@ -1,23 +1,31 @@
+"use client";
+
 import { useQuery } from "@tanstack/react-query";
 import { getUserDailyTransactions } from "../actions/transaction-actions";
+import { useState } from "react";
+import { getInitialdate } from "../utils";
 
-const useTransactions = (date: Date) => {
-  const dateKey = date.toISOString().split("T")[0];
+const useTransactions = (currentDate: string) => {
+  const [date, setDate] = useState(() => getInitialdate(currentDate));
 
   const {
     data,
     isPending,
     refetch: refetchDailyTransactions,
   } = useQuery({
-    queryKey: ["user-daily-transactions", dateKey],
-    queryFn: async () => {
-      const response = await getUserDailyTransactions(date);
-
-      return response;
-    },
+    queryKey: ["user-daily-transactions", date],
+    queryFn: async () => getUserDailyTransactions(date),
   });
 
-  return { data, isPending, refetchDailyTransactions };
+  return {
+    date,
+    setDate,
+    transactions: data?.transactions || [],
+    success: data?.success || false,
+    message: data?.message || "",
+    isPending,
+    refetchDailyTransactions,
+  };
 };
 
 export default useTransactions;

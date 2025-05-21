@@ -16,7 +16,7 @@ import { submitDailyTransaction } from "@/lib/actions/transaction-actions";
 import { cn, currencyFormatter } from "@/lib/utils";
 import { TransactionAccount } from "@/types";
 import { PopoverTrigger } from "@radix-ui/react-popover";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { CalendarIcon, PlusIcon } from "lucide-react";
 import moment from "moment";
@@ -29,15 +29,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import useTransactions from "@/lib/hooks/useTransactions";
 
 const DailyTransactionDialog = () => {
-  const { data } = useQuery({
+  const { data: userAccounts } = useQuery({
     queryKey: ["user-accounts"],
     queryFn: getUserAccounts,
   });
-
-  const { refetchDailyTransactions } = useTransactions(new Date());
 
   const [date, setDate] = useState<Date>();
   const [account, setAccount] = useState<string>("");
@@ -47,29 +44,34 @@ const DailyTransactionDialog = () => {
     message: "",
   });
   const [openDialog, setOpenDialog] = useState(false);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setDate(new Date());
   }, []);
 
   useEffect(() => {
-    if (data && data.accounts) {
-      setAccount(data.accounts[0].id);
+    if (userAccounts && userAccounts.accounts) {
+      setAccount(userAccounts.accounts[0].id);
     }
-  }, [data]);
+  }, [userAccounts]);
 
   useEffect(() => {
     const closeDialog = async () => {
       setOpenDialog(false);
-      await refetchDailyTransactions();
+      await queryClient.invalidateQueries({
+        queryKey: ["user-daily-transactions"],
+      });
     };
 
-    closeDialog();
-  }, [state, refetchDailyTransactions]);
+    if (state.success) {
+      closeDialog();
+    }
+  }, [state, queryClient]);
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      {data && data.accounts && (
+      {userAccounts && userAccounts.accounts && (
         <DialogTrigger
           aria-label="Add Transaction"
           className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center"
@@ -127,10 +129,10 @@ const DailyTransactionDialog = () => {
             name="date"
             value={moment(date).format("MMM DD, YYYY")}
           />
-          {data && data.accounts && (
+          {userAccounts && userAccounts.accounts && (
             <Select
               value={account}
-              defaultValue={data.accounts[0].id.toString()}
+              defaultValue={userAccounts.accounts[0].id.toString()}
               onValueChange={setAccount}
             >
               <SelectTrigger id="account" className="w-full daily-form-item">
@@ -138,9 +140,9 @@ const DailyTransactionDialog = () => {
                 <SelectValue placeholder="Select account" />
               </SelectTrigger>
               <SelectContent>
-                {data &&
-                  data.accounts &&
-                  data.accounts.map((account: TransactionAccount) => (
+                {userAccounts &&
+                  userAccounts.accounts &&
+                  userAccounts.accounts.map((account: TransactionAccount) => (
                     <SelectItem key={account.id} value={account.id}>
                       {account.name}
                     </SelectItem>

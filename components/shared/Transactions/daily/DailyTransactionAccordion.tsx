@@ -46,7 +46,7 @@ const DailyTransactionAccordion = ({
               <div>
                 <IncomeExpense
                   transactions={dailyTransaction.transactions}
-                  className="text-xs md:text-sm flex-col"
+                  className="text-xs md:text-sm justify-end flex-col"
                 />
               </div>
             </div>

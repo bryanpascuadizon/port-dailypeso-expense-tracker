@@ -127,7 +127,7 @@ export const submitDailyTransaction = async (
 
       if (response) {
         return {
-          success: false,
+          success: true,
           message: `Added transacaction`,
         };
       }
