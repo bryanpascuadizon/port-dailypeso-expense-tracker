@@ -67,12 +67,19 @@ const DailyTransactionDialog = () => {
 
     if (state.success) {
       closeDialog();
+      setDate(new Date());
       toast(<p className="toast-text">Transaction added successfully</p>);
     }
   }, [state, queryClient]);
 
   return (
-    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+    <Dialog
+      open={openDialog}
+      onOpenChange={() => {
+        setOpenDialog(!openDialog);
+        setDate(new Date());
+      }}
+    >
       {userAccounts && userAccounts.accounts && (
         <DialogTrigger
           aria-label="Add Transaction"
@@ -123,7 +130,12 @@ const DailyTransactionDialog = () => {
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
-              <Calendar mode="single" selected={date} onSelect={setDate} />
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                defaultMonth={date}
+              />
             </PopoverContent>
           </Popover>
           <input
@@ -182,9 +194,9 @@ const DailyTransactionDialog = () => {
 
           <Button
             type="submit"
-            className="w-full bg-sky-500 hover:bg-sky-400 cursor-pointer"
+            className="w-full bg-yellow-500 hover:bg-sky-400 cursor-pointer"
           >
-            Add
+            Add transaction
           </Button>
         </form>
       </DialogContent>
