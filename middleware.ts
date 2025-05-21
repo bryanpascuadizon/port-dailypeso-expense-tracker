@@ -5,17 +5,13 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // ✅ Bypass next-auth internal routes
-  if (pathname.startsWith("/api/auth")) {
-    return NextResponse.next();
-  }
+  console.log("Middleware path:", pathname);
 
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  // ✅ Define public and protected routes
   const publicRoutes = ["/sign-in"];
   const isPublicRoute = publicRoutes.includes(pathname);
 
@@ -43,3 +39,7 @@ export async function middleware(request: NextRequest) {
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/((?!api|_next|favicon.ico|.*\\..*).*)"],
+};
