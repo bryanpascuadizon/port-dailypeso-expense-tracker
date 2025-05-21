@@ -12,14 +12,14 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  const publicRoutes = ["/sign-in"];
-  const isPublicRoute = publicRoutes.includes(pathname);
-
   if (pathname === "/") {
     return NextResponse.redirect(
       new URL(token ? "/transactions/daily" : "/sign-in", request.url)
     );
   }
+
+  const publicRoutes = ["/sign-in"];
+  const isPublicRoute = publicRoutes.includes(pathname);
 
   const protectedPaths = [
     /^\/transactions(\/.*)?$/,
@@ -41,5 +41,13 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|favicon.ico|.*\\..*).*)"],
+  matcher: [
+    // Only run middleware on these app routes
+    "/",
+    "/sign-in",
+    "/transactions/:path*",
+    "/accounts/:path*",
+    "/summary/:path*",
+    "/profile/:path*",
+  ],
 };
