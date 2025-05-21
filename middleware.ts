@@ -5,18 +5,21 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Allow auth and API routes to pass through without auth check
   if (pathname.startsWith("/api/auth") || pathname.startsWith("/auth")) {
     return NextResponse.next();
   }
 
+  // ✅ Ensure secure cookies are handled correctly (important on Vercel)
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
+    secureCookie: true,
   });
 
-  console.log("Middleware request: ", request);
-  console.log("Middleware token: ", token);
+  console.log("Middleware token:", token);
 
+  // Redirect root route based on token
   if (pathname === "/") {
     return NextResponse.redirect(
       new URL(token ? "/transactions/daily" : "/sign-in", request.url)
@@ -34,10 +37,12 @@ export async function middleware(request: NextRequest) {
   ];
   const isProtected = protectedPaths.some((regex) => regex.test(pathname));
 
+  // Redirect to sign-in if not authenticated
   if (isProtected && !token) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
+  // Redirect to dashboard if already logged in and on public route
   if (isPublicRoute && token) {
     return NextResponse.redirect(new URL("/transactions/daily", request.url));
   }
@@ -45,6 +50,7 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
+// Apply middleware to these paths
 export const config = {
   matcher: [
     "/",
