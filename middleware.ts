@@ -14,6 +14,9 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
+  console.log("Middleware request: ", request);
+  console.log("Middleware token: ", token);
+
   if (pathname === "/") {
     return NextResponse.redirect(
       new URL(token ? "/transactions/daily" : "/sign-in", request.url)
