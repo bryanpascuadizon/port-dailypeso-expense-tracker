@@ -13,8 +13,10 @@ import DailyTransactionItem from "./DailyTransactionItem";
 
 const DailyTransactionAccordion = ({
   transactions,
+  refetchDailyTransactions,
 }: {
   transactions: Transactions[];
+  refetchDailyTransactions: () => void;
 }) => {
   const dailyAccordionPanels = useMemo(
     () => getDailyAccordions(transactions),
@@ -54,7 +56,7 @@ const DailyTransactionAccordion = ({
           <AccordionContent>
             {dailyTransaction.transactions.map(
               (transaction: Transactions, index) => (
-                <DailyTransactionItem transaction={transaction} key={index} />
+                <DailyTransactionItem transaction={transaction} key={index} refetchDailyTransactions={refetchDailyTransactions}/>
               )
             )}
           </AccordionContent>

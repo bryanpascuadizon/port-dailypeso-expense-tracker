@@ -1,12 +1,15 @@
 import { Transactions } from "@/types";
 import { currencyFormatter, renderTransactionType } from "@/lib/utils";
-import { PenLine, Trash2 } from "lucide-react";
+import { PenLine } from "lucide-react";
 
 import { useState } from "react";
+import DailyTransactionDeleteItem from "./DailyTransactionDeleteItem";
 const DailyTransactionItem = ({
   transaction,
+  refetchDailyTransactions,
 }: {
   transaction: Transactions;
+  refetchDailyTransactions: () => void;
 }) => {
   const [showAction, setShowAction] = useState(false);
   return (
@@ -34,7 +37,7 @@ const DailyTransactionItem = ({
       {showAction && (
         <div className="flex items-center gap-3">
           <PenLine className="cursor-pointer text-green-700" />
-          <Trash2 className="cursor-pointer text-red-700" />
+          <DailyTransactionDeleteItem transaction={transaction} refetchDailyTransactions={refetchDailyTransactions}/>
         </div>
       )}
     </div>

@@ -3,6 +3,7 @@
 import moment from "moment";
 import {
   addDailyTransaction,
+  deleteDailyTransaction,
   getTransactions,
 } from "../handlers/transaction-handlers";
 import { formatDateToISO } from "../utils";
@@ -132,6 +133,32 @@ export const submitDailyTransaction = async (
     return {
       success: false,
       message: `Cannot submit daily transaction`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Cannot submit daily transaction - ${error}`,
+    };
+  }
+};
+
+export const deleteTransaction = async (transactionId: string) => {
+  try {
+    const user = await getUserSession();
+
+    if (user) {
+      const response = await deleteDailyTransaction(transactionId);
+
+      if (response) {
+        return {
+          success: true,
+          message: "Transaction has been deleted",
+        };
+      }
+    }
+    return {
+      success: false,
+      message: "Cannot delete transaction",
     };
   } catch (error) {
     return {

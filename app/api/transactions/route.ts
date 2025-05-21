@@ -18,29 +18,27 @@ export const GET = async (request: NextRequest) => {
     const startDateParams = searchParams.get("startDate");
     const endDateParams = searchParams.get("endDate");
 
-    if (userIdParams && startDateParams && endDateParams) {
-      const startDate = new Date(startDateParams.replace(" ", "+"));
-      const endDate = new Date(endDateParams.replace(" ", "+"));
-
-      const transactions = await prisma.transaction.findMany({
-        where: {
-          userId: userIdParams,
-          date: {
-            gte: startDate,
-            lte: endDate,
-          },
-        },
-        include: {
-          transactionAccount: true,
-        },
-      });
-
-      if (transactions) {
-        return new NextResponse(JSON.stringify(transactions), { status: 200 });
-      }
+    if (!userIdParams || !startDateParams || !endDateParams) {
+      return new NextResponse("Cannot get transactions", { status: 400 });
     }
 
-    return new NextResponse("Cannot get transactions", { status: 500 });
+    const startDate = new Date(startDateParams.replace(" ", "+"));
+    const endDate = new Date(endDateParams.replace(" ", "+"));
+
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        userId: userIdParams,
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      include: {
+        transactionAccount: true,
+      },
+    });
+
+    return new NextResponse(JSON.stringify(transactions), { status: 200 });
   } catch (error) {
     return new NextResponse(`Cannot get transactions - ${error}`, {
       status: 500,
@@ -55,30 +53,54 @@ export const POST = async (request: NextRequest) => {
     const userIdParams = searchParams.get("userId");
     const newTransaction = await request.json();
 
-    if (userIdParams && newTransaction) {
-      const transaction: Transaction = await prisma.transaction.create({
-        data: {
-          userId: userIdParams,
-          date: newTransaction.date,
-          note: newTransaction.note,
-          transactionAccountId: newTransaction.account,
-          amount: newTransaction.amount,
-          type: newTransaction.type,
-        },
+    if (!userIdParams || !newTransaction) {
+      return new NextResponse(`Cannot add transaction`, {
+        status: 500,
       });
-
-      if (transaction) {
-        return new NextResponse(JSON.stringify(transaction), {
-          status: 200,
-        });
-      }
     }
 
-    return new NextResponse(`Cannot add transaction`, {
-      status: 500,
+    const transaction: Transaction = await prisma.transaction.create({
+      data: {
+        userId: userIdParams,
+        date: newTransaction.date,
+        note: newTransaction.note,
+        transactionAccountId: newTransaction.account,
+        amount: newTransaction.amount,
+        type: newTransaction.type,
+      },
+    });
+
+    return new NextResponse(JSON.stringify(transaction), {
+      status: 200,
     });
   } catch (error) {
     return new NextResponse(`Cannot add transaction - ${error}`, {
+      status: 500,
+    });
+  }
+};
+
+export const DELETE = async (request: NextRequest) => {
+  try {
+    const { searchParams } = new URL(request.url);
+
+    const transactionId = searchParams.get("transactionId");
+
+    console.log(transactionId)
+
+    if (!transactionId) {
+      return new NextResponse("Cannot delete transaction", { status: 500 });
+    }
+
+    const transaction = await prisma.transaction.delete({
+      where: {
+        id: transactionId,
+      },
+    });
+
+    return new NextResponse(JSON.stringify(transaction), { status: 200 });
+  } catch (error) {
+    return new NextResponse(`Cannot delete transaction - ${error}`, {
       status: 500,
     });
   }

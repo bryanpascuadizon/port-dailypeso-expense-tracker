@@ -35,3 +35,14 @@ export const addDailyTransaction = async (
 
   return response;
 };
+
+export const deleteDailyTransaction = async (transactionId: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/transactions?transactionId=${transactionId}`,
+    {
+      method: "DELETE",
+    }
+  ).then((res) => res.json());
+
+  return response;
+};

@@ -15,7 +15,7 @@ const DailyTransactions = () => {
 
   const startWeek = searchParams.get("week");
 
-  const { date, setDate, transactions, isPending } = useTransactions(
+  const { date, setDate, transactions, isPending, refetchDailyTransactions } = useTransactions(
     startWeek!
   );
 
@@ -39,7 +39,7 @@ const DailyTransactions = () => {
           </div>
           <div className="transaction-content">
             {transactions.length ? (
-              <DailyTransactionAccordion transactions={transactions} />
+              <DailyTransactionAccordion transactions={transactions} refetchDailyTransactions={refetchDailyTransactions}/>
             ) : (
               <NoData />
             )}
