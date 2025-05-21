@@ -18,7 +18,7 @@ import { TransactionAccount } from "@/types";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { CalendarIcon, PlusIcon } from "lucide-react";
+import { CalendarIcon, Loader, PlusIcon } from "lucide-react";
 import moment from "moment";
 import { useActionState, useEffect, useState } from "react";
 import {
@@ -40,7 +40,7 @@ const DailyTransactionDialog = () => {
   const [date, setDate] = useState<Date>();
   const [account, setAccount] = useState<string>("");
   const [transactionType, setTransactionType] = useState<string>("expense");
-  const [state, action] = useActionState(submitDailyTransaction, {
+  const [state, action, isPending] = useActionState(submitDailyTransaction, {
     success: false,
     message: "",
   });
@@ -100,22 +100,6 @@ const DailyTransactionDialog = () => {
           </DialogDescription>
         </DialogHeader>
         <form action={action} className="">
-          <Input
-            id="note"
-            name="note"
-            className="daily-form-item"
-            placeholder="Note"
-            required
-          />
-          <Input
-            id="amount"
-            name="amount"
-            placeholder={`${currencyFormatter.format(0)}`}
-            type="number"
-            step="0.01"
-            className="daily-form-item"
-            required
-          />
           <Popover>
             <PopoverTrigger asChild id="date" name="date">
               <Button
@@ -138,6 +122,22 @@ const DailyTransactionDialog = () => {
               />
             </PopoverContent>
           </Popover>
+          <Input
+            id="note"
+            name="note"
+            className="daily-form-item"
+            placeholder="Note"
+            required
+          />
+          <Input
+            id="amount"
+            name="amount"
+            placeholder={`${currencyFormatter.format(0)}`}
+            type="number"
+            step="0.01"
+            className="daily-form-item"
+            required
+          />
           <input
             type="hidden"
             name="date"
@@ -196,7 +196,11 @@ const DailyTransactionDialog = () => {
             type="submit"
             className="w-full bg-yellow-500 hover:bg-yellow-400 cursor-pointer"
           >
-            Add transaction
+            {isPending ? (
+              <Loader className="animate-spin" />
+            ) : (
+              "Add Transaction"
+            )}
           </Button>
         </form>
       </DialogContent>
