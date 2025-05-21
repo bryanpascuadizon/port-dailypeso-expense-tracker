@@ -25,7 +25,7 @@ const DailyTransactionDeleteItem = ({
 }) => {
   const [isPending, startTransition] = useTransition();
 
-  const handleDelete = () => {
+  const handleDeleteTransaction = () => {
     startTransition(async () => {
       const response = await deleteTransaction(transaction.id);
 
@@ -85,8 +85,8 @@ const DailyTransactionDeleteItem = ({
         </DialogHeader>
         <DialogFooter>
           <Button
-            className="w-full bg-red-700 hover:bg-red-700 text-white cursor-pointer"
-            onClick={handleDelete}
+            className="w-full bg-red-700 hover:bg-red-600 text-white cursor-pointer"
+            onClick={handleDeleteTransaction}
           >
             {isPending ? <Loader className="animate-spin" /> : "Delete"}
           </Button>
