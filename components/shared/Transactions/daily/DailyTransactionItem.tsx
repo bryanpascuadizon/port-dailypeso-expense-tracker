@@ -28,15 +28,6 @@ const DailyTransactionItem = ({
         >
           {currencyFormatter.format(transaction.amount)}
         </p>{" "}
-        <Separator orientation="vertical" className="separator" />
-        <PenLine
-          className="w-5 h-5 text-green-700 cursor-pointer"
-          onClick={handleDelete}
-        />
-        <Trash2
-          className="w-5 h-5 text-red-700 cursor-pointer"
-          onClick={handleDelete}
-        />
       </div>
     </div>
   );

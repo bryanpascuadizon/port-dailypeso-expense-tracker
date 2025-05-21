@@ -194,7 +194,7 @@ const DailyTransactionDialog = () => {
 
           <Button
             type="submit"
-            className="w-full bg-yellow-500 hover:bg-sky-400 cursor-pointer"
+            className="w-full bg-yellow-500 hover:bg-yellow-400 cursor-pointer"
           >
             Add transaction
           </Button>
