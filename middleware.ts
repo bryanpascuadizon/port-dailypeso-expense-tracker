@@ -3,39 +3,39 @@ import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  // const { pathname } = request.nextUrl;
 
-  console.log("Middleware path:", pathname);
+  // console.log("Middleware path:", pathname);
 
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+  // const token = await getToken({
+  //   req: request,
+  //   secret: process.env.NEXTAUTH_SECRET,
+  // });
 
-  if (pathname === "/") {
-    return NextResponse.redirect(
-      new URL(token ? "/transactions/daily" : "/sign-in", request.url)
-    );
-  }
+  // if (pathname === "/") {
+  //   return NextResponse.redirect(
+  //     new URL(token ? "/transactions/daily" : "/sign-in", request.url)
+  //   );
+  // }
 
-  const publicRoutes = ["/sign-in"];
-  const isPublicRoute = publicRoutes.includes(pathname);
+  // const publicRoutes = ["/sign-in"];
+  // const isPublicRoute = publicRoutes.includes(pathname);
 
-  const protectedPaths = [
-    /^\/transactions(\/.*)?$/,
-    /^\/accounts(\/.*)?$/,
-    /^\/summary(\/.*)?$/,
-    /^\/profile(\/.*)?$/,
-  ];
-  const isProtected = protectedPaths.some((regex) => regex.test(pathname));
+  // const protectedPaths = [
+  //   /^\/transactions(\/.*)?$/,
+  //   /^\/accounts(\/.*)?$/,
+  //   /^\/summary(\/.*)?$/,
+  //   /^\/profile(\/.*)?$/,
+  // ];
+  // const isProtected = protectedPaths.some((regex) => regex.test(pathname));
 
-  if (isProtected && !token) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
-  }
+  // if (isProtected && !token) {
+  //   return NextResponse.redirect(new URL("/sign-in", request.url));
+  // }
 
-  if (isPublicRoute && token) {
-    return NextResponse.redirect(new URL("/transactions/daily", request.url));
-  }
+  // if (isPublicRoute && token) {
+  //   return NextResponse.redirect(new URL("/transactions/daily", request.url));
+  // }
 
   return NextResponse.next();
 }
