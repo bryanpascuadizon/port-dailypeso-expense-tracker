@@ -1,5 +1,6 @@
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
+import { Toaster } from "@/components/ui/sonner";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -21,6 +22,7 @@ export default function RootLayout({
             <Suspense>{children}</Suspense>
           </div>
         </main>
+         <Toaster />
         <Footer />
       </div>
     </>

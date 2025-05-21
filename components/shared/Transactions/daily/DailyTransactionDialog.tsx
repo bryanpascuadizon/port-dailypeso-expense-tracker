@@ -29,6 +29,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { toast } from "sonner";
 
 const DailyTransactionDialog = () => {
   const { data: userAccounts } = useQuery({
@@ -66,6 +67,7 @@ const DailyTransactionDialog = () => {
 
     if (state.success) {
       closeDialog();
+      toast(<p className="toast-text">Transaction added successfully</p>);
     }
   }, [state, queryClient]);
 

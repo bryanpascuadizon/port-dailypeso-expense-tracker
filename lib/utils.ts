@@ -108,10 +108,7 @@ export const getDailyAccordions = (transactions: Transactions[]) => {
   transactions.forEach((transaction: Transactions) => {
     const dailyTransactionDate = transaction.date.toString();
     const dailyDate = dailyTransactionDate.split("T")[0];
-
-    //const year = dailyDate.split("-")[0];
-    const month = moment(transaction.date).format("MMMM");
-    const monthDay = `${month} ${dailyDate.split("-")[2]}`;
+    const monthDay = `${moment(dailyDate).format("MMMM D")}`;
     const day = moment(transaction.date).format("dddd");
 
     const dailyIndex = dailies.findIndex((obj) => obj.date === monthDay);
@@ -131,7 +128,7 @@ export const getDailyAccordions = (transactions: Transactions[]) => {
 };
 
 export const formatDateToISO = (date: string) => {
-  return moment.utc(date, "MMMM D, YYYY").startOf("day").toDate();
+  return moment.utc(date, "MMMM D, YYYY").toISOString();
 };
 
 export const renderWeek = (

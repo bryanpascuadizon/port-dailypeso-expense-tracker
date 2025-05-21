@@ -73,11 +73,7 @@ export const getUserMonthlyTransactions = async (year: number) => {
         moment([year]).endOf("year").format("MMM DD, YYYY")
       );
 
-      const response = await getTransactions(
-        user.id,
-        startDate.toString(),
-        endDate.toString()
-      );
+      const response = await getTransactions(user.id, startDate, endDate);
 
       if (response) {
         return {
@@ -120,7 +116,7 @@ export const submitDailyTransaction = async (
         note,
         account,
         type,
-        date: newFormattedDate,
+        date: new Date(newFormattedDate),
       };
 
       const response = await addDailyTransaction(newTransaction, user.id);

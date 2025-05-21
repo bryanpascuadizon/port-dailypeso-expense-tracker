@@ -14,6 +14,7 @@ const SkeletonLoader = () => {
         <Skeleton className="skeleton h-5" />
         <Skeleton className="skeleton h-5" />
       </div>
+    <Skeleton className="skeleton rounded-sm h-20 w-full" />
     </div>
   );
 };
