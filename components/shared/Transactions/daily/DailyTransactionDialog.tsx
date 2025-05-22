@@ -59,10 +59,10 @@ const DailyTransactionDialog = () => {
 
   useEffect(() => {
     const closeDialog = async () => {
-      setOpenDialog(false);
       await queryClient.invalidateQueries({
         queryKey: ["user-daily-transactions"],
       });
+      setOpenDialog(false);
     };
 
     if (state.success) {

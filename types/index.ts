@@ -6,7 +6,7 @@ export type Transactions = {
   note: string;
   transactionAccountId: string;
   type: string;
-  transactionAccount: TransactionAccount;
+  transactionAccount?: TransactionAccount;
 };
 
 export type TransactionAccount = {

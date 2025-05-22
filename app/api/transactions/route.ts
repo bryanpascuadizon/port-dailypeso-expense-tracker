@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/db/prisma";
 import { Transaction } from "@prisma/client";
+import { Transactions } from "@/types";
 
 /**
  * API Handler: /transaction-handlers/getTransactions()
@@ -80,13 +81,43 @@ export const POST = async (request: NextRequest) => {
   }
 };
 
+export const PATCH = async (request: NextRequest) => {
+  try {
+    const updatedTransaction = await request.json();
+    const transactionForEdit: Transactions = updatedTransaction;
+
+    if (!updatedTransaction) {
+      return new NextResponse(`Cannot edit transaction`, { status: 500 });
+    }
+
+    const transaction = await prisma.transaction.update({
+      where: {
+        id: transactionForEdit.id,
+      },
+      data: {
+        note: transactionForEdit.note,
+        amount: transactionForEdit.amount,
+        date: transactionForEdit.date,
+        transactionAccountId: transactionForEdit.transactionAccountId,
+        type: transactionForEdit.type,
+      },
+    });
+
+    return new NextResponse(JSON.stringify(transaction), { status: 200 });
+  } catch (error) {
+    return new NextResponse(`Cannot edit transaction - ${error}`, {
+      status: 500,
+    });
+  }
+};
+
 export const DELETE = async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
 
     const transactionId = searchParams.get("transactionId");
 
-    console.log(transactionId)
+    console.log(transactionId);
 
     if (!transactionId) {
       return new NextResponse("Cannot delete transaction", { status: 500 });

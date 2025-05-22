@@ -36,6 +36,18 @@ export const addDailyTransaction = async (
   return response;
 };
 
+export const editDailyTransaction = async (transaction: Transactions) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/transactions`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(transaction),
+    }
+  ).then((res) => res.json());
+
+  return response;
+};
+
 export const deleteDailyTransaction = async (transactionId: string) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/transactions?transactionId=${transactionId}`,

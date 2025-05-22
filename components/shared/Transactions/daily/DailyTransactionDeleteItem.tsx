@@ -68,7 +68,7 @@ const DailyTransactionDeleteItem = ({
             <div className="grid grid-cols-4">
               <p className="font-bold col-span-1">Account: </p>
               <p className="col-span-3">
-                {transaction.transactionAccount.name}
+                {transaction.transactionAccount?.name}
               </p>
             </div>
             <div className="grid grid-cols-4">

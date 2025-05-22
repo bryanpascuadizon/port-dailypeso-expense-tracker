@@ -4,10 +4,11 @@ import moment from "moment";
 import {
   addDailyTransaction,
   deleteDailyTransaction,
+  editDailyTransaction,
   getTransactions,
 } from "../handlers/transaction-handlers";
 import { formatDateToISO } from "../utils";
-import { FormState } from "@/types";
+import { FormState, Transactions } from "@/types";
 import { auth } from "@/auth";
 
 export const getUserSession = async () => {
@@ -110,14 +111,12 @@ export const submitDailyTransaction = async (
       const type: string = formData.get("type")!.toString();
       const date: string = formData.get("date")!.toString();
 
-      const newFormattedDate = formatDateToISO(`${date}`);
-
       const newTransaction = {
         amount,
         note,
         account,
         type,
-        date: new Date(newFormattedDate),
+        date: new Date(formatDateToISO(`${date}`)),
       };
 
       const response = await addDailyTransaction(newTransaction, user.id);
@@ -138,6 +137,59 @@ export const submitDailyTransaction = async (
     return {
       success: false,
       message: `Cannot submit daily transaction - ${error}`,
+    };
+  }
+};
+
+export const editTransaction = async (
+  prevState: FormState,
+  formData: FormData
+) => {
+  try {
+    const id: string = formData.get("id") as string;
+    const userId: string = formData.get("userId") as string;
+    const date: string = formData.get("date") as string;
+    const amount: number = Number(formData.get("amount"));
+    const note: string = formData.get("note") as string;
+    const type: string = formData.get("type") as string;
+    const account: string = formData.get("account") as string;
+
+    const updatedTransaction: Transactions = {
+      id,
+      userId,
+      date: new Date(formatDateToISO(`${date}`)),
+      amount,
+      note,
+      type,
+      transactionAccountId: account,
+    };
+
+    const user = await getUserSession();
+
+    if (!user || !updatedTransaction) {
+      return {
+        success: false,
+        message: `Cannot edit daily transaction`,
+      };
+    }
+
+    const response = await editDailyTransaction(updatedTransaction);
+
+    if (!response) {
+      return {
+        success: false,
+        message: `Cannot edit daily transaction`,
+      };
+    }
+
+    return {
+      success: true,
+      message: `Transaction edited successfully`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Cannot edit daily transaction - ${error}`,
     };
   }
 };
