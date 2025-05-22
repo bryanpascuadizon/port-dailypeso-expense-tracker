@@ -21,7 +21,7 @@ const DailyTransactionItem = ({
         <div className="flex-start w-full gap-3">
           <div>
             <p className="font-bold">{transaction.note}</p>
-            <p className="text-xs">{transaction.transactionAccount.name}</p>
+            <p className="text-xs">{transaction.transactionAccount?.name}</p>
           </div>
         </div>
         <div className="flex-end gap-2">

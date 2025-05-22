@@ -14,7 +14,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -71,7 +70,7 @@ const DailyTransactionEditItem = ({
       toast(<p className="toast-text">{state.message}</p>);
       setOpenDialog(false);
     }
-  }, [state]);
+  }, [state, refetchDailyTransactions]);
 
   const formattedDate = moment(date).format("MMM DD, YYYY");
 
