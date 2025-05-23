@@ -37,6 +37,7 @@ const MonthlyTransactionItem = ({
             {item.startWeek} - {item.endWeek}
           </p>
         </div>
+        <div></div>
         <div className="">
           <IncomeExpense
             transactions={item.transactions}

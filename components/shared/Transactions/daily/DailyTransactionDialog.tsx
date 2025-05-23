@@ -60,6 +60,7 @@ const DailyTransactionDialog = () => {
       });
       setOpenDialog(false);
       setDate(new Date());
+      state.success = false;
       toast(<p className="toast-text">Transaction added successfully</p>);
     };
 
