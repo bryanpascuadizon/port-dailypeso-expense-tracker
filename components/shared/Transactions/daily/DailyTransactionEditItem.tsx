@@ -63,8 +63,8 @@ const DailyTransactionEditItem = ({
   useEffect(() => {
     if (state.success) {
       refetchDailyTransactions();
-      toast(<p className="toast-text">{state.message}</p>);
       setOpenDialog(false);
+      toast(<p className="toast-text">{state.message}</p>);
     }
   }, [state, refetchDailyTransactions]);
 
@@ -119,6 +119,16 @@ const DailyTransactionEditItem = ({
             defaultValue={transaction.note}
             placeholder="Note"
             className="daily-form-item"
+            required
+          />
+
+          {/* Location Input */}
+          <Input
+            id="location"
+            defaultValue={transaction.location}
+            name="location"
+            className="daily-form-item"
+            placeholder="Location"
             required
           />
 

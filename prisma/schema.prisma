@@ -28,16 +28,16 @@ model User {
 }
 
 model Transaction {
-  id                   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId               String   @db.Uuid
-  date                 DateTime @default(now()) @db.Timestamp(6)
-  amount               Decimal  @default(0) @db.Decimal(12, 2)
-  note                 String   @default("")
-  type                 String   @default("")
-  transactionAccountId String   @db.Uuid
-
-  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  transactionAccount TransactionAccount @relation(fields: [transactionAccountId], references: [id], onDelete: Cascade)
+  id                   String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId               String             @db.Uuid
+  date                 DateTime           @default(now()) @db.Timestamp(6)
+  amount               Decimal            @default(0) @db.Decimal(12, 2)
+  note                 String             @default("")
+  type                 String             @default("")
+  transactionAccountId String             @db.Uuid
+  location             String             @default("")
+  user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactionAccount   TransactionAccount @relation(fields: [transactionAccountId], references: [id], onDelete: Cascade)
 }
 
 model TransactionAccount {

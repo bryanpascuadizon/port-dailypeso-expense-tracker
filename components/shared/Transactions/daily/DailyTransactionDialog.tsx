@@ -134,6 +134,13 @@ const DailyTransactionDialog = () => {
             className="daily-form-item"
             required
           />
+          <Input
+            id="location"
+            name="location"
+            className="daily-form-item"
+            placeholder="Location"
+            required
+          />
           <input
             type="hidden"
             name="date"

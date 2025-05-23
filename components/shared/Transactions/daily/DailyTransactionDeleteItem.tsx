@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,7 +15,7 @@ import { currencyFormatter, renderTransactionType } from "@/lib/utils";
 import { Transactions } from "@/types";
 import { Loader, Trash2 } from "lucide-react";
 import moment from "moment";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
 const DailyTransactionDeleteItem = ({
@@ -24,6 +26,7 @@ const DailyTransactionDeleteItem = ({
   refetchDailyTransactions: () => void;
 }) => {
   const [isPending, startTransition] = useTransition();
+  const [openDialog, setOpenDialog] = useState(false);
 
   const handleDeleteTransaction = () => {
     startTransition(async () => {
@@ -31,12 +34,13 @@ const DailyTransactionDeleteItem = ({
 
       if (response) {
         await refetchDailyTransactions();
+        setOpenDialog(false);
         toast(<p className="toast-text">{response.message}</p>);
       }
     });
   };
   return (
-    <Dialog>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger>
         <Trash2 className="cursor-pointer text-red-700" />
       </DialogTrigger>
@@ -58,6 +62,10 @@ const DailyTransactionDeleteItem = ({
             <div className="grid grid-cols-4">
               <p className="font-bold col-span-1">Note: </p>
               <p className="col-span-3">{transaction.note}</p>
+            </div>
+            <div className="grid grid-cols-4">
+              <p className="font-bold col-span-1">Location: </p>
+              <p className="col-span-3">{transaction.location}</p>
             </div>
             <div className="grid grid-cols-4">
               <p className="font-bold col-span-1">Amount: </p>

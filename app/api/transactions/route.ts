@@ -68,6 +68,7 @@ export const POST = async (request: NextRequest) => {
         transactionAccountId: newTransaction.account,
         amount: newTransaction.amount,
         type: newTransaction.type,
+        location: newTransaction.location,
       },
     });
 
@@ -100,6 +101,7 @@ export const PATCH = async (request: NextRequest) => {
         date: transactionForEdit.date,
         transactionAccountId: transactionForEdit.transactionAccountId,
         type: transactionForEdit.type,
+        location: transactionForEdit.location,
       },
     });
 

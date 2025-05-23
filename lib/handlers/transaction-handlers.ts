@@ -22,6 +22,7 @@ export const addDailyTransaction = async (
     account: string;
     type: string;
     date: Date;
+    location: string;
   },
   userId: string
 ) => {

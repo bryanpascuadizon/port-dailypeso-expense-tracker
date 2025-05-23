@@ -106,16 +106,18 @@ export const submitDailyTransaction = async (
 
     if (user && user.id) {
       const amount: number = Number(formData.get("amount"));
-      const note: string = formData.get("note")!.toString();
-      const account: string = formData.get("account")!.toString();
-      const type: string = formData.get("type")!.toString();
-      const date: string = formData.get("date")!.toString();
+      const note: string = formData.get("note") as string;
+      const account: string = formData.get("account") as string;
+      const type: string = formData.get("type") as string;
+      const date: string = formData.get("date") as string;
+      const location: string = formData.get("location") as string;
 
       const newTransaction = {
         amount,
         note,
         account,
         type,
+        location,
         date: new Date(formatDateToISO(`${date}`)),
       };
 
@@ -153,6 +155,7 @@ export const editTransaction = async (
     const note: string = formData.get("note") as string;
     const type: string = formData.get("type") as string;
     const account: string = formData.get("account") as string;
+    const location: string = formData.get("location") as string;
 
     const updatedTransaction: Transactions = {
       id,
@@ -161,6 +164,7 @@ export const editTransaction = async (
       amount,
       note,
       type,
+      location,
       transactionAccountId: account,
     };
 

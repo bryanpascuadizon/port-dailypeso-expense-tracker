@@ -3,6 +3,7 @@ import { currencyFormatter, renderTransactionType } from "@/lib/utils";
 import { useState } from "react";
 import DailyTransactionDeleteItem from "./DailyTransactionDeleteItem";
 import DailyTransactionEditItem from "./DailyTransactionEditItem";
+import { Banknote } from "lucide-react";
 
 const DailyTransactionItem = ({
   transaction,
@@ -20,8 +21,15 @@ const DailyTransactionItem = ({
       >
         <div className="flex-start w-full gap-3">
           <div>
-            <p className="font-bold">{transaction.note}</p>
-            <p className="text-xs">{transaction.transactionAccount?.name}</p>
+            <p className="font-bold">
+              {transaction.note} - {transaction.location}
+            </p>
+            <div className="flex gap-1">
+              <Banknote
+                className={`w-4 h-4 ${renderTransactionType(transaction.type)}`}
+              />
+              <p className="text-xs">{transaction.transactionAccount?.name}</p>
+            </div>
           </div>
         </div>
         <div className="flex-end gap-2">
