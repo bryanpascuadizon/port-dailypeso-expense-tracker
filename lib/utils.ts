@@ -148,12 +148,13 @@ export const renderWeek = (
   const current = weekEnd.clone();
 
   while (current.isSameOrAfter(weekStart)) {
-    const weekEnd = current.clone();
     const weekStart = current.clone().startOf("week");
+    const weekEnd = current.clone();
 
-    const startDate = new Date(weekStart.format("MM/DD/YYYY"));
-
-    const endDate = new Date(weekEnd.format("MM/DD/YYYY"));
+    const startDate = new Date(
+      formatDateToISO(weekStart.format("MMMM/DD/YYYY"))
+    );
+    const endDate = new Date(formatDateToISO(weekEnd.format("MMMM/DD/YYYY")));
 
     const weeklyTransactions = transactions.filter(
       (transaction: Transactions) =>
