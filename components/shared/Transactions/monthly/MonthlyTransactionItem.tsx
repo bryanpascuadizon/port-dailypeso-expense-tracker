@@ -32,9 +32,15 @@ const MonthlyTransactionItem = ({
         key={index}
         onClick={() => handleDailyRender(item.startWeek)}
       >
-        <div className="flex-start text-xs md:text-sm font-bold">
-          <p className="">
+        <div className="">
+          <p className="text-xs md:text-sm font-bold">
             {item.startWeek} - {item.endWeek}
+          </p>
+          <p className="text-xs text-gray-500">
+            {item.transactions.length > 0 &&
+              `${item.transactions.length} ${
+                item.transactions.length > 1 ? "transactions" : "transaction"
+              }`}
           </p>
         </div>
         <div></div>
