@@ -3,7 +3,6 @@
 import { useActionState, useEffect, useState } from "react";
 import { format } from "date-fns";
 import moment from "moment";
-import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { PenLine, CalendarIcon, Loader } from "lucide-react";
 
@@ -32,10 +31,10 @@ import {
 } from "@/components/ui/select";
 
 import { cn, currencyFormatter } from "@/lib/utils";
-import { getUserAccounts } from "@/lib/actions/account-actions";
 import { editTransaction } from "@/lib/actions/transaction-actions";
 
 import { Transactions, TransactionAccount } from "@/types";
+import useAccounts from "@/lib/hooks/useAccounts";
 
 type Props = {
   transaction: Transactions;
@@ -46,10 +45,7 @@ const DailyTransactionEditItem = ({
   transaction,
   refetchDailyTransactions,
 }: Props) => {
-  const { data: userAccounts } = useQuery({
-    queryKey: ["user-accounts"],
-    queryFn: getUserAccounts,
-  });
+  const { userAccounts } = useAccounts();
 
   const [state, formAction, isPending] = useActionState(editTransaction, {
     success: false,

@@ -11,12 +11,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getUserAccounts } from "@/lib/actions/account-actions";
 import { submitDailyTransaction } from "@/lib/actions/transaction-actions";
 import { cn, currencyFormatter } from "@/lib/utils";
 import { TransactionAccount } from "@/types";
 import { PopoverTrigger } from "@radix-ui/react-popover";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { CalendarIcon, Loader, PlusIcon } from "lucide-react";
 import moment from "moment";
@@ -30,13 +29,10 @@ import {
 } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { toast } from "sonner";
+import useAccounts from "@/lib/hooks/useAccounts";
 
 const DailyTransactionDialog = () => {
-  const { data: userAccounts } = useQuery({
-    queryKey: ["user-accounts"],
-    queryFn: getUserAccounts,
-  });
-
+  const { userAccounts } = useAccounts();
   const [date, setDate] = useState<Date>();
   const [account, setAccount] = useState<string>("");
   const [transactionType, setTransactionType] = useState<string>("expense");
@@ -63,12 +59,12 @@ const DailyTransactionDialog = () => {
         queryKey: ["user-daily-transactions"],
       });
       setOpenDialog(false);
+      setDate(new Date());
+      toast(<p className="toast-text">Transaction added successfully</p>);
     };
 
     if (state.success) {
       closeDialog();
-      setDate(new Date());
-      toast(<p className="toast-text">Transaction added successfully</p>);
     }
   }, [state, queryClient]);
 
