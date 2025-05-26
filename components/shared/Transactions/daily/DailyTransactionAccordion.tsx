@@ -43,6 +43,14 @@ const DailyTransactionAccordion = ({
                   <p className="text-xs text-gray-500">
                     {dailyTransaction.day}
                   </p>
+                  <p className="text-xs text-gray-500">
+                    {dailyTransaction.transactions.length > 0 &&
+                      `${dailyTransaction.transactions.length} ${
+                        dailyTransaction.transactions.length > 1
+                          ? "transactions"
+                          : "transaction"
+                      }`}
+                  </p>
                 </div>
               </div>
               <div>
@@ -56,7 +64,11 @@ const DailyTransactionAccordion = ({
           <AccordionContent>
             {dailyTransaction.transactions.map(
               (transaction: Transactions, index) => (
-                <DailyTransactionItem transaction={transaction} key={index} refetchDailyTransactions={refetchDailyTransactions}/>
+                <DailyTransactionItem
+                  transaction={transaction}
+                  key={index}
+                  refetchDailyTransactions={refetchDailyTransactions}
+                />
               )
             )}
           </AccordionContent>
