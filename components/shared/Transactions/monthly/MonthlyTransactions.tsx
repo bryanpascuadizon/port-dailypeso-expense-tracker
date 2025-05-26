@@ -6,10 +6,9 @@ import MonthlyTransactionAccordion from "@/components/shared/Transactions/monthl
 import TransactionDateTab from "@/components/shared/Transactions/TransactionDateTab";
 import TransactionTabs from "@/components/shared/Transactions/TransactionTabs";
 import { getUserMonthlyTransactions } from "@/lib/actions/transaction-actions";
-
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import SkeletonLoader from "../../SkeletonLoader";
+import TransactionSkeletonLoader from "../TransactionSkeletonLoader";
 
 const MonthlyTransactions = () => {
   const [date, setDate] = useState(new Date());
@@ -23,38 +22,42 @@ const MonthlyTransactions = () => {
     },
   });
 
-  return !isPending ? (
+  return (
     <>
-      {data && data.transactions && (
+      <PageTitle title="Transactions" />
+      {!isPending ? (
         <>
-          <div className="transaction-headers">
-            <PageTitle title="Transactions" />
-            <TransactionDateTab
-              dateType="yearly"
-              date={date}
-              setDate={setDate}
-            />
-            <TransactionTabs activeTab="Monthly" />
-            <IncomeExpense
-              transactions={data.transactions}
-              className="text-xs md:text-sm py-3"
-              isHeader
-            />
-          </div>
+          {data && data.transactions && (
+            <>
+              <div className="transaction-headers">
+                <TransactionDateTab
+                  dateType="yearly"
+                  date={date}
+                  setDate={setDate}
+                />
+                <TransactionTabs activeTab="Monthly" />
+                <IncomeExpense
+                  transactions={data.transactions}
+                  className="text-xs md:text-sm py-3"
+                  isHeader
+                />
+              </div>
 
-          <div className="transaction-content">
-            {data.transactions && (
-              <MonthlyTransactionAccordion
-                transactions={data.transactions}
-                year={date}
-              />
-            )}
-          </div>
+              <div className="transaction-content">
+                {data.transactions && (
+                  <MonthlyTransactionAccordion
+                    transactions={data.transactions}
+                    year={date}
+                  />
+                )}
+              </div>
+            </>
+          )}
         </>
+      ) : (
+        <TransactionSkeletonLoader />
       )}
     </>
-  ) : (
-    <SkeletonLoader />
   );
 };
 

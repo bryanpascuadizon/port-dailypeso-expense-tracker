@@ -7,7 +7,7 @@ import TransactionTabs from "../TransactionTabs";
 import IncomeExpense from "../../IncomeExpense";
 import DailyTransactionAccordion from "./DailyTransactionAccordion";
 import NoData from "../../NoData";
-import SkeletonLoader from "../../SkeletonLoader";
+import TransactionSkeletonLoader from "../TransactionSkeletonLoader";
 import useTransactions from "@/lib/hooks/useTransactions";
 
 const DailyTransactions = () => {
@@ -15,16 +15,15 @@ const DailyTransactions = () => {
 
   const startWeek = searchParams.get("week");
 
-  const { date, setDate, transactions, isPending, refetchDailyTransactions } = useTransactions(
-    startWeek!
-  );
+  const { date, setDate, transactions, isPending, refetchDailyTransactions } =
+    useTransactions(startWeek!);
 
-  return !isPending ? (
+  return (
     <>
-      {transactions && (
+      <PageTitle title="Transactions" />
+      {!isPending ? (
         <>
           <div className="transaction-headers">
-            <PageTitle title="Transactions" />
             <TransactionDateTab
               dateType="monthly"
               date={date}
@@ -39,16 +38,19 @@ const DailyTransactions = () => {
           </div>
           <div className="transaction-content">
             {transactions.length ? (
-              <DailyTransactionAccordion transactions={transactions} refetchDailyTransactions={refetchDailyTransactions}/>
+              <DailyTransactionAccordion
+                transactions={transactions}
+                refetchDailyTransactions={refetchDailyTransactions}
+              />
             ) : (
               <NoData />
             )}
           </div>
         </>
+      ) : (
+        <TransactionSkeletonLoader />
       )}
     </>
-  ) : (
-    <SkeletonLoader />
   );
 };
 
