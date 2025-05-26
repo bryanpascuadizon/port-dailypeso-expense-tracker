@@ -24,12 +24,18 @@ const DailyTransactionItem = ({
             <p className="font-bold">
               {transaction.note} - {transaction.location}
             </p>
-            <div className="flex gap-1">
-              <Banknote
-                className={`w-4 h-4 ${renderTransactionType(transaction.type)}`}
-              />
-              <p className="text-xs">{transaction.transactionAccount?.name}</p>
-            </div>
+            {transaction.transactionAccount && (
+              <div className="flex gap-1">
+                <Banknote
+                  className={`w-4 h-4 ${renderTransactionType(
+                    transaction.type
+                  )}`}
+                />
+                <p className="text-xs">
+                  {transaction.transactionAccount?.name}
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex-end gap-2">
