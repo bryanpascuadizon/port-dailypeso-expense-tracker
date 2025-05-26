@@ -1,10 +1,29 @@
+import {
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogContent,
+} from "@/components/ui/dialog";
 import { TransactionAccount } from "@/types";
+
+import { Banknote } from "lucide-react";
+import AccountDialog from "./AccountDialog";
 
 const AccountItem = ({ account }: { account: TransactionAccount }) => {
   return (
-    <div className="rounded-sm bg-white p-1 text-xs md:text-sm mb-1 shadow">
-      <p>{account.name}</p>
-    </div>
+    <Dialog>
+      <DialogTrigger className="account-item button-hover">
+        <Banknote className="account-icon" />
+        <p>{account.name}</p>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit Account</DialogTitle>
+        </DialogHeader>
+        <AccountDialog account={account} />
+      </DialogContent>
+    </Dialog>
   );
 };
 

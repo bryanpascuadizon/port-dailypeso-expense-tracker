@@ -106,12 +106,20 @@
   }
 
   .daily-form-item {
-    @apply text-sm mb-3;
+    @apply text-base mb-3;
   }
 
   /* Accounts */
   .account-content {
     @apply pb-3 overflow-y-auto;
+  }
+
+  .account-icon {
+    @apply w-10 h-10 text-orange-500;
+  }
+
+  .account-item {
+    @apply flex col-span-1 items-center gap-3 rounded-sm bg-white p-3 text-xs md:text-sm shadow font-bold cursor-pointer;
   }
 
   /* Utils */

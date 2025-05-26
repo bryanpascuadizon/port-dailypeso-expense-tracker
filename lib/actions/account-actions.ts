@@ -1,5 +1,3 @@
-"use server";
-
 import { TransactionAccount } from "@/types";
 import { getAccounts } from "../handlers/account-handlers";
 import { getUserSession } from "./transaction-actions";
