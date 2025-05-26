@@ -1,25 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent } from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { submitDailyTransaction } from "@/lib/actions/transaction-actions";
-import { cn, currencyFormatter } from "@/lib/utils";
-import { TransactionAccount } from "@/types";
-import { PopoverTrigger } from "@radix-ui/react-popover";
-import { useQueryClient } from "@tanstack/react-query";
-import { format } from "date-fns";
-import { CalendarIcon, Loader, PlusIcon } from "lucide-react";
-import moment from "moment";
 import { useActionState, useEffect, useState } from "react";
+import moment from "moment";
+import { format } from "date-fns";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -28,60 +13,80 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { CalendarIcon, Loader, PlusIcon } from "lucide-react";
+import { cn, currencyFormatter } from "@/lib/utils";
+import { submitDailyTransaction } from "@/lib/actions/transaction-actions";
 import useAccounts from "@/lib/hooks/useAccounts";
+import { TransactionAccount } from "@/types";
 
 const DailyTransactionDialog = () => {
   const { userAccounts } = useAccounts();
-  const [date, setDate] = useState<Date>();
-  const [account, setAccount] = useState<string>("");
-  const [transactionType, setTransactionType] = useState<string>("expense");
+  const queryClient = useQueryClient();
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [date, setDate] = useState<Date>(new Date());
+  const [account, setAccount] = useState("");
+  const [transactionType, setTransactionType] = useState("expense");
   const [state, action, isPending] = useActionState(submitDailyTransaction, {
     success: false,
     message: "",
   });
-  const [openDialog, setOpenDialog] = useState(false);
-  const queryClient = useQueryClient();
 
+  // Set default account on load
   useEffect(() => {
-    setDate(new Date());
-  }, []);
-
-  useEffect(() => {
-    if (userAccounts && userAccounts.accounts) {
+    if (userAccounts?.accounts?.length) {
       setAccount(userAccounts.accounts[0].id);
     }
   }, [userAccounts]);
 
+  // Handle transaction success
   useEffect(() => {
-    const closeDialog = async () => {
+    if (!state.success) return;
+
+    const closeAndReset = async () => {
       await queryClient.invalidateQueries({
         queryKey: ["user-daily-transactions"],
       });
       setOpenDialog(false);
-      setDate(new Date());
-      state.success = false;
+      resetForm();
       toast(<p className="toast-text">Transaction added successfully</p>);
     };
 
-    if (state.success) {
-      closeDialog();
-    }
-  }, [state, queryClient]);
+    closeAndReset();
+  }, [state.success, queryClient]);
+
+  const resetForm = () => {
+    setDate(new Date());
+    setTransactionType("expense");
+    setAccount(userAccounts?.accounts?.[0]?.id ?? "");
+  };
+
+  const handleDialogChange = (isOpen: boolean) => {
+    setOpenDialog(isOpen);
+    if (!isOpen) resetForm();
+  };
 
   return (
-    <Dialog
-      open={openDialog}
-      onOpenChange={() => {
-        setOpenDialog(!openDialog);
-        setDate(new Date());
-      }}
-    >
-      {userAccounts && userAccounts.accounts && (
+    <Dialog open={openDialog} onOpenChange={handleDialogChange}>
+      {userAccounts?.accounts?.length && (
         <DialogTrigger
           aria-label="Add Transaction"
           className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center"
-          onClick={() => setOpenDialog}
         >
           <PlusIcon className="w-8 h-8 md:w-10 md:h-10 cursor-pointer" />
         </DialogTrigger>
@@ -92,44 +97,49 @@ const DailyTransactionDialog = () => {
           <DialogTitle className="text-base md:text-lg font-bold">
             Add Transaction
           </DialogTitle>
-          <DialogDescription className="text-sm">
+          <DialogDescription className="text-base">
             {moment(date).format("MMM DD, YYYY")}
           </DialogDescription>
         </DialogHeader>
-        <form action={action} className="">
+
+        <form action={action} className="space-y-4">
+          {/* Date Picker */}
           <Popover>
-            <PopoverTrigger asChild id="date" name="date">
+            <PopoverTrigger asChild>
               <Button
-                variant={"outline"}
+                variant="outline"
                 className={cn(
                   "daily-form-item justify-start text-left font-normal w-full",
                   !date && "text-muted-foreground"
                 )}
               >
-                <CalendarIcon />
-                {date ? format(date, "PP") : <span>Pick a date</span>}
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? format(date, "PP") : "Pick a date"}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
                 mode="single"
                 selected={date}
-                onSelect={setDate}
+                onSelect={(day) => {
+                  if (day) setDate(day);
+                }}
                 defaultMonth={date}
               />
             </PopoverContent>
           </Popover>
+
           <Input
             id="note"
             name="note"
-            className="daily-form-item"
             placeholder="Note"
+            className="daily-form-item"
             required
           />
           <Input
             id="amount"
             name="amount"
-            placeholder={`${currencyFormatter.format(0)}`}
+            placeholder={currencyFormatter.format(0)}
             type="number"
             step="0.01"
             className="daily-form-item"
@@ -138,8 +148,8 @@ const DailyTransactionDialog = () => {
           <Input
             id="location"
             name="location"
-            className="daily-form-item"
             placeholder="Location"
+            className="daily-form-item"
             required
           />
           <input
@@ -147,41 +157,32 @@ const DailyTransactionDialog = () => {
             name="date"
             value={moment(date).format("MMM DD, YYYY")}
           />
-          {userAccounts && userAccounts.accounts && (
-            <Select
-              value={account}
-              defaultValue={userAccounts.accounts[0].id.toString()}
-              onValueChange={setAccount}
-            >
-              <SelectTrigger id="account" className="w-full daily-form-item">
-                {" "}
-                <SelectValue placeholder="Select account" />
-              </SelectTrigger>
-              <SelectContent>
-                {userAccounts &&
-                  userAccounts.accounts &&
-                  userAccounts.accounts.map((account: TransactionAccount) => (
-                    <SelectItem key={account.id} value={account.id}>
-                      {account.name}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-          )}
 
-          <input required type="hidden" name="account" value={account} />
-          <Select
-            defaultValue={transactionType}
-            onValueChange={setTransactionType}
-            value={transactionType}
-          >
+          {/* Account Selector */}
+          <Select value={account} onValueChange={setAccount}>
+            <SelectTrigger id="account" className="w-full daily-form-item">
+              <SelectValue placeholder="Select account" />
+            </SelectTrigger>
+            <SelectContent>
+              {userAccounts?.accounts?.map((acc: TransactionAccount) => (
+                <SelectItem key={acc.id} value={acc.id}>
+                  {acc.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <input type="hidden" name="account" value={account} required />
+
+          {/* Type Selector */}
+          <Select value={transactionType} onValueChange={setTransactionType}>
             <SelectTrigger
               id="type"
-              className={`w-full daily-form-item ${
+              className={cn(
+                "w-full daily-form-item",
                 transactionType === "income"
-                  ? "income-text border-1 border-green-700"
-                  : "expense-text border-1 border-red-700"
-              }`}
+                  ? "income-text border border-green-700"
+                  : "expense-text border border-red-700"
+              )}
             >
               <SelectValue placeholder="Income/Expense" />
             </SelectTrigger>
@@ -194,11 +195,12 @@ const DailyTransactionDialog = () => {
               </SelectItem>
             </SelectContent>
           </Select>
-          <input required type="hidden" name="type" value={transactionType} />
+          <input type="hidden" name="type" value={transactionType} required />
 
           <Button
             type="submit"
             className="w-full bg-yellow-500 hover:bg-yellow-400 cursor-pointer"
+            disabled={isPending}
           >
             {isPending ? (
               <Loader className="animate-spin" />

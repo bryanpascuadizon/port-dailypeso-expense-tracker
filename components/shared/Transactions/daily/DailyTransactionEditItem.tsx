@@ -70,8 +70,18 @@ const DailyTransactionEditItem = ({
 
   const formattedDate = moment(date).format("MMM DD, YYYY");
 
+  const handleDialogChange = (isOpen: boolean) => {
+    setOpenDialog(isOpen);
+
+    if (!isOpen) {
+      setDate(transaction.date);
+      setAccount(transaction.transactionAccountId);
+      setTransactionType(transaction.type);
+    }
+  };
+
   return (
-    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+    <Dialog open={openDialog} onOpenChange={handleDialogChange}>
       <DialogTrigger asChild>
         <PenLine className="cursor-pointer text-green-700" />
       </DialogTrigger>
@@ -79,7 +89,9 @@ const DailyTransactionEditItem = ({
       <DialogContent>
         <DialogHeader className="text-left">
           <DialogTitle className="font-bold">Edit Transaction</DialogTitle>
-          <DialogDescription className="text-sm text-gray-500 mb-3" />
+          <DialogDescription className="text-base">
+            {moment(date).format("MMM D, YYYY")}
+          </DialogDescription>
         </DialogHeader>
 
         <form action={formAction} className="space-y-4">
