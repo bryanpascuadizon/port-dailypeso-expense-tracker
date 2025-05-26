@@ -109,6 +109,11 @@
     @apply text-sm mb-3;
   }
 
+  /* Accounts */
+  .account-content {
+    @apply pb-3 overflow-y-auto;
+  }
+
   /* Utils */
 
   .skeleton {

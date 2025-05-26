@@ -43,6 +43,14 @@ const MonthlyTransactionAccordion = ({
                   <p className="text-xs text-gray-500">
                     {monthTransaction.startDate} - {monthTransaction.endDate}
                   </p>
+                  <p className="text-xs text-gray-500">
+                    {monthTransaction.transactions.length > 0 &&
+                      `${monthTransaction.transactions.length} ${
+                        monthTransaction.transactions.length > 0
+                          ? "transactions"
+                          : "transaction"
+                      }`}
+                  </p>
                 </div>
               </div>
               <div className="">
