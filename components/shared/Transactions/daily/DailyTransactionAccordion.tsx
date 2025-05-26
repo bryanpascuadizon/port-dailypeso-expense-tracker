@@ -43,7 +43,7 @@ const DailyTransactionAccordion = ({
                   <p className="text-xs text-gray-500">
                     {dailyTransaction.day}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-yellow-500">
                     {dailyTransaction.transactions.length > 0 &&
                       `${dailyTransaction.transactions.length} ${
                         dailyTransaction.transactions.length > 1

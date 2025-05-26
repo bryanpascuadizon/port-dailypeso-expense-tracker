@@ -36,7 +36,7 @@ const MonthlyTransactionItem = ({
           <p className="text-xs md:text-sm font-bold">
             {item.startWeek} - {item.endWeek}
           </p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-sky-500">
             {item.transactions.length > 0 &&
               `${item.transactions.length} ${
                 item.transactions.length > 1 ? "transactions" : "transaction"
