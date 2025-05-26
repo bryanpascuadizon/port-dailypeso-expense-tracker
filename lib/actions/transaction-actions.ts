@@ -200,21 +200,18 @@ export const editTransaction = async (
 
 export const deleteTransaction = async (transactionId: string) => {
   try {
-    const user = await getUserSession();
+    const response = await deleteDailyTransaction(transactionId);
 
-    if (user) {
-      const response = await deleteDailyTransaction(transactionId);
-
-      if (response) {
-        return {
-          success: true,
-          message: "Transaction has been deleted",
-        };
-      }
+    if (!response) {
+      return {
+        success: false,
+        message: "Cannot delete transaction",
+      };
     }
+
     return {
-      success: false,
-      message: "Cannot delete transaction",
+      success: true,
+      message: "Transaction has been deleted",
     };
   } catch (error) {
     return {

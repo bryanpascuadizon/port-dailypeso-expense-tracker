@@ -4,14 +4,14 @@ import { getUserAccounts } from "../actions/account-actions";
 const useAccounts = () => {
   const {
     data: userAccounts,
-    isPending,
+    isPending: isPendingUserAccounts,
     refetch: refetchUserAccounts,
   } = useQuery({
     queryKey: ["user-accounts"],
     queryFn: getUserAccounts,
   });
 
-  return { userAccounts, isPending, refetchUserAccounts };
+  return { userAccounts, isPendingUserAccounts, refetchUserAccounts };
 };
 
 export default useAccounts;

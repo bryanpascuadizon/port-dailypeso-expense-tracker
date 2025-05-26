@@ -47,6 +47,17 @@ const DailyTransactionDialog = () => {
     message: "",
   });
 
+  const resetForm = () => {
+    setDate(new Date());
+    setTransactionType("expense");
+    setAccount(userAccounts?.accounts?.[0]?.id ?? "");
+  };
+
+  const handleDialogChange = (isOpen: boolean) => {
+    setOpenDialog(isOpen);
+    if (!isOpen) resetForm();
+  };
+
   // Set default account on load
   useEffect(() => {
     if (userAccounts?.accounts?.length) {
@@ -63,27 +74,17 @@ const DailyTransactionDialog = () => {
         queryKey: ["user-daily-transactions"],
       });
       setOpenDialog(false);
+      state.success = false;
       resetForm();
       toast(<p className="toast-text">Transaction added successfully</p>);
     };
 
     closeAndReset();
-  }, [state.success, queryClient]);
-
-  const resetForm = () => {
-    setDate(new Date());
-    setTransactionType("expense");
-    setAccount(userAccounts?.accounts?.[0]?.id ?? "");
-  };
-
-  const handleDialogChange = (isOpen: boolean) => {
-    setOpenDialog(isOpen);
-    if (!isOpen) resetForm();
-  };
+  }, [state, state.success, queryClient, resetForm]);
 
   return (
     <Dialog open={openDialog} onOpenChange={handleDialogChange}>
-      {userAccounts?.accounts?.length && (
+      {userAccounts?.accounts && (
         <DialogTrigger
           aria-label="Add Transaction"
           className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center"
@@ -200,7 +201,7 @@ const DailyTransactionDialog = () => {
           <Button
             type="submit"
             className="w-full bg-yellow-500 hover:bg-yellow-400 cursor-pointer"
-            disabled={isPending}
+            disabled={account === "" || isPending}
           >
             {isPending ? (
               <Loader className="animate-spin" />
