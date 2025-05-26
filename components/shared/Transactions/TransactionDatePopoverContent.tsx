@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { MONTHS } from "@/lib/constants";
+import { formatDateToISO } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 
@@ -15,9 +16,11 @@ const TransactionDatePopoverContent = ({
   );
   const [selectedMonth] = useState(new Date(date).getMonth());
 
-  const handleMonthChange = (month: string) => {
-    const monthIndex = MONTHS.indexOf(month);
-    setDate(new Date(selectedYear, monthIndex, 1));
+  const handleMonthChange = (monthIndex: number) => {
+    const month = MONTHS[monthIndex];
+    const year = selectedYear;
+    const selectedDate = new Date(formatDateToISO(`${month} ${year}`));
+    setDate(selectedDate);
   };
 
   return (
@@ -44,7 +47,7 @@ const TransactionDatePopoverContent = ({
             className={`col-span-1 text-center cursor-pointer p-3 button-hover rounded-sm font-normal text-xs md:text-sm ${
               index === selectedMonth && "bg-slate-200"
             }`}
-            onClick={() => handleMonthChange(month)}
+            onClick={() => handleMonthChange(index)}
           >
             {month}
           </div>

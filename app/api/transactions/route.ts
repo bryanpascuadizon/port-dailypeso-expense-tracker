@@ -26,9 +26,6 @@ export const GET = async (request: NextRequest) => {
     const startDate = new Date(startDateParams.replace(" ", "+"));
     const endDate = new Date(endDateParams.replace(" ", "+"));
 
-    console.log(startDate);
-    console.log(endDate);
-
     const transactions = await prisma.transaction.findMany({
       where: {
         userId: userIdParams,
