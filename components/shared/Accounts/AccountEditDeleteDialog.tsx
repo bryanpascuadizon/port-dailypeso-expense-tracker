@@ -61,6 +61,7 @@ const AccountEditDeleteDialog = ({
         id="accountName"
         name="accountName"
         defaultValue={account.name}
+        disabled={isPendingDelete || isEditPending}
       />
       <div className="flex gap-3 w-full">
         <div className="w-full">
