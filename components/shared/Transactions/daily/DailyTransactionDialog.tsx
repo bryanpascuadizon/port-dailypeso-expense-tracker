@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useCallback, useEffect, useState } from "react";
 import moment from "moment";
 import { format } from "date-fns";
 import { useQueryClient } from "@tanstack/react-query";
@@ -47,11 +47,11 @@ const DailyTransactionDialog = () => {
     message: "",
   });
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setDate(new Date());
     setTransactionType("expense");
     setAccount(userAccounts?.accounts?.[0]?.id ?? "");
-  };
+  }, [userAccounts]);
 
   const handleDialogChange = (isOpen: boolean) => {
     setOpenDialog(isOpen);

@@ -19,9 +19,9 @@ const MonthlyTransactionItem = ({
     [month, year, transactions]
   );
 
-  const handleDailyRender = (startWeek: string) => {
-    const week = new Date(`${startWeek}/${year}`);
-    redirect(`/transactions/daily?week=${moment(week).format("MMM DD, YYYY")}`);
+  const handleDailyRender = (dailyTrigger: string) => {
+    const week = new Date(`${dailyTrigger}`);
+    redirect(`/transactions/daily?week=${moment(week).format("MMMM-YYYY")}`);
   };
 
   return (
@@ -30,7 +30,7 @@ const MonthlyTransactionItem = ({
       <div
         className="flex-between p-2 rounded-sm cursor-pointer hover:bg-slate-200"
         key={index}
-        onClick={() => handleDailyRender(item.startWeek)}
+        onClick={() => handleDailyRender(item.dailyTrigger)}
       >
         <div className="">
           <p className="text-xs md:text-sm font-bold">

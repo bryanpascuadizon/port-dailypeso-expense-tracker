@@ -150,7 +150,6 @@ export const renderWeek = (
   while (current.isSameOrAfter(weekStart)) {
     const weekStart = current.clone().startOf("week");
     const weekEnd = current.clone();
-
     const startDate = new Date(
       formatDateToISO(weekStart.format("MMMM/DD/YYYY"))
     );
@@ -165,8 +164,10 @@ export const renderWeek = (
     weeks.push({
       startWeek: `${weekStart.format("MM/DD")}`,
       endWeek: `${weekEnd.format("MM/DD")}`,
+      dailyTrigger: formatDateToISO(`${month} ${year}`),
       transactions: weeklyTransactions,
     });
+
     current.subtract(1, "week");
   }
 

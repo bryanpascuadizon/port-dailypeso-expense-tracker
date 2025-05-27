@@ -48,7 +48,7 @@ const AccountDialog = ({
     };
 
     closeDialog();
-  }, [state.success, refetchUserAccounts, setOpenDialog]);
+  }, [state, state.success, refetchUserAccounts, setOpenDialog]);
 
   return (
     <form action={action}>

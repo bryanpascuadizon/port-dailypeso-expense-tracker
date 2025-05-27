@@ -26,15 +26,21 @@ const TransactionDateTab = ({
       } else {
         assignDate = new Date(assignDate.setFullYear(date.getFullYear() - 1));
       }
-    } else {
+    }
+
+    if (dateType === "monthly") {
       if (increase) {
         assignDate = new Date(assignDate.setMonth(date.getMonth() + 1));
       } else {
         assignDate = new Date(assignDate.setMonth(date.getMonth() - 1));
       }
     }
+
     setDate(assignDate);
   };
+
+  const yearlyDate = moment(date).format("YYYY");
+  const monthlyDate = moment(date).format("MMMM YYYY");
 
   return (
     <div className="transaction-date-tab flex-between gap-3 mb-3">
@@ -47,9 +53,7 @@ const TransactionDateTab = ({
       <Popover>
         <PopoverTrigger className="w-full" disabled={dateType === "yearly"}>
           <div className="transaction-date-tab-date button-hover">
-            {dateType === "yearly"
-              ? moment(date).format("YYYY")
-              : moment(date).format("MMMM YYYY")}
+            {dateType === "yearly" ? yearlyDate : monthlyDate}
           </div>
         </PopoverTrigger>
         <PopoverContent>

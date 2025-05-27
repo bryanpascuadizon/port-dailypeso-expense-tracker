@@ -47,7 +47,7 @@ const MonthlyTransactions = () => {
                 {data.transactions && (
                   <MonthlyTransactionAccordion
                     transactions={data.transactions}
-                    year={date}
+                    year={date.getFullYear()}
                   />
                 )}
               </div>

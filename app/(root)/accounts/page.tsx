@@ -40,7 +40,7 @@ const Accounts = () => {
     };
 
     closeDialog();
-  }, [state, state, refetchUserAccounts, setOpenDialog]);
+  }, [state, refetchUserAccounts, setOpenDialog]);
 
   return (
     <div>
