@@ -11,7 +11,7 @@ import {
 import { TransactionAccount } from "@/types";
 
 import { Banknote } from "lucide-react";
-import AccountDialog from "./AccountDialog";
+import AccountEditDeleteDialog from "./AccountEditDeleteDialog";
 import { useState } from "react";
 
 const AccountItem = ({
@@ -33,7 +33,7 @@ const AccountItem = ({
           <DialogTitle>Edit Account</DialogTitle>
           <DialogDescription>{account.name}</DialogDescription>
         </DialogHeader>
-        <AccountDialog
+        <AccountEditDeleteDialog
           account={account}
           refetchUserAccounts={refetchUserAccounts}
           setOpenDialog={setOpenDialog}

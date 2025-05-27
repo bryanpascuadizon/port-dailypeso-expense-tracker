@@ -35,13 +35,13 @@ import useAccounts from "@/lib/hooks/useAccounts";
 import { TransactionAccount } from "@/types";
 
 const DailyTransactionDialog = () => {
-  const { userAccounts } = useAccounts();
   const queryClient = useQueryClient();
-
   const [openDialog, setOpenDialog] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
   const [account, setAccount] = useState("");
   const [transactionType, setTransactionType] = useState("expense");
+
+  const { userAccounts } = useAccounts();
   const [state, action, isPending] = useActionState(submitDailyTransaction, {
     success: false,
     message: "",
@@ -58,29 +58,27 @@ const DailyTransactionDialog = () => {
     if (!isOpen) resetForm();
   };
 
-  // Set default account on load
   useEffect(() => {
     if (userAccounts?.accounts?.length) {
       setAccount(userAccounts.accounts[0].id);
     }
   }, [userAccounts]);
 
-  // Handle transaction success
   useEffect(() => {
     if (!state.success) return;
 
     const closeAndReset = async () => {
+      state.success = false;
+      resetForm();
+      setOpenDialog(false);
+      toast(<p className="toast-text">Transaction added successfully</p>);
       await queryClient.invalidateQueries({
         queryKey: ["user-daily-transactions"],
       });
-      setOpenDialog(false);
-      state.success = false;
-      resetForm();
-      toast(<p className="toast-text">Transaction added successfully</p>);
     };
 
     closeAndReset();
-  }, [state, state.success, queryClient, resetForm]);
+  }, [state, state.success, queryClient, resetForm, setOpenDialog]);
 
   return (
     <Dialog open={openDialog} onOpenChange={handleDialogChange}>

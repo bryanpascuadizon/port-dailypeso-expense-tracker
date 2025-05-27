@@ -9,7 +9,7 @@ import { Loader } from "lucide-react";
 import { useActionState, useEffect, useTransition } from "react";
 import { toast } from "sonner";
 
-const AccountDialog = ({
+const AccountEditDeleteDialog = ({
   account,
   refetchUserAccounts,
   setOpenDialog,
@@ -86,4 +86,4 @@ const AccountDialog = ({
   );
 };
 
-export default AccountDialog;
+export default AccountEditDeleteDialog;
