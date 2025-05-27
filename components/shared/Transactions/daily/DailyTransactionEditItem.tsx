@@ -64,7 +64,7 @@ const DailyTransactionEditItem = ({
     if (state.success) {
       refetchDailyTransactions();
       setOpenDialog(false);
-      toast(<p className="toast-text">{state.message}</p>);
+      toast(<p className="toast-text text-confirm">{state.message}</p>);
     }
   }, [state, refetchDailyTransactions]);
 

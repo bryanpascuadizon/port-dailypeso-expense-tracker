@@ -69,11 +69,14 @@
     @apply pb-3 overflow-y-auto;
   }
 
-  .income-text {
+  .income-text,
+  .text-confirm {
     @apply text-green-700 hover:text-green-700;
   }
 
-  .expense-text {
+  .expense-text,
+  .text-error,
+  .text-delete {
     @apply text-red-700 hover:text-red-700;
   }
 

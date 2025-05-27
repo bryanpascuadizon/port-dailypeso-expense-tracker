@@ -36,7 +36,7 @@ const Accounts = () => {
       await refetchUserAccounts();
       setOpenDialog(false);
       state.success = false;
-      toast(<p className="toast-text">{state.message}</p>);
+      toast(<p className="toast-text text-confirm">{state.message}</p>);
     };
 
     closeDialog();

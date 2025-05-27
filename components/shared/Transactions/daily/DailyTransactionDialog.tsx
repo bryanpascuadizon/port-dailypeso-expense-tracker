@@ -71,7 +71,11 @@ const DailyTransactionDialog = () => {
       state.success = false;
       resetForm();
       setOpenDialog(false);
-      toast(<p className="toast-text">Transaction added successfully</p>);
+      toast(
+        <p className="toast-text text-confirm">
+          Transaction added successfully
+        </p>
+      );
       await queryClient.invalidateQueries({
         queryKey: ["user-daily-transactions"],
       });

@@ -31,7 +31,7 @@ const AccountEditDeleteDialog = ({
       if (response.success) {
         await refetchUserAccounts();
         setOpenDialog(false);
-        toast(<p className="toast-text">{response.message}</p>);
+        toast(<p className="toast-text text-delete">{response.message}</p>);
       }
     });
   };
@@ -45,6 +45,7 @@ const AccountEditDeleteDialog = ({
       await refetchUserAccounts();
       state.success = false;
       setOpenDialog(false);
+      toast(<p className="toast-text text-confirm">{state.message}</p>);
     };
 
     closeDialog();

@@ -35,7 +35,7 @@ const DailyTransactionDeleteItem = ({
       if (response) {
         await refetchDailyTransactions();
         setOpenDialog(false);
-        toast(<p className="toast-text">{response.message}</p>);
+        toast(<p className="toast-text text-delete">{response.message}</p>);
       }
     });
   };
