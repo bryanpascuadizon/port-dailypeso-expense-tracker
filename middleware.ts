@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
   if (
     pathname === "/" ||
     (process.env.NODE_ENV === "production" &&
-      (pathname === "profile/" || pathname === "/summary"))
+      (pathname === "/profile" || pathname === "/summary"))
   ) {
     return NextResponse.redirect(
       new URL(token ? "/transactions/daily" : "/sign-in", request.url)
