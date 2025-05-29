@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  deleteUserAccount,
-  editUserAccount,
-} from "@/lib/actions/account-actions";
+import { editUserAccount } from "@/lib/actions/account-actions";
 import { TransactionAccount } from "@/types";
+
 import { Loader } from "lucide-react";
-import { useActionState, useEffect, useTransition } from "react";
+import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
+import AccountDeleteDialog from "./AccountDeleteDialog";
 
 const AccountEditDeleteDialog = ({
   account,
@@ -18,23 +17,10 @@ const AccountEditDeleteDialog = ({
   refetchUserAccounts: () => void;
   setOpenDialog: (isOpen: boolean) => void;
 }) => {
-  const [isPendingDelete, startDeleteTransition] = useTransition();
   const [state, action, isEditPending] = useActionState(editUserAccount, {
     success: false,
     message: "",
   });
-
-  const handleDeleteAccount = () => {
-    startDeleteTransition(async () => {
-      const response = await deleteUserAccount(account.id);
-
-      if (response.success) {
-        await refetchUserAccounts();
-        setOpenDialog(false);
-        toast(<p className="toast-text text-delete">{response.message}</p>);
-      }
-    });
-  };
 
   useEffect(() => {
     if (!state.success) {
@@ -61,13 +47,13 @@ const AccountEditDeleteDialog = ({
         id="accountName"
         name="accountName"
         defaultValue={account.name}
-        disabled={isPendingDelete || isEditPending}
+        disabled={isEditPending}
       />
       <div className="flex gap-3 w-full">
         <div className="w-full">
           <Button
             className="w-full bg-green-700 hover:bg-green-600 cursor-pointer"
-            disabled={isPendingDelete || isEditPending}
+            disabled={isEditPending}
             type="submit"
           >
             {isEditPending ? <Loader className="animate-spin" /> : "Edit"}
@@ -75,13 +61,11 @@ const AccountEditDeleteDialog = ({
         </div>
 
         <div className="w-full">
-          <Button
-            className="w-full bg-red-700 hover:bg-red-600 cursor-pointer"
-            onClick={handleDeleteAccount}
-            disabled={isPendingDelete || isEditPending}
-          >
-            {isPendingDelete ? <Loader className="animate-spin" /> : "Delete"}
-          </Button>
+          <AccountDeleteDialog
+            account={account}
+            refetchUserAccounts={refetchUserAccounts}
+            isEditPending={isEditPending}
+          />
         </div>
       </div>
     </form>

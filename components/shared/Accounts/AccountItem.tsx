@@ -31,7 +31,7 @@ const AccountItem = ({
       <DialogContent>
         <DialogHeader className="text-left">
           <DialogTitle>Edit Account</DialogTitle>
-          <DialogDescription>{account.name}</DialogDescription>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
         <AccountEditDeleteDialog
           account={account}

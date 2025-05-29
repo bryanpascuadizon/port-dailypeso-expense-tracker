@@ -38,15 +38,19 @@ const DailyTransactionAddItem = ({
   });
 
   const [date, setDate] = useState<Date>(new Date());
-  const [account, setAccount] = useState(
-    userAccounts ? userAccounts[0].id : ""
-  );
+  const [account, setAccount] = useState("");
   const [transactionType, setTransactionType] = useState("expense");
   const queryClient = useQueryClient();
 
   const resetForm = useCallback(() => {
     setDate(new Date());
   }, []);
+
+  useEffect(() => {
+    if (userAccounts && userAccounts.length > 0) {
+      setAccount(userAccounts[0].id);
+    }
+  }, [userAccounts]);
 
   useEffect(() => {
     if (!state.success) return;
