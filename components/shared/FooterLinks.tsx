@@ -15,7 +15,10 @@ const FooterLinks = ({
   }[];
 }) => {
   const handleFooterLink = (link: string) => {
-    if (link === "/profile" || link === "/summary") {
+    if (
+      process.env.NODE_ENV === "production" &&
+      (link === "/profile" || link === "/summary")
+    ) {
       toast(
         <p className="toast-text text-destructive">{`${
           link === "/profile" ? "Profile" : "Summary"
@@ -34,11 +37,7 @@ const FooterLinks = ({
               index
             ) => (
               <Link
-                href={
-                  page.link === "/profile" || page.link === "/summary"
-                    ? ""
-                    : page.link
-                }
+                href={process.env.NODE_ENV === "production" ? "" : page.link}
                 className={`footer-links ${
                   index === 0
                     ? "rounded-tl-sm"
