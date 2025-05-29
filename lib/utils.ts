@@ -128,7 +128,9 @@ export const getDailyAccordions = (transactions: Transactions[]) => {
 };
 
 export const formatDateToISO = (date: string) => {
-  return moment.utc(date, "MMMM D, YYYY").toISOString();
+  return moment
+    .utc(date === "" ? new Date() : date, "MMMM D, YYYY")
+    .toISOString();
 };
 
 export const renderWeek = (
@@ -175,13 +177,15 @@ export const renderWeek = (
 };
 
 export const getInitialdate = (startWeek: string | null) => {
+  const currentDate = new Date(formatDateToISO(""));
+
   if (isNaN(new Date(startWeek!).getTime())) {
-    return new Date();
+    return currentDate;
   }
 
   if (startWeek) {
-    return new Date(startWeek);
+    return new Date(formatDateToISO(startWeek));
   }
 
-  return new Date();
+  return currentDate;
 };
