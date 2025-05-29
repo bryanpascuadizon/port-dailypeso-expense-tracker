@@ -41,12 +41,18 @@ const DailyTransactionAccount = ({
 
   return (
     <div>
-      {!accounts.length && (
-        <DialogDescription className="">
-          Since you do not have any accounts, add a new account before adding a
-          transaction. This is to categorize your daily transactions
-        </DialogDescription>
-      )}
+      <DialogDescription className="">
+        {!accounts.length ? (
+          <>
+            {" "}
+            Since you do not have any accounts, add a new account before adding
+            a transaction. This is to categorize your daily transactions
+          </>
+        ) : (
+          <>Add an account to categorize your daily transactions</>
+        )}
+      </DialogDescription>
+
       <form action={action} className="mt-3">
         <Input
           className="daily-form-item"
@@ -58,7 +64,7 @@ const DailyTransactionAccount = ({
           maxLength={20}
         />
         <Button className="bg-green-700 hover:bg-green-600 w-full cursor-pointer">
-          {isPending ? <Loader className="animate-spin" /> : "Add"}
+          {isPending ? <Loader className="animate-spin" /> : "Add Account"}
         </Button>
       </form>
     </div>

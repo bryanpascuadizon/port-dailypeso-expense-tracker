@@ -37,7 +37,12 @@ const FooterLinks = ({
               index
             ) => (
               <Link
-                href={process.env.NODE_ENV === "production" ? "" : page.link}
+                href={
+                  process.env.NODE_ENV === "production" &&
+                  (page.link === "/profile" || page.link === "/summary")
+                    ? ""
+                    : page.link
+                }
                 className={`footer-links ${
                   index === 0
                     ? "rounded-tl-sm"
