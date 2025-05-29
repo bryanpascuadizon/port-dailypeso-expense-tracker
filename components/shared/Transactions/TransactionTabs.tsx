@@ -1,6 +1,7 @@
 import { Calendar1, CalendarDays, Sun } from "lucide-react";
 import Link from "next/link";
 import { JSX } from "react";
+import { toast } from "sonner";
 
 const TransactionTabs = ({ activeTab }: { activeTab: string }) => {
   const transactionPages = [
@@ -40,7 +41,14 @@ const TransactionTabs = ({ activeTab }: { activeTab: string }) => {
           (page: { title: string; link: string; icon: JSX.Element }, index) => (
             <Link
               key={index}
-              href={page.link}
+              href={page.title === "Calendar" ? "/" : page.link}
+              onClick={() => {
+                toast(
+                  <p className="toast-text text-destructive">
+                    Calendar is not available yet
+                  </p>
+                );
+              }}
               className={`button-hover rounded-t-sm w-full p-2 col-span-1 font-bold flex justify-center gap-2 text-sm md:text-base ${
                 page.title === activeTab && "transaction-tab-active"
               }`}

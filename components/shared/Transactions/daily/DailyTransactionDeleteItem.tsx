@@ -97,6 +97,7 @@ const DailyTransactionDeleteItem = ({
           <Button
             className="w-full bg-red-700 hover:bg-red-600 text-white cursor-pointer"
             onClick={handleDeleteTransaction}
+            disabled={isPending}
           >
             {isPending ? (
               <Loader className="animate-spin" />
