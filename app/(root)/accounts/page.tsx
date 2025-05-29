@@ -48,15 +48,6 @@ const Accounts = () => {
       <div className="account-content grid grid-cols-1 md:grid-cols-4 sm:grid-cols-2 gap-3">
         {!isPendingUserAccounts && userAccounts && userAccounts.accounts ? (
           <>
-            {userAccounts.accounts.map(
-              (account: TransactionAccount, index: number) => (
-                <AccountItem
-                  account={account}
-                  key={index}
-                  refetchUserAccounts={refetchUserAccounts}
-                />
-              )
-            )}
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
               <DialogTrigger className="account-item button-hover bg-gray-300!">
                 <CirclePlus className="account-icon" />
@@ -83,6 +74,15 @@ const Accounts = () => {
                 </form>
               </DialogContent>
             </Dialog>
+            {userAccounts.accounts.map(
+              (account: TransactionAccount, index: number) => (
+                <AccountItem
+                  account={account}
+                  key={index}
+                  refetchUserAccounts={refetchUserAccounts}
+                />
+              )
+            )}
           </>
         ) : (
           <Skeleton className="skeleton-data w-full h-16"></Skeleton>
