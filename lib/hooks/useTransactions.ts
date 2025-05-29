@@ -3,10 +3,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUserDailyTransactions } from "../actions/transaction-actions";
 import { useState } from "react";
-import { getInitialdate } from "../utils";
+import { getInitialDate } from "../utils";
 
 const useTransactions = (currentDate: string) => {
-  const [date, setDate] = useState(() => getInitialdate(currentDate));
+  const [date, setDate] = useState(() => getInitialDate(currentDate));
 
   const {
     data,

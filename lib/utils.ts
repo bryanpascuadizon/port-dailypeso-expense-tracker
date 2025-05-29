@@ -176,16 +176,11 @@ export const renderWeek = (
   return weeks;
 };
 
-export const getInitialdate = (startWeek: string | null) => {
-  const currentDate = new Date(formatDateToISO(""));
+export const getInitialDate = (startWeek: string | null): Date => {
+  if (!startWeek) return new Date(formatDateToISO(""));
 
-  if (isNaN(new Date(startWeek!).getTime())) {
-    return currentDate;
-  }
-
-  if (startWeek) {
-    return new Date(formatDateToISO(startWeek));
-  }
-
-  return currentDate;
+  const parsedDate = new Date(formatDateToISO(startWeek));
+  return isNaN(parsedDate.getTime())
+    ? new Date(formatDateToISO(""))
+    : parsedDate;
 };
