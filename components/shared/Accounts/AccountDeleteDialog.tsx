@@ -11,7 +11,7 @@ import {
 import { deleteUserAccount } from "@/lib/actions/account-actions";
 import { TransactionAccount } from "@/types";
 import { Loader } from "lucide-react";
-import { TransitionStartFunction } from "react";
+import { TransitionStartFunction, useState } from "react";
 import { toast } from "sonner";
 
 const AccountDeleteDialog = ({
@@ -27,19 +27,22 @@ const AccountDeleteDialog = ({
   refetchUserAccounts: () => void;
   startDeleteTransition: TransitionStartFunction;
 }) => {
+  const [openDialog, setDialog] = useState(false);
+
   const handleDeleteAccount = () => {
     startDeleteTransition(async () => {
       const response = await deleteUserAccount(account.id);
 
       if (response.success) {
-        await refetchUserAccounts();
+        setDialog(false);
         toast(<p className="toast-text text-delete">{response.message}</p>);
+        await refetchUserAccounts();
       }
     });
   };
 
   return (
-    <Dialog>
+    <Dialog open={openDialog} onOpenChange={setDialog}>
       <DialogTrigger asChild>
         <Button
           className="w-full bg-red-700 hover:bg-red-600 cursor-pointer"

@@ -43,11 +43,13 @@ const TransactionTabs = ({ activeTab }: { activeTab: string }) => {
               key={index}
               href={page.title === "Calendar" ? "/" : page.link}
               onClick={() => {
-                toast(
-                  <p className="toast-text text-destructive">
-                    Calendar is not available yet
-                  </p>
-                );
+                if (page.title === "Calendar") {
+                  toast(
+                    <p className="toast-text text-destructive">
+                      Calendar is not available yet
+                    </p>
+                  );
+                }
               }}
               className={`button-hover rounded-t-sm w-full p-2 col-span-1 font-bold flex justify-center gap-2 text-sm md:text-base ${
                 page.title === activeTab && "transaction-tab-active"
