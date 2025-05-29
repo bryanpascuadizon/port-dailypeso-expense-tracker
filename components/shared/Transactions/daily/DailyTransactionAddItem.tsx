@@ -118,6 +118,14 @@ const DailyTransactionAddItem = ({
           placeholder="Note"
           className="daily-form-item"
           required
+          maxLength={30}
+        />
+        <Input
+          id="details"
+          name="details"
+          placeholder="Note details"
+          className="daily-form-item"
+          maxLength={30}
         />
         <Input
           id="amount"
@@ -125,13 +133,6 @@ const DailyTransactionAddItem = ({
           type="number"
           step="0.01"
           placeholder={currencyFormatter.format(0)}
-          className="daily-form-item"
-          required
-        />
-        <Input
-          id="location"
-          name="location"
-          placeholder="Location"
           className="daily-form-item"
           required
         />
@@ -173,7 +174,7 @@ const DailyTransactionAddItem = ({
 
         <Button
           type="submit"
-          className="w-full bg-yellow-500 hover:bg-yellow-400"
+          className="w-full bg-yellow-500 hover:bg-yellow-400 cursor-pointer"
           disabled={!account || isPending}
         >
           {isPending ? <Loader className="animate-spin" /> : "Add Transaction"}

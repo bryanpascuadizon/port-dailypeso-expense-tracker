@@ -88,7 +88,9 @@ const DailyTransactionEditItem = ({
 
       <DialogContent>
         <DialogHeader className="text-left">
-          <DialogTitle className="font-bold">Edit Transaction</DialogTitle>
+          <DialogTitle className="font-bold text-green-700">
+            Edit Transaction
+          </DialogTitle>
           <DialogDescription className="text-base">
             {moment(date).format("MMM D, YYYY")}
           </DialogDescription>
@@ -101,7 +103,6 @@ const DailyTransactionEditItem = ({
           <input type="hidden" name="account" value={account} />
           <input type="hidden" name="type" value={transactionType} />
 
-          {/* Date Picker */}
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -125,26 +126,24 @@ const DailyTransactionEditItem = ({
             </PopoverContent>
           </Popover>
 
-          {/* Note Input */}
           <Input
             name="note"
             defaultValue={transaction.note}
             placeholder="Note"
             className="daily-form-item"
             required
+            maxLength={30}
           />
 
-          {/* Location Input */}
           <Input
-            id="location"
-            defaultValue={transaction.location}
-            name="location"
+            id="details"
+            defaultValue={transaction.details}
+            name="details"
             className="daily-form-item"
-            placeholder="Location"
-            required
+            placeholder="Note details"
+            maxLength={30}
           />
 
-          {/* Amount Input */}
           <Input
             name="amount"
             type="number"
@@ -155,7 +154,6 @@ const DailyTransactionEditItem = ({
             required
           />
 
-          {/* Account Select */}
           <Select
             value={account}
             onValueChange={setAccount}

@@ -4,7 +4,7 @@ export type Transactions = {
   date: Date;
   amount: number;
   note: string;
-  location: string;
+  details: string;
   transactionAccountId: string;
   type: string;
   transactionAccount?: TransactionAccount;

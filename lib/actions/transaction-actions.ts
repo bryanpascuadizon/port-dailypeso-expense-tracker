@@ -110,14 +110,14 @@ export const submitDailyTransaction = async (
       const account: string = formData.get("account") as string;
       const type: string = formData.get("type") as string;
       const date: string = formData.get("date") as string;
-      const location: string = formData.get("location") as string;
+      const details: string = formData.get("details") as string;
 
       const newTransaction = {
         amount,
         note,
         account,
         type,
-        location,
+        details,
         date: new Date(formatDateToISO(`${date}`)),
       };
 
@@ -155,7 +155,7 @@ export const editTransaction = async (
     const note: string = formData.get("note") as string;
     const type: string = formData.get("type") as string;
     const account: string = formData.get("account") as string;
-    const location: string = formData.get("location") as string;
+    const details: string = formData.get("details") as string;
 
     const updatedTransaction: Transactions = {
       id,
@@ -164,7 +164,7 @@ export const editTransaction = async (
       amount,
       note,
       type,
-      location,
+      details,
       transactionAccountId: account,
     };
 

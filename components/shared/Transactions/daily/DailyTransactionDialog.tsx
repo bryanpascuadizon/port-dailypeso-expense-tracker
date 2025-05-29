@@ -50,7 +50,7 @@ const DailyTransactionDialog = () => {
 
         <DialogContent>
           <DialogHeader className="text-left">
-            <DialogTitle className="text-base md:text-lg font-bold">
+            <DialogTitle className="text-base md:text-lg font-bold text-yellow-500">
               Add Transaction
             </DialogTitle>
             <DialogDescription></DialogDescription>

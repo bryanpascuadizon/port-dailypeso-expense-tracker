@@ -11,20 +11,22 @@ import {
 import { deleteUserAccount } from "@/lib/actions/account-actions";
 import { TransactionAccount } from "@/types";
 import { Loader } from "lucide-react";
-import { useTransition } from "react";
+import { TransitionStartFunction } from "react";
 import { toast } from "sonner";
 
 const AccountDeleteDialog = ({
   account,
   isEditPending,
+  isDeletePending,
   refetchUserAccounts,
+  startDeleteTransition,
 }: {
   account: TransactionAccount;
   isEditPending: boolean;
+  isDeletePending: boolean;
   refetchUserAccounts: () => void;
+  startDeleteTransition: TransitionStartFunction;
 }) => {
-  const [isDeletePending, startDeleteTransition] = useTransition();
-
   const handleDeleteAccount = () => {
     startDeleteTransition(async () => {
       const response = await deleteUserAccount(account.id);
@@ -51,7 +53,7 @@ const AccountDeleteDialog = ({
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogTitle>Delete Account</DialogTitle>
+        <DialogTitle className="text-red-700">Delete Account</DialogTitle>
         <DialogDescription>
           <span className="font-bold">
             Are you sure you want to delete this account?{" "}

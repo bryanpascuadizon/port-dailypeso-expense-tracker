@@ -52,7 +52,7 @@ const DailyTransactionDeleteItem = ({
           <DialogDescription className="text-sm text-gray-500 mb-3">
             Are you sure you want to delete this transaction?
           </DialogDescription>
-          <div className="text-sm mb-2">
+          <div className="text-sm md:text-base mb-2">
             <div className="grid grid-cols-4">
               <p className="font-bold col-span-1">Date: </p>
               <p className="col-span-3">
@@ -64,8 +64,10 @@ const DailyTransactionDeleteItem = ({
               <p className="col-span-3">{transaction.note}</p>
             </div>
             <div className="grid grid-cols-4">
-              <p className="font-bold col-span-1">Location: </p>
-              <p className="col-span-3">{transaction.location}</p>
+              <p className="font-bold col-span-1">Note Details: </p>
+              <p className="col-span-3">
+                {transaction.details === "" ? "-" : transaction.details}
+              </p>
             </div>
             <div className="grid grid-cols-4">
               <p className="font-bold col-span-1">Amount: </p>
@@ -96,7 +98,11 @@ const DailyTransactionDeleteItem = ({
             className="w-full bg-red-700 hover:bg-red-600 text-white cursor-pointer"
             onClick={handleDeleteTransaction}
           >
-            {isPending ? <Loader className="animate-spin" /> : "Delete"}
+            {isPending ? (
+              <Loader className="animate-spin" />
+            ) : (
+              "Delete Transaction"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

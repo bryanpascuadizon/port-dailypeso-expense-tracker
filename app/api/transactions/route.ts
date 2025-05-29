@@ -68,7 +68,7 @@ export const POST = async (request: NextRequest) => {
         transactionAccountId: newTransaction.account,
         amount: newTransaction.amount,
         type: newTransaction.type,
-        location: newTransaction.location,
+        details: newTransaction.details,
       },
     });
 
@@ -101,7 +101,7 @@ export const PATCH = async (request: NextRequest) => {
         date: transactionForEdit.date,
         transactionAccountId: transactionForEdit.transactionAccountId,
         type: transactionForEdit.type,
-        location: transactionForEdit.location,
+        details: transactionForEdit.details,
       },
     });
 
@@ -118,8 +118,6 @@ export const DELETE = async (request: NextRequest) => {
     const { searchParams } = new URL(request.url);
 
     const transactionId = searchParams.get("transactionId");
-
-    console.log(transactionId);
 
     if (!transactionId) {
       return new NextResponse("Cannot delete transaction", { status: 500 });

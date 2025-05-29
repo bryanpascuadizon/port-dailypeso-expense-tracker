@@ -30,7 +30,7 @@ const AccountItem = ({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="text-left">
-          <DialogTitle>Edit Account</DialogTitle>
+          <DialogTitle className="text-green-700">Edit Account</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <AccountEditDeleteDialog

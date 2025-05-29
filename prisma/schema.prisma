@@ -35,7 +35,7 @@ model Transaction {
   note                 String              @default("")
   type                 String              @default("")
   transactionAccountId String?             @db.Uuid
-  location             String              @default("")
+  details              String?
   user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactionAccount   TransactionAccount? @relation(fields: [transactionAccountId], references: [id], onDelete: SetNull) // Nullable + SetNull
 }
