@@ -33,7 +33,7 @@
   }
 
   .toast-text {
-    @apply text-base;
+    @apply text-sm md:text-base;
   }
 
   .header-title {

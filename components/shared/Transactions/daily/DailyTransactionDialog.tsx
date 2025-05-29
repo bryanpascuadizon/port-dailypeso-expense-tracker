@@ -14,10 +14,10 @@ import useAccounts from "@/lib/hooks/useAccounts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DailyTransactionAccount from "./DailyTransactionAccount";
 import DailyTransactionAddItem from "./DailyTransactionAddItem";
-import { Loader, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 
 const DailyTransactionDialog = () => {
-  const { userAccounts, isPendingUserAccounts } = useAccounts();
+  const { userAccounts } = useAccounts();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [defaultTab, setDefaultTab] = useState("");
@@ -57,30 +57,21 @@ const DailyTransactionDialog = () => {
           </DialogHeader>
 
           <Tabs defaultValue={defaultTab} value={defaultTab}>
-            <TabsList className="w-full grid grid-cols-2">
+            <TabsList className="w-full flex items-center">
               <TabsTrigger
                 value={tabs.ACCOUNTS}
-                className="flex gap-3 cursor-pointer"
+                className="flex gap-3 cursor-pointer text-sm md:text-base"
                 onClick={() => setDefaultTab(tabs.ACCOUNTS)}
               >
-                <p className="">1</p>
                 <p>New Account</p>
               </TabsTrigger>
               <TabsTrigger
                 value={tabs.TRANSACTION}
-                className="flex gap-3 cursor-pointer"
+                className="flex gap-3 cursor-pointer text-sm md:text-base"
                 disabled={!userAccounts.accounts.length}
                 onClick={() => setDefaultTab(tabs.TRANSACTION)}
               >
-                {isPendingUserAccounts ? (
-                  <Loader />
-                ) : (
-                  <>
-                    {" "}
-                    <p className="">2</p>
-                    <p>New Transaction</p>
-                  </>
-                )}
+                <p>New Transaction</p>
               </TabsTrigger>
             </TabsList>
             <TabsContent value={tabs.ACCOUNTS}>

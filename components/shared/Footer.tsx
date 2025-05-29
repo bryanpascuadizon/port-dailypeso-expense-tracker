@@ -1,9 +1,7 @@
-import Link from "next/link";
 import { HandCoins, CreditCard, ChartNoAxesCombined } from "lucide-react";
-import { JSX } from "react";
-import DailyTransactionDialog from "./Transactions/daily/DailyTransactionDialog";
 import { auth } from "@/auth";
 import Image from "next/image";
+import FooterLinks from "./FooterLinks";
 
 const Footer = async () => {
   const session = await auth();
@@ -12,7 +10,7 @@ const Footer = async () => {
   const userName = user?.name?.split(" ")[0];
   const userImage = user?.image;
 
-  const footerPages = [
+  const links = [
     {
       title: "Transactions",
       link: "/transactions/daily",
@@ -44,34 +42,8 @@ const Footer = async () => {
       ),
     },
   ];
-  return (
-    <footer className="w-full footer-container">
-      <div className="wrapper relative bg-white shadow rounded-t-sm">
-        <nav className="grid grid-cols-4 text-sm text-center">
-          {footerPages.map(
-            (
-              page: { title: string; link: string; icon: JSX.Element },
-              index
-            ) => (
-              <Link
-                href={page.link}
-                className={`footer-links ${
-                  index === 0
-                    ? "rounded-tl-sm"
-                    : index === footerPages.length - 1 && "rounded-tr-sm"
-                }`}
-                key={index}
-              >
-                {page.icon}
-                <p>{page.title}</p>
-              </Link>
-            )
-          )}
-        </nav>
-        <DailyTransactionDialog />
-      </div>
-    </footer>
-  );
+
+  return <FooterLinks footerLinks={links} />;
 };
 
 export default Footer;
