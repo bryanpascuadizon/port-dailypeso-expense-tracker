@@ -1,5 +1,12 @@
 "use client";
 
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { useActionState } from "react";
+import { toast } from "sonner";
+import { format } from "date-fns";
+import { CalendarIcon, Loader } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -7,12 +14,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { submitDailyTransaction } from "@/lib/actions/transaction-actions";
-import { cn, currencyFormatter } from "@/lib/utils";
-import { CalendarIcon, Loader } from "lucide-react";
-import moment from "moment";
-import { useActionState, useCallback, useEffect, useState } from "react";
-import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Select,
@@ -21,66 +22,72 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn, currencyFormatter } from "@/lib/utils";
+import { submitDailyTransaction } from "@/lib/actions/transaction-actions";
 import { TransactionAccount } from "@/types";
-import { useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
 
 const DailyTransactionAddItem = ({
   userAccounts,
   setOpenDialog,
 }: {
   userAccounts: TransactionAccount[];
-  setOpenDialog: (isOpenDialog: boolean) => void;
+  setOpenDialog: (isOpen: boolean) => void;
 }) => {
   const [state, action, isPending] = useActionState(submitDailyTransaction, {
     success: false,
     message: "",
   });
 
-  const [date, setDate] = useState<Date>(new Date());
-  const [account, setAccount] = useState("");
-  const [transactionType, setTransactionType] = useState("expense");
   const queryClient = useQueryClient();
+
+  const [date, setDate] = useState(new Date());
+  const [transactionType, setTransactionType] = useState("expense");
+
+  const defaultAccount = useMemo(
+    () => userAccounts?.[0]?.id ?? "",
+    [userAccounts]
+  );
+  const [account, setAccount] = useState(defaultAccount);
+
+  useEffect(() => {
+    if (!account && defaultAccount) {
+      setAccount(defaultAccount);
+    }
+  }, [defaultAccount, account]);
 
   const resetForm = useCallback(() => {
     setDate(new Date());
-  }, []);
-
-  useEffect(() => {
-    if (userAccounts && userAccounts.length > 0) {
-      setAccount(userAccounts[0].id);
-    }
-  }, [userAccounts]);
+    setTransactionType("expense");
+    setAccount(defaultAccount);
+  }, [defaultAccount]);
 
   useEffect(() => {
     if (!state.success) return;
 
-    const closeAndReset = async () => {
-      state.success = false;
+    const handleSuccess = async () => {
       resetForm();
       setOpenDialog(false);
+
       toast(
         <p className="toast-text text-confirm">
           Transaction added successfully
         </p>
       );
+
       await queryClient.invalidateQueries({
         queryKey: ["user-daily-transactions"],
       });
     };
 
-    closeAndReset();
-  }, [state, state.success, queryClient, resetForm, setOpenDialog]);
+    handleSuccess();
+  }, [state.success, resetForm, setOpenDialog, queryClient]);
 
   return (
     <div>
       <form action={action} className="space-y-4 mt-3">
-        <input
-          type="hidden"
-          name="date"
-          value={moment(date).format("MMM DD, YYYY")}
-        />
+        <input type="hidden" name="date" value={format(date, "MMM dd, yyyy")} />
         <input type="hidden" name="type" value={transactionType} required />
+        <input type="hidden" name="account" value={account} required />
 
         <Popover>
           <PopoverTrigger asChild>
@@ -99,9 +106,7 @@ const DailyTransactionAddItem = ({
             <Calendar
               mode="single"
               selected={date}
-              onSelect={(day) => {
-                if (day) setDate(day);
-              }}
+              onSelect={(d) => d && setDate(d)}
               defaultMonth={date}
             />
           </PopoverContent>
@@ -114,17 +119,15 @@ const DailyTransactionAddItem = ({
           className="daily-form-item"
           required
         />
-
         <Input
           id="amount"
           name="amount"
-          placeholder={currencyFormatter.format(0)}
           type="number"
           step="0.01"
+          placeholder={currencyFormatter.format(0)}
           className="daily-form-item"
           required
         />
-
         <Input
           id="location"
           name="location"
@@ -133,22 +136,18 @@ const DailyTransactionAddItem = ({
           required
         />
 
-        <Select
-          value={account ? account : userAccounts[0].id}
-          onValueChange={setAccount}
-        >
+        <Select value={account} onValueChange={setAccount}>
           <SelectTrigger id="account" className="w-full daily-form-item">
             <SelectValue placeholder="Select account" />
           </SelectTrigger>
           <SelectContent>
-            {userAccounts.map((acc: TransactionAccount) => (
+            {userAccounts.map((acc) => (
               <SelectItem key={acc.id} value={acc.id}>
                 {acc.name}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
-        <input type="hidden" name="account" value={account} required />
 
         <Select value={transactionType} onValueChange={setTransactionType}>
           <SelectTrigger
@@ -174,8 +173,8 @@ const DailyTransactionAddItem = ({
 
         <Button
           type="submit"
-          className="w-full bg-yellow-500 hover:bg-yellow-400 cursor-pointer"
-          disabled={account === "" || isPending}
+          className="w-full bg-yellow-500 hover:bg-yellow-400"
+          disabled={!account || isPending}
         >
           {isPending ? <Loader className="animate-spin" /> : "Add Transaction"}
         </Button>
