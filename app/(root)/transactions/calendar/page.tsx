@@ -1,20 +1,9 @@
 "use client";
 
-import PageTitle from "@/components/shared/PageTitle";
-import TransactionDateTab from "@/components/shared/Transactions/TransactionDateTab";
-import TransactionTabs from "@/components/shared/Transactions/TransactionTabs";
-import { useState } from "react";
+import CalendarTransaction from "@/components/shared/Transactions/calendar/CalendarTransaction";
 
-const CalendarTransactions = () => {
-  const [date, setDate] = useState(new Date());
-  return (
-    <div>
-      <PageTitle title="Transactions" />
-      <TransactionDateTab dateType="monthly" date={date} setDate={setDate} />
-      <TransactionTabs activeTab="Calendar" />
-      <div className="transaction-content"></div>
-    </div>
-  );
+const CalendarTransactionPage = () => {
+  return <CalendarTransaction />;
 };
 
-export default CalendarTransactions;
+export default CalendarTransactionPage;

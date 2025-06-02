@@ -112,6 +112,15 @@
     @apply text-base mb-3;
   }
 
+  /* Calendar */
+  .calendar {
+    @apply grid grid-cols-7 gap-1;
+  }
+
+  .calendar-tile {
+    @apply col-span-1 p-1 rounded-sm  shadow text-[7px] md:text-sm min-h-10 md:min-h-20 cursor-pointer;
+  }
+
   /* Accounts */
   .account-content {
     @apply pb-3 overflow-y-auto;

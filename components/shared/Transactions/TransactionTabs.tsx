@@ -41,9 +41,17 @@ const TransactionTabs = ({ activeTab }: { activeTab: string }) => {
           (page: { title: string; link: string; icon: JSX.Element }, index) => (
             <Link
               key={index}
-              href={page.title === "Calendar" ? "/" : page.link}
+              href={
+                page.title === "Calendar" &&
+                process.env.NODE_ENV === "production"
+                  ? "/"
+                  : page.link
+              }
               onClick={() => {
-                if (page.title === "Calendar") {
+                if (
+                  page.title === "Calendar" &&
+                  process.env.NODE_ENV === "production"
+                ) {
                   toast(
                     <p className="toast-text text-destructive">
                       Calendar is not available yet
