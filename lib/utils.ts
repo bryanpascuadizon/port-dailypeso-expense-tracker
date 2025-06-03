@@ -21,7 +21,7 @@ export const currencyFormatter = new Intl.NumberFormat("en-PH", {
 
 export const computeTotalAmount = (transactions: Transactions[]) => {
   const totalAmount = transactions.reduce(
-    (acc, transaction: Transactions) => acc + Number(transaction.amount),
+    (acc, transaction: Transactions) => acc + transaction.amount,
     0
   );
 
