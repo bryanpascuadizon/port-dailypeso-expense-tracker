@@ -23,7 +23,7 @@ const CalendarTransactionItem = ({
             }`}
             key={index}
           >
-            <div>{calendarItem.day}</div>
+            <div className="font-bold">{calendarItem.day}</div>
             {calendarItem.transactions.length > 0 && (
               <CalendarTransactionIncomeExpense
                 transactions={calendarItem.transactions}

@@ -13,10 +13,14 @@ const CalendarTransactionIncomeExpense = ({
   );
 
   return (
-    <div className="md:text-[9px]">
+    <div className="text-right">
       <p className="income-text">{currencyFormatter.format(totalIncome)}</p>
       <p className="expense-text">{currencyFormatter.format(totalExpense)}</p>
-      <p>{currencyFormatter.format(totalIncomeExpense)}</p>
+      <p
+        className={`${totalIncomeExpense < 0 ? "expense-text" : "income-text"}`}
+      >
+        {currencyFormatter.format(totalIncomeExpense)}
+      </p>
     </div>
   );
 };
