@@ -227,7 +227,12 @@ export const renderCalendar = (
       );
 
       calendarWeek.push({
-        day: current.getDate(),
+        day:
+          current.getDate() === 1
+            ? monthIndex === current.getMonth()
+              ? `${monthIndex + 1}/${current.getDate()}`
+              : `${current.getMonth() + 1}/${current.getDate()}`
+            : `${current.getDate()}`,
         transactions: dailyTransaction,
         formattedDate: new Date(current),
         isIncluded: monthIndex === new Date(current).getMonth(),

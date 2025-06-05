@@ -6,7 +6,7 @@ const CalendarTransactionItem = ({
   calendarPanels,
 }: {
   calendarPanels: {
-    day: number;
+    day: string;
     transactions: Transactions[];
     formattedDate: Date;
     isIncluded: boolean;
