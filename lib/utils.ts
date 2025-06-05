@@ -167,6 +167,8 @@ export const renderWeek = (
     weeks.push({
       startWeek: `${weekStart.format("MM/DD")}`,
       endWeek: `${weekEnd.format("MM/DD")}`,
+      fullStartWeek: `${weekStart.format("MM/DD/YYYY")}`,
+      fullEndWeek: `${weekEnd.format("MM/DD/YYYY")}`,
       dailyTrigger: formatDateToISO(`${month} ${year}`),
       transactions: weeklyTransactions,
     });
@@ -178,7 +180,6 @@ export const renderWeek = (
 };
 
 export const getInitialDate = (startWeek: string | null): Date => {
-  console.log(startWeek);
   if (!startWeek) return new Date(formatDateToISO(""));
 
   const isAlreadyParsed = startWeek === new Date(startWeek).toString();
@@ -206,15 +207,13 @@ export const renderCalendar = (
   const calendarPanel = weeksInMonth.map((week: WeeklyAccordion) => {
     const current = new Date(
       formatDateToISO(
-        moment(`${week.startWeek}/${year}`, "MM/DD/YYYY").format(
-          "MMMM DD, YYYY"
-        )
+        moment(`${week.fullStartWeek}`, "MM/DD/YYYY").format("MMMM DD, YYYY")
       )
     );
 
     const endWeek = new Date(
       formatDateToISO(
-        moment(`${week.endWeek}/${year}`, "MM/DD/YYYY").format("MMMM DD, YYYY")
+        moment(`${week.fullEndWeek}`, "MM/DD/YYYY").format("MMMM DD, YYYY")
       )
     );
 

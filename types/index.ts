@@ -26,6 +26,8 @@ export type MonthlyAccordion = {
 export type WeeklyAccordion = {
   startWeek: string;
   endWeek: string;
+  fullStartWeek: string;
+  fullEndWeek: string;
   dailyTrigger: string;
   transactions: Transactions[];
 };
