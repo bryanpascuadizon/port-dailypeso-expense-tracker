@@ -7,6 +7,7 @@ import TransactionDateTab from "../TransactionDateTab";
 import TransactionTabs from "../TransactionTabs";
 import IncomeExpense from "../../IncomeExpense";
 import TransactionSkeletonLoader from "../TransactionSkeletonLoader";
+import CalendarTransactionItem from "./CalendarTransactionItem";
 
 const CalendarTransaction = () => {
   const { date, setDate, transactions, isPending } = useTransactions("");
@@ -36,20 +37,7 @@ const CalendarTransaction = () => {
           </div>
           <div className="transaction-content">
             <div className="calendar">
-              {calendarPanels.map((calendarItem, index) => (
-                <React.Fragment key={index}>
-                  {calendarItem.map((date, index) => (
-                    <div
-                      className={`calendar-tile ${
-                        date.isIncluded ? "bg-white" : "bg-gray-200"
-                      }`}
-                      key={index}
-                    >
-                      {date.day}
-                    </div>
-                  ))}
-                </React.Fragment>
-              ))}
+              <CalendarTransactionItem calendarPanels={calendarPanels} />
             </div>
           </div>
         </>

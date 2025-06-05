@@ -220,9 +220,16 @@ export const renderCalendar = (
     const calendarWeek = [];
 
     while (current <= endWeek) {
+      const dailyTransaction = transactions.filter(
+        (transaction: Transactions) =>
+          formatDateToISO(moment(transaction.date).format("MMMM/DD/YYYY")) ===
+          formatDateToISO(moment(current).format("MMMM/DD/YYYY"))
+      );
+
       calendarWeek.push({
-        formattedDate: new Date(current),
         day: current.getDate(),
+        transactions: dailyTransaction,
+        formattedDate: new Date(current),
         isIncluded: monthIndex === new Date(current).getMonth(),
       });
 
@@ -233,4 +240,20 @@ export const renderCalendar = (
   });
 
   return calendarPanel;
+};
+
+export const incomeExpenseComputation = (transactions: Transactions[]) => {
+  const incomeTransactions = transactions.filter(
+    (transaction: Transactions) => transaction.type === "income"
+  );
+  const expenseTransactions = transactions.filter(
+    (transaction: Transactions) => transaction.type === "expense"
+  );
+
+  const totalIncome = computeTotalAmount(incomeTransactions);
+  const totalExpense = computeTotalAmount(expenseTransactions);
+
+  const totalIncomeExpense = totalIncome - totalExpense;
+
+  return { totalIncome, totalExpense, totalIncomeExpense };
 };

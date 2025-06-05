@@ -1,4 +1,4 @@
-import { computeTotalAmount, currencyFormatter } from "@/lib/utils";
+import { currencyFormatter, incomeExpenseComputation } from "@/lib/utils";
 import { Transactions } from "@/types";
 import { useMemo } from "react";
 
@@ -11,23 +11,10 @@ const IncomeExpense = ({
   className?: string;
   isHeader?: boolean;
 }) => {
-  const incomeTransactions = transactions.filter(
-    (transaction: Transactions) => transaction.type === "income"
+  const { totalIncome, totalExpense, totalIncomeExpense } = useMemo(
+    () => incomeExpenseComputation(transactions),
+    [transactions]
   );
-  const expenseTransactions = transactions.filter(
-    (transaction: Transactions) => transaction.type === "expense"
-  );
-
-  const totalIncome = useMemo(
-    () => computeTotalAmount(incomeTransactions),
-    [incomeTransactions]
-  );
-  const totalExpense = useMemo(
-    () => computeTotalAmount(expenseTransactions),
-    [expenseTransactions]
-  );
-
-  const totalIncomeExpense = totalIncome - totalExpense;
 
   return (
     <div

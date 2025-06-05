@@ -118,7 +118,7 @@
   }
 
   .calendar-tile {
-    @apply col-span-1 p-1 rounded-sm  shadow text-[7px] md:text-sm min-h-10 md:min-h-20 cursor-pointer;
+    @apply col-span-1 p-1 rounded-sm  shadow text-[6px] md:text-sm min-h-10 md:min-h-20 cursor-pointer;
   }
 
   /* Accounts */
