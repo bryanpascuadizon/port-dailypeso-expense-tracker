@@ -45,8 +45,9 @@ const DailyTransactionAccount = ({
         {!accounts.length ? (
           <>
             {" "}
-            Since you do not have any accounts, add a new account before adding
-            a transaction. This is to categorize your daily transactions
+            Since you do not have any accounts, add a new account before
+            adding/editing a transaction. This is to categorize your daily
+            transactions
           </>
         ) : (
           <>Add an account to categorize your daily transactions</>

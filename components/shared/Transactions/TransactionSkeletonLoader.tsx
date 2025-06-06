@@ -1,6 +1,10 @@
 import { Skeleton } from "../../ui/skeleton";
 
-const TransactionSkeletonLoader = () => {
+const TransactionSkeletonLoader = ({
+  isCalendar,
+}: {
+  isCalendar?: boolean;
+}) => {
   return (
     <div>
       <div className="flex-between gap-3 mb-7">
@@ -13,7 +17,11 @@ const TransactionSkeletonLoader = () => {
         <Skeleton className="skeleton h-10" />
         <Skeleton className="skeleton h-10" />
       </div>
-      <Skeleton className="skeleton-data h-15" />
+      {!isCalendar ? (
+        <Skeleton className="skeleton-data h-15" />
+      ) : (
+        <Skeleton className="skeleton-data w-30 h-20" />
+      )}
     </div>
   );
 };

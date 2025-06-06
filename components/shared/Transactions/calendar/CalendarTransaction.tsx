@@ -42,7 +42,7 @@ const CalendarTransaction = () => {
           </div>
         </>
       ) : (
-        <TransactionSkeletonLoader />
+        <TransactionSkeletonLoader isCalendar />
       )}
     </>
   );
