@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <header className="w-full header-container">
       <div className="wrapper flex-start bg-white py-3 rounded-b-sm shadow">
-        <div className="flex-start gap-2 px-10 w-full">
+        <div className="flex-start gap-2 px-5 w-full">
           <div>
             <HandCoins className="w-11 h-11 md:w-13 md:h-13" />
           </div>
@@ -34,7 +34,7 @@ const Header = () => {
             ) : (
               <Power
                 onClick={() => handleLogOut()}
-                className="cursor-pointer"
+                className="cursor-pointer mr-5"
               />
             )}
           </nav>
