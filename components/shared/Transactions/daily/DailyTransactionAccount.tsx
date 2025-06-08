@@ -50,7 +50,7 @@ const DailyTransactionAccount = ({
             transactions
           </>
         ) : (
-          <>Add an account to categorize your daily transactions</>
+          <>Add an accoun t to categorize your daily transactions</>
         )}
       </DialogDescription>
 

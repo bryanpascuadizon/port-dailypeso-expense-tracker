@@ -57,7 +57,7 @@ const DailyTransactionEditItem = ({
     () => userAccounts?.accounts?.[0]?.id ?? "",
     [userAccounts]
   );
-
+  const [account, setAccount] = useState(defaultAccount);
   const [openDialog, setOpenDialog] = useState(false);
   const [date, setDate] = useState<Date | undefined>(
     new Date(transaction.date)
@@ -68,7 +68,6 @@ const DailyTransactionEditItem = ({
     TRANSACTION: "transaction",
     ACCOUNTS: "accounts",
   };
-  const [account, setAccount] = useState(defaultAccount);
 
   useEffect(() => {
     if (!userAccounts?.accounts?.length) {
@@ -78,14 +77,26 @@ const DailyTransactionEditItem = ({
     }
   }, [userAccounts, tabs.TRANSACTION, tabs.ACCOUNTS]);
 
-  // Close dialog and refetch on success
+  useEffect(() => {
+    if (!account && defaultAccount) {
+      setAccount(defaultAccount);
+    }
+  }, [defaultAccount, account]);
+
   useEffect(() => {
     if (state.success) {
       refetchDailyTransactions();
       setOpenDialog(false);
+      setDefaultTab(tabs.TRANSACTION);
       toast(<p className="toast-text text-confirm">{state.message}</p>);
     }
-  }, [state, refetchDailyTransactions]);
+  }, [
+    state,
+    state.success,
+    setDefaultTab,
+    tabs.TRANSACTION,
+    refetchDailyTransactions,
+  ]);
 
   const formattedDate = moment(date).format("MMM DD, YYYY");
 
@@ -114,7 +125,7 @@ const DailyTransactionEditItem = ({
             <DialogDescription></DialogDescription>
           </DialogHeader>
 
-          <Tabs defaultValue={defaultTab}>
+          <Tabs defaultValue={defaultTab} value={defaultTab}>
             <TabsList className="w-full flex items-center">
               <TabsTrigger
                 value={tabs.ACCOUNTS}
@@ -144,7 +155,7 @@ const DailyTransactionEditItem = ({
                 <input type="hidden" name="id" value={transaction.id} />
                 <input type="hidden" name="userId" value={transaction.userId} />
                 <input type="hidden" name="date" value={formattedDate} />
-                <input type="hidden" name="account" value={account} />
+                <input type="hidden" name="account" value={account ?? ""} />
                 <input type="hidden" name="type" value={transactionType} />
 
                 <Popover>
