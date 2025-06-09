@@ -19,3 +19,8 @@ export const MONTHS = [
 ];
 
 export const useQueryUserDailyTransactions = "user-daily-transactions";
+export const inputMaxLength = 30;
+export const tabs = {
+  TRANSACTION: "transaction",
+  ACCOUNTS: "accounts",
+};

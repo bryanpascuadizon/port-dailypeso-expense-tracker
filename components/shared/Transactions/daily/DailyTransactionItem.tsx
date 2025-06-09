@@ -2,8 +2,8 @@ import { Transactions } from "@/types";
 import { currencyFormatter, renderTransactionType } from "@/lib/utils";
 import { useState } from "react";
 import DailyTransactionDeleteItem from "./DailyTransactionDeleteItem";
-import DailyTransactionEditItem from "./DailyTransactionEditItem";
 import { Banknote, NotebookText } from "lucide-react";
+import DailyTransactionDialog from "./DailyTransactionDialog";
 
 const DailyTransactionItem = ({
   transaction,
@@ -39,9 +39,7 @@ const DailyTransactionItem = ({
               {transaction.details !== "" && (
                 <>
                   <NotebookText className="w-3.5 h-3.5 text-yellow-500" />
-                  <p className="text-xs">
-                    {transaction.details}
-                  </p>
+                  <p className="text-xs">{transaction.details}</p>
                 </>
               )}
             </div>
@@ -59,10 +57,7 @@ const DailyTransactionItem = ({
       </div>
       {showAction && (
         <div className="flex items-center gap-3">
-          <DailyTransactionEditItem
-            transaction={transaction}
-            refetchDailyTransactions={refetchDailyTransactions}
-          />
+          <DailyTransactionDialog transaction={transaction} toEdit />
           <DailyTransactionDeleteItem
             transaction={transaction}
             refetchDailyTransactions={refetchDailyTransactions}

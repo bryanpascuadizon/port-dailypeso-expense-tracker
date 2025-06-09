@@ -13,18 +13,25 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import useAccounts from "@/lib/hooks/useAccounts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DailyTransactionAccount from "./DailyTransactionAccount";
-import DailyTransactionAddItem from "./DailyTransactionAddItem";
-import { PlusIcon } from "lucide-react";
+import { PenLine, PlusIcon } from "lucide-react";
+import DailyTransactionAddEditForm from "./DailyTransactionAddEditForm";
+import { tabs } from "@/lib/constants";
+import { Transactions } from "@/types";
 
-const DailyTransactionDialog = () => {
+interface DailyTranasctionDialogProps {
+  transaction?: Transactions;
+  toEdit?: boolean;
+}
+
+const DailyTransactionDialog = ({
+  transaction,
+
+  toEdit,
+}: DailyTranasctionDialogProps) => {
   const { userAccounts } = useAccounts();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [defaultTab, setDefaultTab] = useState("");
-  const tabs = {
-    TRANSACTION: "transaction",
-    ACCOUNTS: "accounts",
-  };
 
   useEffect(() => {
     if (!userAccounts?.accounts?.length) {
@@ -32,7 +39,7 @@ const DailyTransactionDialog = () => {
     } else {
       setDefaultTab(tabs.TRANSACTION);
     }
-  }, [userAccounts, tabs.TRANSACTION, tabs.ACCOUNTS]);
+  }, [userAccounts]);
 
   const handleDialogChange = (isOpen: boolean) => {
     setOpenDialog(isOpen);
@@ -42,16 +49,24 @@ const DailyTransactionDialog = () => {
     userAccounts?.accounts && (
       <Dialog open={openDialog} onOpenChange={handleDialogChange}>
         <DialogTrigger
-          aria-label="Add Transaction"
-          className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-500 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center"
+          aria-label={toEdit ? "Edit Transaction" : "Add Transaction"}
+          className={
+            !toEdit
+              ? "absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-500 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center"
+              : ""
+          }
         >
-          <PlusIcon className="w-8 h-8 md:w-10 md:h-10 cursor-pointer" />
+          {toEdit ? (
+            <PenLine className="cursor-pointer text-green-700" />
+          ) : (
+            <PlusIcon className="w-8 h-8 md:w-10 md:h-10 cursor-pointer" />
+          )}
         </DialogTrigger>
 
         <DialogContent>
           <DialogHeader className="text-left">
             <DialogTitle className="text-base md:text-lg font-bold text-yellow-500">
-              Add Transaction
+              {toEdit ? "Edit" : "Add"} tranasction
             </DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
@@ -71,7 +86,7 @@ const DailyTransactionDialog = () => {
                 disabled={!userAccounts.accounts.length}
                 onClick={() => setDefaultTab(tabs.TRANSACTION)}
               >
-                <p>New Transaction</p>
+                <p>{!toEdit && "New"} Transaction</p>
               </TabsTrigger>
             </TabsList>
             <TabsContent value={tabs.ACCOUNTS}>
@@ -82,10 +97,19 @@ const DailyTransactionDialog = () => {
               />
             </TabsContent>
             <TabsContent value={tabs.TRANSACTION}>
-              <DailyTransactionAddItem
-                userAccounts={userAccounts.accounts}
-                setOpenDialog={setOpenDialog}
-              />
+              {toEdit ? (
+                <DailyTransactionAddEditForm
+                  transaction={transaction}
+                  userAccounts={userAccounts.accounts}
+                  toEdit
+                  setOpenDialog={setOpenDialog}
+                />
+              ) : (
+                <DailyTransactionAddEditForm
+                  userAccounts={userAccounts.accounts}
+                  setOpenDialog={setOpenDialog}
+                />
+              )}
             </TabsContent>
           </Tabs>
         </DialogContent>
