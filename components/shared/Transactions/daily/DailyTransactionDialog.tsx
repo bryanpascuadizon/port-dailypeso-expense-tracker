@@ -66,7 +66,7 @@ const DailyTransactionDialog = ({
         <DialogContent>
           <DialogHeader className="text-left">
             <DialogTitle className="text-base md:text-lg font-bold text-yellow-500">
-              {toEdit ? "Edit" : "Add"} tranasction
+              {toEdit ? "Edit" : "Add"} transaction
             </DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
