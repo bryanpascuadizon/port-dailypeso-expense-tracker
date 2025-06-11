@@ -68,7 +68,7 @@ const DailyTransactionAccordionContent = ({
   return (
     <AccordionContent>
       <div className="flex justify-end items-center gap-2">
-        <p className="mt-[-10px]">Sort by:</p>
+        <p className="mt-[-10px] text-xs md:text-sm">Sort by:</p>
         <Select value={sortBy} onValueChange={(sort) => setSortBy(sort)}>
           <SelectTrigger className="bg-white mb-2 shadow min-w-[130px] cursor-pointer text-xs md:text-sm h-full">
             <SelectValue placeholder="sort by" />
