@@ -11,7 +11,7 @@ import {
   SelectGroup,
   SelectItem,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
 interface DailyTranasctionAccordionContentProp {
   transactions: Transactions[];
@@ -23,11 +23,6 @@ const DailyTransactionAccordionContent = ({
   refetchDailyTransactions,
 }: DailyTranasctionAccordionContentProp) => {
   const sortOptions = ["account", "amount", "note", "note details"];
-
-  const [sortBy, setSortBy] = useState(sortOptions[0]);
-  const [sortedTransactions, setSortedTransactions] =
-    useState<Transactions[]>();
-
   const sortTransactions = (
     sort: string,
     transactionsForSorting: Transactions[]
@@ -64,22 +59,17 @@ const DailyTransactionAccordionContent = ({
     });
   };
 
-  useEffect(() => {
-    setSortedTransactions(sortTransactions(sortBy, transactions));
-  }, [transactions, sortBy]);
+  const [sortBy, setSortBy] = useState(sortOptions[0]);
 
-  const handleSortChange = (sort: string) => {
-    setSortBy(sort);
-    if (!sortedTransactions) return;
-
-    setSortedTransactions(sortTransactions(sort, sortedTransactions));
-  };
+  const sortedTransactions = useMemo(() => {
+    return sortTransactions(sortBy, transactions);
+  }, [sortBy, transactions]);
 
   return (
     <AccordionContent>
       <div className="flex justify-end items-center gap-2">
         <p className="mt-[-10px]]">Sort by:</p>
-        <Select value={sortBy} onValueChange={handleSortChange}>
+        <Select value={sortBy} onValueChange={(sort) => setSortBy(sort)}>
           <SelectTrigger className="bg-white mb-2 shadow min-w-[130px] cursor-pointer text-xs md:text-sm h-full">
             <SelectValue placeholder="sort by" />
           </SelectTrigger>
