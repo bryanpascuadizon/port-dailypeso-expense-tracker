@@ -70,7 +70,7 @@ const DailyTransactionAddEditForm = ({
   useEffect(() => {
     setTransactionDate(transaction?.date ?? new Date());
     setTransactionType(transaction?.type ?? "expense");
-  }, [transaction]);
+  }, [transaction, transactionType]);
 
   useEffect(() => {
     if (!state.success) return;

@@ -22,27 +22,28 @@ const DailyTransactionAccordionContent = ({
   transactions,
   refetchDailyTransactions,
 }: DailyTranasctionAccordionContentProp) => {
-  const sortOptions = ["accounts", "note", "note details", "amount"];
+  const sortOptions = ["account", "amount", "note", "note details"];
 
-  const [sortBy, setSortBy] = useState("accounts");
+  const [sortBy, setSortBy] = useState(sortOptions[0]);
   const [sortedTransactions, setSortedTransactions] =
     useState<Transactions[]>();
 
-  useEffect(() => {
-    setSortedTransactions(transactions);
-  }, [transactions]);
-
-  const handleSortChange = (sort: string) => {
-    setSortBy(sort);
-    if (!sortedTransactions) return;
-
-    const tempSortedTransactions = sortedTransactions.sort((current, next) => {
+  const sortTransactions = (
+    sort: string,
+    transactionsForSorting: Transactions[]
+  ) => {
+    return [...transactionsForSorting].sort((current, next) => {
       let currentTranasaction: string = "";
       let nextTransaction: string = "";
 
       switch (sort) {
         case "amount":
-          return current.amount ?? 0 - next.amount ?? 0;
+          return (current.amount ?? 0) - (next.amount ?? 0);
+        case "account":
+          currentTranasaction =
+            current.transactionAccount?.name.toLowerCase() ?? "";
+          nextTransaction = next.transactionAccount?.name.toLowerCase() ?? "";
+          break;
         case "note":
           currentTranasaction = current.note.toLowerCase() ?? "";
           nextTransaction = next.note.toLowerCase() ?? "";
@@ -51,11 +52,7 @@ const DailyTransactionAccordionContent = ({
           currentTranasaction = current.details.toLowerCase() ?? "";
           nextTransaction = next.details.toLowerCase() ?? "";
           break;
-        case "accounts":
-          currentTranasaction =
-            current.transactionAccount?.name.toLowerCase() ?? "";
-          nextTransaction = next.transactionAccount?.name.toLowerCase() ?? "";
-          break;
+
         default:
           return 0;
       }
@@ -65,21 +62,35 @@ const DailyTransactionAccordionContent = ({
 
       return 0;
     });
+  };
 
-    setSortedTransactions(tempSortedTransactions);
+  useEffect(() => {
+    setSortedTransactions(sortTransactions(sortBy, transactions));
+  }, [transactions, sortBy]);
+
+  const handleSortChange = (sort: string) => {
+    setSortBy(sort);
+    if (!sortedTransactions) return;
+
+    setSortedTransactions(sortTransactions(sort, sortedTransactions));
   };
 
   return (
     <AccordionContent>
-      <div className="flex justify-end">
+      <div className="flex justify-end items-center gap-2">
+        <p className="mt-[-10px]]">Sort by:</p>
         <Select value={sortBy} onValueChange={handleSortChange}>
-          <SelectTrigger className="bg-white mb-2 shadow">
+          <SelectTrigger className="bg-white mb-2 shadow min-w-[130px] cursor-pointer text-xs md:text-sm h-full">
             <SelectValue placeholder="sort by" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               {sortOptions.map((option: string, index) => (
-                <SelectItem value={option} key={index}>
+                <SelectItem
+                  value={option}
+                  key={index}
+                  className="cursor-pointer text-center text-xs md:text-sm"
+                >
                   {option}
                 </SelectItem>
               ))}
