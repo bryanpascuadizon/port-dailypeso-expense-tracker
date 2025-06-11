@@ -14,7 +14,7 @@ const DailyTransactionItem = ({
 }) => {
   const [showAction, setShowAction] = useState(false);
   return (
-    <div className="flex mx-2 text-xs md:text-sm mb-3 gap-3">
+    <div className="flex mx-2 text-xs md:text-sm gap-3">
       <div
         className="flex p-1 w-full rounded-sm button-hover cursor-pointer"
         onClick={() => setShowAction(!showAction)}

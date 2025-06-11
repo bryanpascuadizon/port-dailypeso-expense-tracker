@@ -2,14 +2,13 @@ import { getDailyAccordions } from "@/lib/utils";
 import { DailyAccordion, Transactions } from "@/types";
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@radix-ui/react-accordion";
 import { Sun } from "lucide-react";
 import { useMemo } from "react";
 import IncomeExpense from "../../IncomeExpense";
-import DailyTransactionItem from "./DailyTransactionItem";
+import DailyTransactionAccordionContent from "./DailyTransactionAccordionContent";
 
 const DailyTransactionAccordion = ({
   transactions,
@@ -61,17 +60,10 @@ const DailyTransactionAccordion = ({
               </div>
             </div>
           </AccordionTrigger>
-          <AccordionContent>
-            {dailyTransaction.transactions.map(
-              (transaction: Transactions, index) => (
-                <DailyTransactionItem
-                  transaction={transaction}
-                  key={index}
-                  refetchDailyTransactions={refetchDailyTransactions}
-                />
-              )
-            )}
-          </AccordionContent>
+          <DailyTransactionAccordionContent
+            transactions={dailyTransaction.transactions}
+            refetchDailyTransactions={refetchDailyTransactions}
+          />
         </AccordionItem>
       ))}
     </Accordion>
