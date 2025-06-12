@@ -52,7 +52,7 @@ const DailyTransactionDialog = ({
           aria-label={toEdit ? "Edit Transaction" : "Add Transaction"}
           className={
             !toEdit
-              ? "absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-500 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center"
+              ? "absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400 w-13 h-13 md:w-15 md:h-15 flex items-center justify-center"
               : ""
           }
         >
@@ -65,8 +65,12 @@ const DailyTransactionDialog = ({
 
         <DialogContent>
           <DialogHeader className="text-left">
-            <DialogTitle className="text-base md:text-lg font-bold text-yellow-500">
-              {toEdit ? "Edit" : "Add"} transaction
+            <DialogTitle
+              className={`text-base md:text-lg font-bold ${
+                toEdit ? "text-green-700" : "text-yellow-500"
+              }`}
+            >
+              {toEdit ? "Update" : "Create"} transaction
             </DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>

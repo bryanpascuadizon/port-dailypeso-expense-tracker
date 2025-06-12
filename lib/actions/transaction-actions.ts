@@ -126,7 +126,7 @@ export const submitDailyTransaction = async (
       if (response) {
         return {
           success: true,
-          message: `Added transacaction`,
+          message: `Transaction created successfully`,
         };
       }
     }
@@ -173,7 +173,7 @@ export const editTransaction = async (
     if (!user || !updatedTransaction) {
       return {
         success: false,
-        message: `Cannot edit daily transaction`,
+        message: `Cannot update daily transaction`,
       };
     }
 
@@ -182,18 +182,18 @@ export const editTransaction = async (
     if (!response) {
       return {
         success: false,
-        message: `Cannot edit daily transaction`,
+        message: `Cannot update daily transaction`,
       };
     }
 
     return {
       success: true,
-      message: `Transaction edited successfully`,
+      message: `Transaction updated successfully`,
     };
   } catch (error) {
     return {
       success: false,
-      message: `Cannot edit daily transaction - ${error}`,
+      message: `Cannot update daily transaction - ${error}`,
     };
   }
 };
@@ -211,7 +211,7 @@ export const deleteTransaction = async (transactionId: string) => {
 
     return {
       success: true,
-      message: "Transaction has been deleted",
+      message: "Transaction deleted successfully",
     };
   } catch (error) {
     return {

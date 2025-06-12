@@ -61,7 +61,7 @@ const AccountEditDeleteDialog = ({
             {isEditPending || isDeletePending ? (
               <Loader className="animate-spin" />
             ) : (
-              "Edit"
+              "Update"
             )}
           </Button>
         </div>

@@ -79,7 +79,7 @@ const DailyTransactionAddEditForm = ({
       setOpenDialog(false);
       toast(
         <p className="toast-text text-confirm">
-          Transaction {`${toEdit ? "edited" : "added"} `} successfully
+          Transaction {`${toEdit ? "updated" : "created"} `} successfully
         </p>
       );
 
@@ -228,7 +228,7 @@ const DailyTransactionAddEditForm = ({
           {isPending ? (
             <Loader className="animate-spin" />
           ) : (
-            `${toEdit ? "Edit" : "Add"} transaction`
+            `${toEdit ? "Update" : "Create"}`
           )}
         </Button>
       </form>

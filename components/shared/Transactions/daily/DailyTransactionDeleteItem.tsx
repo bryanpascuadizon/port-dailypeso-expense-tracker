@@ -102,7 +102,7 @@ const DailyTransactionDeleteItem = ({
             {isPending ? (
               <Loader className="animate-spin" />
             ) : (
-              "Delete Transaction"
+              "Delete"
             )}
           </Button>
         </DialogFooter>

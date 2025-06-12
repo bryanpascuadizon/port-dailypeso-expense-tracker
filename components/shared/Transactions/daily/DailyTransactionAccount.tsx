@@ -50,7 +50,7 @@ const DailyTransactionAccount = ({
             transactions
           </>
         ) : (
-          <>Add an accoun t to categorize your daily transactions</>
+          <>Add an account to categorize your daily transactions</>
         )}
       </DialogDescription>
 
@@ -65,7 +65,7 @@ const DailyTransactionAccount = ({
           maxLength={20}
         />
         <Button className="bg-green-700 hover:bg-green-600 w-full cursor-pointer">
-          {isPending ? <Loader className="animate-spin" /> : "Add Account"}
+          {isPending ? <Loader className="animate-spin" /> : "Create"}
         </Button>
       </form>
     </div>

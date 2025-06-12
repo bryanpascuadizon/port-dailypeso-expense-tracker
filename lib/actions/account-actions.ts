@@ -111,7 +111,7 @@ export const editUserAccount = async (
     if (!accountId || !userId || !accountName) {
       return {
         success: false,
-        message: `Cannot edit account`,
+        message: `Cannot update account`,
       };
     }
 
@@ -126,18 +126,18 @@ export const editUserAccount = async (
     if (!response) {
       return {
         success: false,
-        message: `Cannot edit account`,
+        message: `Cannot update account`,
       };
     }
 
     return {
       success: true,
-      message: "Account edited successfully",
+      message: "Account updated successfully",
     };
   } catch (error) {
     return {
       success: false,
-      message: `Cannot edit account - ${error}`,
+      message: `Cannot update account - ${error}`,
     };
   }
 };

@@ -55,7 +55,7 @@ export const POST = async (request: NextRequest) => {
     const newTransaction = await request.json();
 
     if (!userIdParams || !newTransaction) {
-      return new NextResponse(`Cannot add transaction`, {
+      return new NextResponse(`Cannot create transaction`, {
         status: 500,
       });
     }
@@ -76,7 +76,7 @@ export const POST = async (request: NextRequest) => {
       status: 200,
     });
   } catch (error) {
-    return new NextResponse(`Cannot add transaction - ${error}`, {
+    return new NextResponse(`Cannot create transaction - ${error}`, {
       status: 500,
     });
   }
@@ -88,7 +88,7 @@ export const PATCH = async (request: NextRequest) => {
     const transactionForEdit: Transactions = updatedTransaction;
 
     if (!updatedTransaction) {
-      return new NextResponse(`Cannot edit transaction`, { status: 500 });
+      return new NextResponse(`Cannot update transaction`, { status: 500 });
     }
 
     const transaction = await prisma.transaction.update({
@@ -107,7 +107,7 @@ export const PATCH = async (request: NextRequest) => {
 
     return new NextResponse(JSON.stringify(transaction), { status: 200 });
   } catch (error) {
-    return new NextResponse(`Cannot edit transaction - ${error}`, {
+    return new NextResponse(`Cannot update transaction - ${error}`, {
       status: 500,
     });
   }

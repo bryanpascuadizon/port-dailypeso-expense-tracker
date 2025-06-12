@@ -92,7 +92,7 @@ export const PATCH = async (request: NextRequest) => {
     const editedAccount: TransactionAccount = await request.json();
 
     if (!editedAccount) {
-      return new NextResponse("Cannot edit user account", { status: 500 });
+      return new NextResponse("Cannot update user account", { status: 500 });
     }
 
     const account = await prisma.transactionAccount.update({
@@ -106,7 +106,7 @@ export const PATCH = async (request: NextRequest) => {
 
     return new NextResponse(JSON.stringify(account), { status: 200 });
   } catch (error) {
-    return new NextResponse(`Cannot edit user account - ${error}`, {
+    return new NextResponse(`Cannot update user account - ${error}`, {
       status: 500,
     });
   }
