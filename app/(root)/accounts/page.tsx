@@ -51,12 +51,12 @@ const Accounts = () => {
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
               <DialogTrigger className="account-item button-hover bg-gray-300!">
                 <CirclePlus className="account-icon" />
-                <p>New account</p>
+                <p>Create account</p>
               </DialogTrigger>
               <DialogContent>
-                <DialogTitle>Add account</DialogTitle>
+                <DialogTitle>Create account</DialogTitle>
                 <DialogDescription>
-                  Add a new account to categorize your daily transactions
+                  Create a new account to categorize your daily transactions
                 </DialogDescription>
                 <form action={action}>
                   <Input
@@ -69,7 +69,7 @@ const Accounts = () => {
                     maxLength={20}
                   />
                   <Button className="bg-green-700 hover:bg-green-600 w-full cursor-pointer">
-                    {isPending ? <Loader className="animate-spin" /> : "Add"}
+                    {isPending ? <Loader className="animate-spin" /> : "Create"}
                   </Button>
                 </form>
               </DialogContent>
