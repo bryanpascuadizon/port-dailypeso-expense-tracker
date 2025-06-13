@@ -23,13 +23,11 @@ const Summary = () => {
     <>
       <PageTitle title="Summary" />
       <div className="transaction-headers">
+        <TransactionDateTab dateType="yearly" date={date} setDate={setDate} />
+      </div>
+      <div>
         {!isPending && data && data.transactions && (
           <>
-            <TransactionDateTab
-              dateType="yearly"
-              date={date}
-              setDate={setDate}
-            />
             <SummaryChart
               transactions={data.transactions}
               year={date.getFullYear()}

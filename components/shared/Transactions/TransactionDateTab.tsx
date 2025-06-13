@@ -17,7 +17,7 @@ const TransactionDateTab = ({
   date: Date;
   setDate: Dispatch<SetStateAction<Date>>;
 }) => {
-  const handleTransactionTabDateChange = (increase: boolean) => {
+  const handleTransactionTabDateChange = (increase?: boolean) => {
     let assignDate: Date = new Date(date);
 
     if (dateType === "yearly") {
@@ -46,7 +46,7 @@ const TransactionDateTab = ({
     <div className="transaction-date-tab flex-between gap-3 mb-3">
       <div
         className="transaction-date-tab-arrows button-hover"
-        onClick={() => handleTransactionTabDateChange(false)}
+        onClick={() => handleTransactionTabDateChange()}
       >
         <ChevronLeft className="w-5" />
       </div>
