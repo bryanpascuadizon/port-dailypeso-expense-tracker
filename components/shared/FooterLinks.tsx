@@ -15,13 +15,10 @@ const FooterLinks = ({
   }[];
 }) => {
   const handleFooterLink = (link: string) => {
-    if (
-      process.env.NODE_ENV === "production" &&
-      (link === "/profile" || link === "/summary")
-    ) {
+    if (process.env.NODE_ENV === "production" && link === "/profile") {
       toast(
         <p className="toast-text text-destructive">{`${
-          link === "/profile" ? "Profile" : "Summary"
+          link === "/profile" && "Profile"
         } is not available yet`}</p>
       );
     }
@@ -39,7 +36,7 @@ const FooterLinks = ({
               <Link
                 href={
                   process.env.NODE_ENV === "production" &&
-                  (page.link === "/profile" || page.link === "/summary")
+                  page.link === "/profile"
                     ? ""
                     : page.link
                 }
