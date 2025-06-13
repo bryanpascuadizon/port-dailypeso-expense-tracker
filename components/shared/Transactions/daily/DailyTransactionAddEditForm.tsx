@@ -55,7 +55,9 @@ const DailyTransactionAddEditForm = ({
     new Date()
   );
   const [transactionAccount, setTransactionAccount] = useState(defaultAccount);
-  const [transactionType, setTransactionType] = useState("expense");
+  const [transactionType, setTransactionType] = useState(
+    transaction?.type ?? "expense"
+  );
   const queryClient = useQueryClient();
 
   const [state, action, isPending] = useActionState(
@@ -69,7 +71,6 @@ const DailyTransactionAddEditForm = ({
   //Set default state values
   useEffect(() => {
     setTransactionDate(transaction?.date ?? new Date());
-    setTransactionType(transaction?.type ?? "expense");
   }, [transaction, transactionType]);
 
   useEffect(() => {
@@ -191,11 +192,7 @@ const DailyTransactionAddEditForm = ({
         </Select>
 
         {/* Transaction Type */}
-        <Select
-          value={transactionType}
-          onValueChange={setTransactionType}
-          defaultValue={transaction?.type ?? transactionType}
-        >
+        <Select value={transactionType} onValueChange={setTransactionType}>
           <SelectTrigger
             className={cn(
               "w-full daily-form-item",

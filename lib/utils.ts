@@ -262,3 +262,25 @@ export const incomeExpenseComputation = (transactions: Transactions[]) => {
 
   return { totalIncome, totalExpense, totalIncomeExpense };
 };
+
+export const getSummaryChartData = (
+  transactions: Transactions[],
+  year: number
+) => {
+  const monthlyData = getMonthlyAccordions(transactions, year).reverse();
+
+  const summaryData = monthlyData.map(
+    (data: { month: string; transactions: Transactions[] }) => {
+      const incomeExpense = incomeExpenseComputation(data.transactions);
+
+      return {
+        month: data.month,
+        income: incomeExpense.totalIncome,
+        expense: incomeExpense.totalExpense,
+        total: incomeExpense.totalIncomeExpense,
+      };
+    }
+  );
+
+  return summaryData;
+};

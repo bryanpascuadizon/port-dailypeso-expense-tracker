@@ -12,24 +12,20 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { getSummaryChartData } from "@/lib/utils";
 import { Transactions } from "@/types";
+import { useMemo } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 interface SummaryChartProps {
   transactions: Transactions[];
-  isSummaryChart: boolean;
+  year: number;
 }
-const SummaryChart = ({ transactions, isSummaryChart }: SummaryChartProps) => {
-  console.log(transactions, isSummaryChart);
-
-  const chartData = [
-    { month: "January", income: 186, expense: 80, total: 100 },
-    { month: "February", income: 186, expense: 80, total: 100 },
-    { month: "March", income: 186, expense: 80, total: 100 },
-    { month: "April", income: 186, expense: 80, total: 100 },
-    { month: "May", income: 186, expense: 80, total: 100 },
-    { month: "June", income: 186, expense: 80, total: 100 },
-  ];
+const SummaryChart = ({ transactions, year }: SummaryChartProps) => {
+  const chartSummaryData = useMemo(
+    () => getSummaryChartData(transactions, year),
+    [transactions, year]
+  );
 
   return (
     <Card>
@@ -39,7 +35,7 @@ const SummaryChart = ({ transactions, isSummaryChart }: SummaryChartProps) => {
       </CardHeader>
       <CardContent>
         <ChartContainer config={{}}>
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={chartSummaryData}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="month"

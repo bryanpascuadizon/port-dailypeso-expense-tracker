@@ -18,14 +18,24 @@ const Summary = () => {
       return response;
     },
   });
-  console.log(data);
 
   return (
     <>
       <PageTitle title="Summary" />
       <div className="transaction-headers">
-        <TransactionDateTab dateType="yearly" date={date} setDate={setDate} />
-        <SummaryChart transactions={[]} isSummaryChart={isPending} />
+        {!isPending && data && data.transactions && (
+          <>
+            <TransactionDateTab
+              dateType="yearly"
+              date={date}
+              setDate={setDate}
+            />
+            <SummaryChart
+              transactions={data.transactions}
+              year={date.getFullYear()}
+            />
+          </>
+        )}
       </div>
     </>
   );
