@@ -1,11 +1,6 @@
-import PageTitle from "@/components/shared/PageTitle";
+import Summary from "@/components/shared/Summary/Summary";
 
-const Summary = () => {
-  return (
-    <div>
-      <PageTitle title="Summary" />
-    </div>
-  );
+const SummaryPage = () => {
+  return <Summary />;
 };
-
-export default Summary;
+export default SummaryPage;
