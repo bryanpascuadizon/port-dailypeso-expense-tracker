@@ -57,15 +57,15 @@ const SummaryChart = ({ transactions, year }: SummaryChartProps) => {
         </ChartContainer>
         <div className="flex gap-3 mt-5 text-xs md:text-sm">
           <div className="flex flex-start gap-1">
-            <div className="bg-green-600 h-3 w-3 md:h-5 md:w-5 rounded-full"></div>
+            <div className="bg-green-600 h-[15px] w-[15px] rounded-sm"></div>
             <p>income</p>
           </div>
           <div className="flex flex-start gap-1">
-            <div className="bg-red-600 h-3 w-3 md:h-5 md:w-5 rounded-full"></div>
+            <div className="bg-red-600 h-[15px] w-[15px] rounded-sm"></div>
             <p>expense</p>
           </div>
           <div className="flex flex-start gap-1">
-            <div className="bg-black h-3 w-3 md:h-5 md:w-5 rounded-full"></div>
+            <div className="bg-black h-[15px] w-[15px] rounded-sm"></div>
             <p>total</p>
           </div>
         </div>

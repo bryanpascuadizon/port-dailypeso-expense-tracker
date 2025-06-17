@@ -54,7 +54,7 @@ const TransactionDatePopoverContent = ({
         ))}
       </div>
       <Button
-        className="m-2 cursor-pointer bg-yellow-400 hover:bg-yellow-400 text-black"
+        className="m-2 cursor-pointer bg-yellow-400 hover:bg-yellow-400 text-black text-xs md:text-sm"
         onClick={() => setDate(new Date())}
       >
         This Month
