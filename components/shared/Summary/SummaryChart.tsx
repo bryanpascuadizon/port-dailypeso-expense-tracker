@@ -28,9 +28,11 @@ const SummaryChart = ({ transactions, year }: SummaryChartProps) => {
   );
 
   return (
-    <Card>
+    <Card className="mb-5">
       <CardHeader>
-        <CardTitle>Transaction Summary</CardTitle>
+        <CardTitle className="text-xs md:text-sm">
+          Transactions Summary
+        </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
@@ -53,6 +55,20 @@ const SummaryChart = ({ transactions, year }: SummaryChartProps) => {
             <Bar dataKey="total" fill="var(--color-total)" radius={2} />
           </BarChart>
         </ChartContainer>
+        <div className="flex gap-3 mt-5 text-xs md:text-sm">
+          <div className="flex flex-start gap-1">
+            <div className="bg-green-600 h-3 w-3 md:h-5 md:w-5 rounded-full"></div>
+            <p>income</p>
+          </div>
+          <div className="flex flex-start gap-1">
+            <div className="bg-red-600 h-3 w-3 md:h-5 md:w-5 rounded-full"></div>
+            <p>expense</p>
+          </div>
+          <div className="flex flex-start gap-1">
+            <div className="bg-black h-3 w-3 md:h-5 md:w-5 rounded-full"></div>
+            <p>total</p>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

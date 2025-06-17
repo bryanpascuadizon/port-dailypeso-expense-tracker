@@ -6,6 +6,7 @@ import TransactionDateTab from "../Transactions/TransactionDateTab";
 import { useQuery } from "@tanstack/react-query";
 import { getUserMonthlyTransactions } from "@/lib/actions/transaction-actions";
 import SummaryChart from "./SummaryChart";
+import SummaryAccounts from "./SummaryAccounts";
 
 const Summary = () => {
   const [date, setDate] = useState(new Date());
@@ -25,13 +26,14 @@ const Summary = () => {
       <div className="transaction-headers">
         <TransactionDateTab dateType="yearly" date={date} setDate={setDate} />
       </div>
-      <div>
+      <div className="transaction-content">
         {!isPending && data && data.transactions && (
           <>
             <SummaryChart
               transactions={data.transactions}
               year={date.getFullYear()}
             />
+            <SummaryAccounts transactions={data.transactions} />
           </>
         )}
       </div>
