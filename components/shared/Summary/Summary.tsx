@@ -26,7 +26,7 @@ const Summary = () => {
       <div className="transaction-headers">
         <TransactionDateTab dateType="yearly" date={date} setDate={setDate} />
       </div>
-      <div className="transaction-content">
+      <div className="transaction-content px-3">
         {!isPending && data && data.transactions && (
           <>
             <SummaryChart

@@ -32,15 +32,17 @@ const SummaryAccounts = ({ transactions }: SummaryAccountsProps) => {
         {summaryAccounts &&
           summaryAccounts.map((account, index) => (
             <div
-              className="grid grid-cols-3 text-xs md:text-sm mb-2"
+              className="grid grid-cols-2 text-xs md:text-sm mb-2"
               key={index}
             >
-              <div className="self-center font-bold">{account.accountName}</div>
-              <div className="self-center text-center">
-                {account.numberOfTranasctions}{" "}
-                {account.numberOfTranasctions > 1
-                  ? "transactions"
-                  : "transaction"}
+              <div className="self-center ">
+                <p className="font-bold">{account.accountName}</p>
+                <p>
+                  {account.numberOfTranasctions}{" "}
+                  {account.numberOfTranasctions > 1
+                    ? "transactions"
+                    : "transaction"}
+                </p>
               </div>
               <div>
                 <IncomeExpense
