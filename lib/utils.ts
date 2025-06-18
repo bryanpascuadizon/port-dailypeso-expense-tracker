@@ -284,3 +284,42 @@ export const getSummaryChartData = (
 
   return summaryData;
 };
+
+export const getSummaryAccountsData = (transactions: Transactions[]) => {
+  const accountTransactions: {
+    accountId: string;
+    accountName: string;
+    transactions: Transactions[];
+  }[] = [];
+
+  transactions.forEach((transaction: Transactions) => {
+    const accountId = transaction.transactionAccountId;
+    const accountName = transaction.transactionAccount?.name ?? "";
+
+    const accountIndex = accountTransactions.findIndex((accountTransaction) => {
+      return accountTransaction.accountId === accountId;
+    });
+
+    if (accountIndex !== -1) {
+      accountTransactions[accountIndex].transactions.push(transaction);
+    } else {
+      accountTransactions.push({
+        accountId,
+        accountName,
+        transactions: [transaction],
+      });
+    }
+  });
+
+  const summaryAccounts = accountTransactions.map((account) => {
+    return {
+      accountId: account.accountId,
+      accountName: account.accountName,
+      numberOfTranasctions: account.transactions.length,
+      transactions: account.transactions,
+      ...incomeExpenseComputation(account.transactions),
+    };
+  });
+
+  return summaryAccounts;
+};
