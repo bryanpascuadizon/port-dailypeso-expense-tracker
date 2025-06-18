@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <header className="w-full header-container">
-      <div className="wrapper flex-start bg-white py-3 rounded-b-sm shadow">
+      <div className="wrapper flex-start bg-white py-3 shadow">
         <div className="flex-start gap-2 px-5 w-full">
           <div>
             <HandCoins className="w-11 h-11 md:w-13 md:h-13" />
@@ -30,7 +30,7 @@ const Header = () => {
           </div>
           <nav className="flex justify-end w-full">
             {isLogoutPending ? (
-              <Loader className="animate-spin" />
+              <Loader className="animate-spin mr-5" />
             ) : (
               <Power
                 onClick={() => handleLogOut()}

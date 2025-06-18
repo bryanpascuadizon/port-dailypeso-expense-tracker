@@ -26,7 +26,7 @@ const FooterLinks = ({
 
   return (
     <footer className="w-full footer-container">
-      <div className="wrapper relative bg-white shadow rounded-t-sm">
+      <div className="wrapper relative bg-white shadow">
         <nav className="grid grid-cols-4 text-sm text-center">
           {footerLinks.map(
             (
@@ -40,11 +40,7 @@ const FooterLinks = ({
                     ? ""
                     : page.link
                 }
-                className={`footer-links ${
-                  index === 0
-                    ? "rounded-tl-sm"
-                    : index === footerLinks.length - 1 && "rounded-tr-sm"
-                }`}
+                className="footer-links"
                 key={index}
                 onClick={() => handleFooterLink(page.link)}
               >
