@@ -21,8 +21,6 @@ const SummaryAccounts = ({ transactions }: SummaryAccountsProps) => {
     [transactions]
   );
 
-  console.log(summaryAccounts);
-
   return (
     <Card className="mb-5">
       <CardHeader>
@@ -32,8 +30,8 @@ const SummaryAccounts = ({ transactions }: SummaryAccountsProps) => {
       <CardContent>
         {summaryAccounts &&
           summaryAccounts.map((account, index) => (
-            <>
-              <div className="grid grid-cols-2 text-xs md:text-sm" key={index}>
+            <div key={index}>
+              <div className="grid grid-cols-2 text-xs md:text-sm">
                 <div className="self-center ">
                   <p className="font-bold">{account.accountName}</p>
                   <p>
@@ -50,8 +48,10 @@ const SummaryAccounts = ({ transactions }: SummaryAccountsProps) => {
                   />
                 </div>
               </div>
-              {index !== summaryAccounts.length - 1 && <Separator className="my-2" />}
-            </>
+              {index !== summaryAccounts.length - 1 && (
+                <Separator className="my-2" />
+              )}
+            </div>
           ))}
       </CardContent>
     </Card>
