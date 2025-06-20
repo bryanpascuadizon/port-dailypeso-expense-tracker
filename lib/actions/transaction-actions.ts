@@ -97,6 +97,45 @@ export const getUserMonthlyTransactions = async (year: number) => {
   }
 };
 
+export const getUserMonthyTransactionsForSummaryExport = async (
+  startDate: Date,
+  endDate: Date
+) => {
+  try {
+    const user = await getUserSession();
+
+    if (user && user.id) {
+      const exportStartDate = moment(startDate)
+        .startOf("month")
+        .format("MMM DD, YYYY");
+      const exportEndDate = moment(endDate)
+        .endOf("month")
+        .format("MMM DD, YYYY");
+
+      const response = await getTransactions(
+        user.id,
+        exportStartDate,
+        exportEndDate
+      );
+
+      return {
+        success: true,
+        transactions: response,
+      };
+    }
+
+    return {
+      success: false,
+      message: `Cannot get transactions for summary report`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Cannot get transactions for summary export - ${error}`,
+    };
+  }
+};
+
 export const submitDailyTransaction = async (
   prevState: FormState,
   formData: FormData

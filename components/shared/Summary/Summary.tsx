@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserMonthlyTransactions } from "@/lib/actions/transaction-actions";
 import SummaryChart from "./SummaryChart";
 import SummaryAccounts from "./SummaryAccounts";
+import SummaryExcel from "./SummaryExcel";
 
 const Summary = () => {
   const [date, setDate] = useState(new Date());
@@ -34,6 +35,7 @@ const Summary = () => {
               year={date.getFullYear()}
             />
             <SummaryAccounts transactions={data.transactions} />
+            <SummaryExcel />
           </>
         )}
       </div>

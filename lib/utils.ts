@@ -8,6 +8,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import moment from "moment";
 import { MONTHS } from "./constants";
+import ExcelJS from "exceljs";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -185,7 +186,6 @@ export const getInitialDate = (startWeek: string | null): Date => {
   const isAlreadyParsed = startWeek === new Date(startWeek).toString();
   const parsedDate = new Date(formatDateToISO(startWeek));
 
-  console.log(isAlreadyParsed);
   return isNaN(parsedDate.getTime())
     ? new Date(formatDateToISO(""))
     : isAlreadyParsed
@@ -322,4 +322,110 @@ export const getSummaryAccountsData = (transactions: Transactions[]) => {
   });
 
   return summaryAccounts;
+};
+
+export const getSummaryExcelData = (transactions: Transactions[]) => {
+  const workbook = new ExcelJS.Workbook();
+
+  const consolidatedTransactions: {
+    monthDate: Date;
+    monthYear: string;
+    transactions: Transactions[];
+  }[] = [];
+  const excelHeaders = [
+    "No.",
+    "Note",
+    "Details",
+    "Amount",
+    "Account",
+    "Income/Expense",
+  ];
+
+  //consolidate transactions
+  for (const transaction of transactions) {
+    const monthYear = moment(transaction.date).format("MMMM YYYY");
+
+    const monthYearIndex = consolidatedTransactions.findIndex(
+      (monthTranasction) => {
+        return monthTranasction.monthYear === monthYear;
+      }
+    );
+
+    if (monthYearIndex === -1) {
+      consolidatedTransactions.push({
+        monthDate: new Date(monthYear),
+        monthYear: monthYear,
+        transactions: [transaction],
+      });
+    } else {
+      consolidatedTransactions[monthYearIndex].transactions.push(transaction);
+    }
+  }
+
+  consolidatedTransactions.sort((a, b) => {
+    const currentMonthTransaction =
+      a.monthDate.getFullYear() * 12 + a.monthDate.getMonth();
+    const nextMonthTransaction =
+      b.monthDate.getFullYear() * 12 + b.monthDate.getMonth();
+
+    return currentMonthTransaction - nextMonthTransaction;
+  });
+
+  //build excel worksheet structure
+  for (const transaction of consolidatedTransactions) {
+    const monthTransactions = transaction.transactions.map(
+      (mtransaction, index) => {
+        return [
+          index + 1,
+          mtransaction.note,
+          mtransaction.details,
+          currencyFormatter.format(mtransaction.amount),
+          mtransaction.transactionAccount?.name,
+          mtransaction.type,
+        ];
+      }
+    );
+
+    const { totalIncomeExpense } = incomeExpenseComputation(
+      transaction.transactions
+    );
+
+    //Add excel worksheet
+    const monthYearSheet = workbook.addWorksheet(transaction.monthYear);
+
+    //Add excel header row with bold font
+    monthYearSheet.addRow(excelHeaders).eachCell((cell) => {
+      cell.font = { bold: true };
+    });
+
+    //Add transaction rows
+    monthYearSheet.addRows([...monthTransactions]);
+
+    //Add a blank row
+    monthYearSheet.addRow([]);
+
+    //Add total amount of transactions
+    monthYearSheet
+      .addRow(["Total", "", "", currencyFormatter.format(totalIncomeExpense)])
+      .eachCell((cell) => {
+        cell.font = { bold: true };
+      });
+
+    // auto-size(width and height) and wrap texts of each cell
+    monthYearSheet.columns.forEach((column) => {
+      if (!column) return;
+
+      let maxLength = 10; // fallback width
+
+      column.eachCell?.({ includeEmpty: true }, (cell) => {
+        const cellValue = cell.value ? cell.value.toString() : "";
+        if (cellValue.length > maxLength) {
+          maxLength = cellValue.length;
+        }
+      });
+      column.width = maxLength + 2;
+    });
+  }
+
+  return workbook;
 };
