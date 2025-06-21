@@ -14,12 +14,21 @@ const TransactionDatePopoverContent = ({
   const [selectedYear, setSelectedYear] = useState(
     new Date(date).getFullYear()
   );
-  const [selectedMonth] = useState(new Date(date).getMonth());
+  const [selectedMonth, setSelectedMonth] = useState(new Date(date).getMonth());
 
   const handleMonthChange = (monthIndex: number) => {
     const month = MONTHS[monthIndex];
     const year = selectedYear;
     const selectedDate = new Date(formatDateToISO(`${month} ${year}`));
+    setSelectedMonth(monthIndex);
+    setDate(selectedDate);
+  };
+
+  const handleCurrentMonthChange = () => {
+    const month = MONTHS[new Date().getMonth()];
+    const year = new Date().getFullYear();
+    const selectedDate = new Date(formatDateToISO(`${month} ${year}`));
+    setSelectedMonth(new Date().getMonth());
     setDate(selectedDate);
   };
 
@@ -55,7 +64,7 @@ const TransactionDatePopoverContent = ({
       </div>
       <Button
         className="m-2 cursor-pointer bg-yellow-400 hover:bg-yellow-400 text-black text-xs md:text-sm"
-        onClick={() => setDate(new Date())}
+        onClick={handleCurrentMonthChange}
       >
         This Month
       </Button>

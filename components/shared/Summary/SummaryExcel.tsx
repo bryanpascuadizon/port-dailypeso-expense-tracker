@@ -15,11 +15,11 @@ import { saveAs } from "file-saver";
 import { useState, useTransition } from "react";
 import TransactionDatePopoverContent from "../Transactions/TransactionDatePopoverContent";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { getUserMonthyTransactionsForSummaryExport } from "@/lib/actions/transaction-actions";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import moment from "moment";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 const SummaryExcel = () => {
   const [startDate, setStartDate] = useState(new Date(formatDateToISO("")));
@@ -56,7 +56,7 @@ const SummaryExcel = () => {
     });
   };
   return (
-    <Card className="bg-gray-100 shadow-none border-none">
+    <Card>
       <CardHeader>
         <CardTitle className="text-xs md:text-sm">
           Export Transactions
@@ -64,61 +64,71 @@ const SummaryExcel = () => {
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent className="text-xs md:text-sm">
-        <div className="mb-3">
-          <Popover>
-            <PopoverTrigger className="flex gap-2 items-center">
-              <p className="font-bold">From: </p>
-              <p className="shadow p-2 rounded-sm bg-white">
+        <Table className="whitespace-nowrap w-1">
+          <TableBody>
+            <TableRow className="border-0 hover:bg-white">
+              <TableCell>
                 {" "}
-                {MONTHS[startDate.getMonth()]} {startDate.getFullYear()}
-              </p>
-            </PopoverTrigger>
-            <PopoverContent>
-              <TransactionDatePopoverContent
-                date={startDate}
-                setDate={setStartDate}
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
-        <div>
-          <Popover>
-            <PopoverTrigger className="flex gap-2 items-center">
-              <p className="font-bold">To: </p>
-              <p className="shadow p-2 rounded-sm bg-white">
+                <p className="font-bold text-xs md:text-sm">From: </p>
+              </TableCell>
+              <TableCell className="flex items-start">
+                <Popover>
+                  <PopoverTrigger className="flex gap-2 items-center cursor-pointer">
+                    <p className="border-1 border-gray-300 p-2 rounded-sm bg-white text-xs md:text-sm">
+                      {" "}
+                      {MONTHS[startDate.getMonth()]} {startDate.getFullYear()}
+                    </p>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <div className="m-3">
+                      <TransactionDatePopoverContent
+                        date={startDate}
+                        setDate={setStartDate}
+                      />
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </TableCell>
+            </TableRow>
+            <TableRow className="hover:bg-white">
+              <TableCell>
                 {" "}
-                {MONTHS[endDate.getMonth()]} {endDate.getFullYear()}
-              </p>
-            </PopoverTrigger>
-            <PopoverContent>
-              <TransactionDatePopoverContent
-                date={endDate}
-                setDate={setEndDate}
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
-        <p className="text-destructive py-3">
+                <p className="font-bold text-xs md:text-sm">To: </p>
+              </TableCell>
+              <TableCell>
+                <Popover>
+                  <PopoverTrigger className="flex gap-2 items-center cursor-pointer">
+                    <p className="border-1 border-gray-300 p-2 rounded-sm bg-white text-xs md:text-sm">
+                      {" "}
+                      {MONTHS[endDate.getMonth()]} {endDate.getFullYear()}
+                    </p>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <div className="m-3">
+                      <TransactionDatePopoverContent
+                        date={endDate}
+                        setDate={setEndDate}
+                      />
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+        <p className="text-destructive py-3 text-xs md:text-sm">
           {startDate > endDate &&
             `"From" date cannot be later than the "To" date`}
         </p>
         <Button
           disabled={startDate > endDate}
-          className="text-xs md:text-sm bg-white hover:bg-white text-black font-bold cursor-pointer"
+          className="text-xs md:text-sm  bg-green-700 hover:bg-green-600 text-white cursor-pointer min-w-[120px]"
           onClick={handleTransactionsExport}
         >
           {isPending ? (
             <Loader className="animate-spin" />
           ) : (
-            <>
-              <Image
-                src="/images/excel.jpg"
-                alt="export transactions"
-                width={20}
-                height={20}
-              />
-              Export
-            </>
+            <>Export to excel</>
           )}
         </Button>
       </CardContent>

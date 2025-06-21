@@ -26,10 +26,10 @@ export const getUserAccounts = async () => {
       success: false,
       message: "Cannot get accounts",
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Cannot get accounts - ${error}`,
+      message: `Cannot get accounts`,
     };
   }
 };
@@ -46,7 +46,7 @@ export const addUserAccounts = async (
     if (!accountName) {
       return {
         success: false,
-        message: `Cannot add account`,
+        message: `Cannot create account`,
       };
     }
 
@@ -59,19 +59,19 @@ export const addUserAccounts = async (
       if (response) {
         return {
           success: true,
-          message: "Account added successfully",
+          message: "Account created successfully",
         };
       }
     }
 
     return {
       success: false,
-      message: `Cannot add account`,
+      message: `Cannot created account`,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Cannot add account - ${error}`,
+      message: `Cannot create account`,
     };
   }
 };
@@ -91,10 +91,10 @@ export const deleteUserAccount = async (accountId: string) => {
       success: true,
       message: "Account deleted successfully",
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Cannot delete account - ${error}`,
+      message: `Cannot delete account`,
     };
   }
 };
@@ -134,10 +134,10 @@ export const editUserAccount = async (
       success: true,
       message: "Account updated successfully",
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Cannot update account - ${error}`,
+      message: `Cannot update account`,
     };
   }
 };

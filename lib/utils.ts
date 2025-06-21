@@ -334,6 +334,7 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
   }[] = [];
   const excelHeaders = [
     "No.",
+    "Date",
     "Note",
     "Details",
     "Amount",
@@ -362,6 +363,7 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
     }
   }
 
+  //sort consolidated transactions
   consolidatedTransactions.sort((a, b) => {
     const currentMonthTransaction =
       a.monthDate.getFullYear() * 12 + a.monthDate.getMonth();

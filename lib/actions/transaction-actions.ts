@@ -55,10 +55,10 @@ export const getUserDailyTransactions = async (week: Date) => {
       success: false,
       message: "Cannot get daily transactions",
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Cannot get daily transactions - ${error}`,
+      message: `Cannot get daily transactions`,
     };
   }
 };
@@ -89,10 +89,10 @@ export const getUserMonthlyTransactions = async (year: number) => {
       success: false,
       message: `Cannot get monthly transactions`,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Cannot get monthly transactions - ${error}`,
+      message: `Cannot get monthly transactions`,
     };
   }
 };
@@ -118,6 +118,13 @@ export const getUserMonthyTransactionsForSummaryExport = async (
         exportEndDate
       );
 
+      if (!response.length) {
+        return {
+          success: false,
+          message: "No transactions to export",
+        };
+      }
+
       return {
         success: true,
         transactions: response,
@@ -128,10 +135,10 @@ export const getUserMonthyTransactionsForSummaryExport = async (
       success: false,
       message: `Cannot get transactions for summary report`,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Cannot get transactions for summary export - ${error}`,
+      message: `Cannot get transactions for summary export`,
     };
   }
 };
@@ -174,10 +181,10 @@ export const submitDailyTransaction = async (
       success: false,
       message: `Cannot submit daily transaction`,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Cannot submit daily transaction - ${error}`,
+      message: `Cannot submit daily transaction`,
     };
   }
 };
@@ -229,10 +236,10 @@ export const editTransaction = async (
       success: true,
       message: `Transaction updated successfully`,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Cannot update daily transaction - ${error}`,
+      message: `Cannot update daily transaction`,
     };
   }
 };
@@ -252,10 +259,10 @@ export const deleteTransaction = async (transactionId: string) => {
       success: true,
       message: "Transaction deleted successfully",
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Cannot submit daily transaction - ${error}`,
+      message: `Cannot submit daily transaction`,
     };
   }
 };

@@ -23,9 +23,9 @@ export const addAccount = async (userId: string, accountName: string) => {
   return response;
 };
 
-export const deleteAccount = async (accoundId: string) => {
+export const deleteAccount = async (accountId: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/accounts?accountId=${accoundId}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/accounts?accountId=${accountId}`,
     {
       method: "DELETE",
     }
