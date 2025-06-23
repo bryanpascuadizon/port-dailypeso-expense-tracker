@@ -2,7 +2,7 @@ export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "DailyPeso";
 
 export const APP_DESCRIPTION =
   process.env.NEXT_PUBLIC_APP_DESCRIPTION ||
-  "DailyPeso is a personal expense tracker built for effortless daily money management. Users can quickly log expenses and income, categorize transactions by account, and gain clear insights into their spending habits. Designed with a clean UI and a smooth, responsive experience, DailyPeso helps users stay organized, stick to budgets, and make smarter financial decisions — whether they're saving, budgeting, or tracking everyday costs.";
+  "DailyPeso is your simple, everyday money tracker that makes managing your finances feel easy. Whether you're buying coffee, paying bills, or setting aside savings, you can quickly log your expenses and income in just a few taps. Organize your transactions by account, see where your money’s going, and get a clear picture of your spending habits. With a clean, modern design and a smooth experience, DailyPeso helps you stay on top of your budget without the stress. Perfect for anyone who wants to save more, spend smarter, or just keep their daily spending in check.";
 
 export const APP_SLOGAN = "Simplify Spending Daily";
 
