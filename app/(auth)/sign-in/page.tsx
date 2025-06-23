@@ -1,4 +1,4 @@
-import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
+import { APP_NAME, APP_SLOGAN } from "@/lib/constants";
 import { HandCoins } from "lucide-react";
 import SignInForm from "@/components/shared/User/SignInForm";
 
@@ -9,7 +9,7 @@ const SignInPage = async () => {
         <HandCoins className="w-18 h-18 md:w-20 md:h-20" />
         <div>
           <p className="text-3xl md:text-5xl font-bold mb-2">{APP_NAME}</p>
-          <p>{APP_DESCRIPTION}</p>
+          <p>{APP_SLOGAN}</p>
         </div>
       </div>
       <SignInForm />

@@ -1,7 +1,7 @@
 "use client";
 
 import { SignOut } from "@/lib/actions/user-actions";
-import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
+import { APP_NAME, APP_SLOGAN } from "@/lib/constants";
 import { HandCoins, Loader, Power } from "lucide-react";
 import Link from "next/link";
 import { useTransition } from "react";
@@ -25,7 +25,7 @@ const Header = () => {
           <div className="w-full">
             <Link href="/transactions/daily">
               <p className="header-title">{APP_NAME}</p>
-              <p className="header-slogan">{APP_DESCRIPTION}</p>
+              <p className="header-slogan">{APP_SLOGAN}</p>
             </Link>
           </div>
           <nav className="flex justify-end w-full">
