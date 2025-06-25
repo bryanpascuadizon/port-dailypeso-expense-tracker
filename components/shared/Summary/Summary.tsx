@@ -28,15 +28,15 @@ const Summary = () => {
       <PageTitle title="Summary" />
       {!isPending ? (
         <>
+          <div className="transaction-headers">
+            <TransactionDateTab
+              dateType="yearly"
+              date={date}
+              setDate={setDate}
+            />
+          </div>
           {data && data.transactions?.length ? (
             <>
-              <div className="transaction-headers">
-                <TransactionDateTab
-                  dateType="yearly"
-                  date={date}
-                  setDate={setDate}
-                />
-              </div>
               <div className="transaction-content px-3">
                 <SummaryChart
                   transactions={data.transactions}
