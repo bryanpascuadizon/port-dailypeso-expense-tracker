@@ -8,6 +8,7 @@ import { getUserMonthlyTransactions } from "@/lib/actions/transaction-actions";
 import SummaryChart from "./SummaryChart";
 import SummaryAccounts from "./SummaryAccounts";
 import SummaryExcel from "./SummaryExcel";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Summary = () => {
   const [date, setDate] = useState(new Date());
@@ -28,7 +29,7 @@ const Summary = () => {
         <TransactionDateTab dateType="yearly" date={date} setDate={setDate} />
       </div>
       <div className="transaction-content px-3">
-        {!isPending && data && data.transactions && (
+        {!isPending && data && data.transactions ? (
           <>
             <SummaryChart
               transactions={data.transactions}
@@ -36,6 +37,12 @@ const Summary = () => {
             />
             <SummaryAccounts transactions={data.transactions} />
             <SummaryExcel />
+          </>
+        ) : (
+          <>
+            <Skeleton className="skeleton w-full h-65 md:h-75 mb-3" />
+            <Skeleton className="skeleton w-full h-65 md:h-75 mb-3" />
+            <Skeleton className="skeleton w-full h-65 md:h-75 mb-3" />
           </>
         )}
       </div>
