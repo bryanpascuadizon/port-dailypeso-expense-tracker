@@ -363,7 +363,7 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
     }
   }
 
-  //sory consolidated transactions
+  //sort consolidated transactions
   for (const ctransaction of consolidatedTransactions) {
     ctransaction.transactions.sort((a, b) => {
       const currentTransaction = new Date(a.date).getDate();
