@@ -7,12 +7,12 @@ const TransactionSkeletonLoader = ({
 }) => {
   return (
     <div>
-      <div className="flex-between gap-3 mb-7">
+      <div className="flex-between gap-3 mb-3">
         <Skeleton className="skeleton h-10 w-26 md:w-35" />
         <Skeleton className="skeleton h-10 w-full" />
         <Skeleton className="skeleton h-10 w-26 md:w-35" />
       </div>
-      <div className="grid grid-cols-3 gap-3 mb-7">
+      <div className="grid grid-cols-3 gap-3 mb-3">
         <Skeleton className="skeleton h-10" />
         <Skeleton className="skeleton h-10" />
         <Skeleton className="skeleton h-10" />
