@@ -344,7 +344,7 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
 
   //consolidate transactions
   for (const transaction of transactions) {
-    const monthYear = moment().format("MMMM YYYY");
+    const monthYear = moment(transaction.date).format("MMMM YYYY");
 
     const monthYearIndex = consolidatedTransactions.findIndex(
       (monthTranasction) => {
@@ -354,7 +354,7 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
 
     if (monthYearIndex === -1) {
       consolidatedTransactions.push({
-        monthDate: new Date(transaction.date).getDate(),
+        monthDate: new Date(monthYear).getDate(),
         monthYear: monthYear,
         transactions: [transaction],
       });
