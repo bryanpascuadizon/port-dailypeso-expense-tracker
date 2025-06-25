@@ -418,11 +418,12 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
       currencyFormatter.format(totalIncomeExpense),
     ]);
 
-    //Make eah cell bold in total row
+    //Make each cell bold in total row
     totalRow.eachCell((cell) => {
       cell.font = { bold: true };
     });
 
+    //Set styling of total cell for income or expense
     totalRow.getCell(5).font = {
       bold: true,
       color: { argb: totalIncomeExpense > 0 ? "FF008000" : "FFFF0000" }, // green or red
