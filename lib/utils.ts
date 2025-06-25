@@ -328,7 +328,7 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
   const workbook = new ExcelJS.Workbook();
 
   const consolidatedTransactions: {
-    monthDate: Date;
+    monthDate: number;
     monthYear: string;
     transactions: Transactions[];
   }[] = [];
@@ -344,7 +344,7 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
 
   //consolidate transactions
   for (const transaction of transactions) {
-    const monthYear = moment(transaction.date).format("MMMM YYYY");
+    const monthYear = moment().format("MMMM YYYY");
 
     const monthYearIndex = consolidatedTransactions.findIndex(
       (monthTranasction) => {
@@ -354,7 +354,7 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
 
     if (monthYearIndex === -1) {
       consolidatedTransactions.push({
-        monthDate: new Date(monthYear),
+        monthDate: new Date(transaction.date).getDate(),
         monthYear: monthYear,
         transactions: [transaction],
       });
@@ -363,27 +363,30 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
     }
   }
 
-  //sort consolidated transactions
-  consolidatedTransactions.sort((a, b) => {
-    const currentMonthTransaction =
-      a.monthDate.getFullYear() * 12 + a.monthDate.getMonth();
-    const nextMonthTransaction =
-      b.monthDate.getFullYear() * 12 + b.monthDate.getMonth();
+  //sory consolidated transactions
+  for (const ctransaction of consolidatedTransactions) {
+    ctransaction.transactions.sort((a, b) => {
+      const currentTransaction = new Date(a.date).getDate();
+      const nextTransaction = new Date(b.date).getDate();
 
-    return currentMonthTransaction - nextMonthTransaction;
-  });
+      return currentTransaction - nextTransaction;
+    });
+  }
 
   //build excel worksheet structure
   for (const transaction of consolidatedTransactions) {
     const monthTransactions = transaction.transactions.map(
       (mtransaction, index) => {
+        const transactionDate = moment(mtransaction.date).format("MM/DD/YYYY");
+
         return [
           index + 1,
+          transactionDate,
           mtransaction.note,
           mtransaction.details,
           currencyFormatter.format(mtransaction.amount),
           mtransaction.transactionAccount?.name,
-          mtransaction.type,
+          mtransaction.type === "income" ? "Income" : "Expense",
         ];
       }
     );
@@ -407,13 +410,25 @@ export const getSummaryExcelData = (transactions: Transactions[]) => {
     monthYearSheet.addRow([]);
 
     //Add total amount of transactions
-    monthYearSheet
-      .addRow(["Total", "", "", currencyFormatter.format(totalIncomeExpense)])
-      .eachCell((cell) => {
-        cell.font = { bold: true };
-      });
+    const totalRow = monthYearSheet.addRow([
+      "Total",
+      "",
+      "",
+      "",
+      currencyFormatter.format(totalIncomeExpense),
+    ]);
 
-    // auto-size(width and height) and wrap texts of each cell
+    //Make eah cell bold in total row
+    totalRow.eachCell((cell) => {
+      cell.font = { bold: true };
+    });
+
+    totalRow.getCell(5).font = {
+      bold: true,
+      color: { argb: totalIncomeExpense > 0 ? "FF008000" : "FFFF0000" }, // green or red
+    };
+
+    //auto-size(width and height) and wrap texts of each cell
     monthYearSheet.columns.forEach((column) => {
       if (!column) return;
 
