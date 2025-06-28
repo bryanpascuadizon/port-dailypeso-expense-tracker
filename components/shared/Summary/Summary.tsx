@@ -10,6 +10,7 @@ import SummaryAccounts from "./SummaryAccounts";
 import SummaryExcel from "./SummaryExcel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChartColumn } from "lucide-react";
+import SummarySkeletonLoader from "./SummarySkeletonLoader";
 
 const Summary = () => {
   const [date, setDate] = useState(new Date());
@@ -54,18 +55,7 @@ const Summary = () => {
           )}
         </>
       ) : (
-        <>
-          <div className="flex-between gap-3 mb-3">
-            <Skeleton className="skeleton h-10 w-26 md:w-35" />
-            <Skeleton className="skeleton h-10 w-full" />
-            <Skeleton className="skeleton h-10 w-26 md:w-35" />
-          </div>
-          <div>
-            <Skeleton className="skeleton w-full h-30 mb-3" />
-            <Skeleton className="skeleton w-full h-30 mb-3" />
-            <Skeleton className="skeleton w-full h-30 mb-3" />
-          </div>
-        </>
+        <SummarySkeletonLoader />
       )}
     </>
   );
