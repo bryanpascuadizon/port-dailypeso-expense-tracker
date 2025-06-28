@@ -8,7 +8,6 @@ import { getUserMonthlyTransactions } from "@/lib/actions/transaction-actions";
 import SummaryChart from "./SummaryChart";
 import SummaryAccounts from "./SummaryAccounts";
 import SummaryExcel from "./SummaryExcel";
-import { Skeleton } from "@/components/ui/skeleton";
 import { ChartColumn } from "lucide-react";
 import SummarySkeletonLoader from "./SummarySkeletonLoader";
 
