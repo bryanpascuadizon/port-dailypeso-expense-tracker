@@ -170,6 +170,7 @@ const DailyTransactionAddEditForm = ({
           placeholder={currencyFormatter.format(0)}
           step="0.01"
           defaultValue={transaction?.amount ?? ""}
+          inputMode="decimal"
           required
         />
 
